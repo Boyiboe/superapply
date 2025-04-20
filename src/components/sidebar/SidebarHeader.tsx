@@ -12,11 +12,23 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export function SidebarHeader() {
   return (
     <Header className="flex flex-col items-center gap-2 p-4">
-      <div className="flex items-center justify-between w-full mb-4">
-        <div className="text-2xl font-bold text-blue-500">
+      {/* Logo Section */}
+      <div className="flex w-full mb-4">
+        <div className="text-2xl font-bold text-blue-500 w-full text-center">
           <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">SA</span>
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
+      </div>
+
+      {/* Toggle Button - Only visible when collapsed */}
+      <div className="hidden group-data-[state=collapsed]:block mb-2">
+        <SidebarTrigger className="p-2 rounded-lg hover:bg-gray-100">
+          <ChevronLeft className="w-5 h-5" />
+        </SidebarTrigger>
+      </div>
+
+      {/* Toggle Button - Only visible when expanded */}
+      <div className="group-data-[state=collapsed]:hidden absolute right-4 top-4">
         <SidebarTrigger className="p-1 rounded-lg hover:bg-gray-100">
           <ChevronLeft className="w-5 h-5" />
         </SidebarTrigger>
@@ -43,7 +55,7 @@ export function SidebarHeader() {
           </Avatar>
         </div>
 
-        {/* New Application Button - Updated Style */}
+        {/* New Application Button */}
         <SidebarMenuButton 
           key="/new"
           asChild
