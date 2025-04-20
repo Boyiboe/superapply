@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Bot, Sparkles, ALargeSmall } from 'lucide-react';
@@ -57,9 +56,9 @@ const Index = () => {
         <div className="mb-12">
           <Avatar className="w-32 h-32 mx-auto mb-4">
             <AvatarFallback 
-              className="w-full h-full bg-gradient-to-br from-[#60A5FA] to-[#BFDBFE] flex items-center justify-center text-white"
+              className="w-full h-full bg-gradient-to-br from-[#60A5FA] to-[#BFDBFE] flex items-center justify-center text-white text-4xl font-bold"
             >
-              <ALargeSmall className="w-16 h-16" />
+              小艾
             </AvatarFallback>
           </Avatar>
         </div>
