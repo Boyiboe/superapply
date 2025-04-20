@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MessageSquare } from 'lucide-react';
+import ChatSection from '@/components/ChatSection';
 
 interface Message {
   id: number;
@@ -27,33 +28,117 @@ const Chat = () => {
     const newMessages: Message[] = [
       ...messages,
       { id: Date.now(), content, type: 'user', visible: true },
-      { 
-        id: Date.now() + 1, 
+    ];
+    
+    if (content.includes('浙江大学') && content.includes('留学')) {
+      newMessages.push({
+        id: Date.now() + 1,
+        content: 'analysis',
+        type: 'assistant',
+        visible: true
+      });
+    } else {
+      newMessages.push({
+        id: Date.now() + 1,
         content: '感谢您的提问！我是Eva，您的AI留学顾问。我会根据您的具体情况为您提供专业的建议。',
         type: 'assistant',
-        visible: false
-      }
-    ];
+        visible: true
+      });
+    }
+    
     setMessages(newMessages);
     setInput('');
-
-    // Animate assistant message
-    setTimeout(() => {
-      setMessages(prev => 
-        prev.map(msg => 
-          msg.id === newMessages[newMessages.length - 1].id 
-            ? { ...msg, visible: true }
-            : msg
-        )
-      );
-    }, 500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (input.trim()) {
-      handleNewMessage(input);
-    }
+  const renderAssistantResponse = () => {
+    if (messages.length === 0) return null;
+    
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage.type !== 'assistant' || lastMessage.content !== 'analysis') return null;
+
+    return (
+      <div className="space-y-6">
+        <ChatSection
+          title="基本情况分析"
+          content={
+            <div className="space-y-2">
+              <p>您作为浙江大学计算机专业的大四学生，具有很强的竞争优势：</p>
+              <p>1. 浙江大学是中国顶尖高校，在国际上有很高认可度</p>
+              <p>2. 计算机专业是热门专业，就业前景好</p>
+              <p>3. 作为应届生申请，时间点比较合适</p>
+            </div>
+          }
+          delay={500}
+        />
+
+        <ChatSection
+          title="英国院校推荐"
+          content={
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b pb-2">
+                <div>
+                  <h4 className="font-medium">剑桥大学 (University of Cambridge)</h4>
+                  <p className="text-sm text-gray-600">计算机科学硕士</p>
+                </div>
+                <div className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
+                  TOP 1
+                </div>
+              </div>
+              <div className="flex items-center justify-between border-b pb-2">
+                <div>
+                  <h4 className="font-medium">帝国理工学院 (Imperial College London)</h4>
+                  <p className="text-sm text-gray-600">计算机科学硕士</p>
+                </div>
+                <div className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
+                  TOP 3
+                </div>
+              </div>
+            </div>
+          }
+          delay={1000}
+        />
+
+        <ChatSection
+          title="美国院校推荐"
+          content={
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b pb-2">
+                <div>
+                  <h4 className="font-medium">斯坦福大学 (Stanford University)</h4>
+                  <p className="text-sm text-gray-600">计算机科学硕士</p>
+                </div>
+                <div className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
+                  TOP 1
+                </div>
+              </div>
+              <div className="flex items-center justify-between border-b pb-2">
+                <div>
+                  <h4 className="font-medium">麻省理工学院 (MIT)</h4>
+                  <p className="text-sm text-gray-600">计算机科学与工程硕士</p>
+                </div>
+                <div className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
+                  TOP 2
+                </div>
+              </div>
+            </div>
+          }
+          delay={1500}
+        />
+
+        <ChatSection
+          title="申请建议"
+          content={
+            <div className="space-y-2">
+              <p>1. 准备雅思/托福考试，英国学校普遍要求雅思7.0以上</p>
+              <p>2. 收集本科期间的科研项目、实习经历等材料</p>
+              <p>3. 建议同时申请5-8所学校，包括冲刺、匹配和保底选择</p>
+              <p>4. 开始准备个人陈述和推荐信</p>
+            </div>
+          }
+          delay={2000}
+        />
+      </div>
+    );
   };
 
   return (
@@ -71,32 +156,36 @@ const Chat = () => {
       </div>
 
       {/* Chat Messages */}
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-8 mb-20">
         <div className="space-y-6">
-          {messages.map(message => (
-            <div
-              key={message.id}
-              className={`transition-all duration-500 ease-out ${
-                message.type === 'user' ? 'text-right' : 'text-left'
-              } ${message.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
-              <div
-                className={`inline-block max-w-[80%] px-6 py-4 rounded-2xl ${
-                  message.type === 'user'
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-white text-gray-800 shadow-sm'
-                }`}
-              >
-                {message.content}
+          {messages.map(message => 
+            message.type === 'user' ? (
+              <div key={message.id} className="text-right">
+                <div className="inline-block max-w-[80%] px-6 py-4 rounded-2xl bg-purple-600 text-white">
+                  {message.content}
+                </div>
               </div>
-            </div>
-          ))}
+            ) : message.content === 'analysis' ? (
+              <div key={message.id}>{renderAssistantResponse()}</div>
+            ) : (
+              <div key={message.id} className="text-left">
+                <div className="inline-block max-w-[80%] px-6 py-4 rounded-2xl bg-white text-gray-800 shadow-sm">
+                  {message.content}
+                </div>
+              </div>
+            )
+          )}
         </div>
       </div>
 
       {/* Input Form */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          if (input.trim()) {
+            handleNewMessage(input);
+          }
+        }} className="max-w-4xl mx-auto">
           <div className="relative">
             <input
               type="text"
