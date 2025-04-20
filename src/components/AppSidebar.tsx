@@ -12,6 +12,7 @@ import {
   SidebarTrigger,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
 
 // Main menu items with updated order
@@ -67,6 +68,34 @@ const recentApplications = [
     major: "计算机视觉",
     time: "5天前",
     status: "已完成"
+  }
+];
+
+const recentStudents = [
+  {
+    name: "张三",
+    progress: 75,
+    status: "材料审核中"
+  },
+  {
+    name: "李四",
+    progress: 100,
+    status: "已完成"
+  },
+  {
+    name: "王五",
+    progress: 30,
+    status: "等待材料"
+  },
+  {
+    name: "赵六",
+    progress: 90,
+    status: "等待确认"
+  },
+  {
+    name: "钱七",
+    progress: 60,
+    status: "处理中"
   }
 ];
 
@@ -144,6 +173,31 @@ export function AppSidebar() {
                         </div>
                         <span className="text-sm text-gray-600">{app.major}</span>
                         <span className="text-xs text-gray-500">{app.time}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          {/* Recent Students Section */}
+          <SidebarGroup className="mt-6">
+            <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700 text-center">我递交的学生</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {recentStudents.map((student, index) => (
+                  <SidebarMenuItem key={index}>
+                    <SidebarMenuButton asChild>
+                      <Link 
+                        to={`/student/${index}`}
+                        className="flex flex-col w-full p-3 gap-2 hover:bg-blue-50 rounded-lg"
+                      >
+                        <div className="flex items-center justify-between w-full">
+                          <span className="font-medium text-gray-800">{student.name}</span>
+                          <span className="text-xs text-gray-600">{student.status}</span>
+                        </div>
+                        <Progress value={student.progress} className="h-2" />
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
