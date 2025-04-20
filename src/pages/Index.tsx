@@ -104,13 +104,6 @@ const Index = () => {
             </span>
           ))}
         </div>
-
-        {/* 新的描述部分 */}
-        <div className="text-center mt-4 px-4">
-          <p className="text-blue-700 text-sm">
-            以下是材料模版，可下载使用，您上传的材料需要包含标记"*"的文件，在读证明和学位证书有一个即可。另外这些模版是可点击下载的。
-          </p>
-        </div>
       </div>
     </div>
   );
