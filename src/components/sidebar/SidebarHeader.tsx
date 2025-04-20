@@ -1,4 +1,3 @@
-
 import { Menu, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -19,14 +18,16 @@ export function SidebarHeader() {
       </div>
       
       <div className="flex flex-col items-center gap-2 w-full">
-        {/* User Profile */}
-        <div className="flex flex-col items-center mb-2 group-data-[state=collapsed]:hidden">
-          <Avatar className="w-16 h-16 mb-2">
+        {/* User Profile - Now Horizontal */}
+        <div className="flex items-center gap-4 w-full mb-2 group-data-[state=collapsed]:hidden">
+          <Avatar className="w-12 h-12">
             <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
             <AvatarFallback>ZS</AvatarFallback>
           </Avatar>
-          <span className="text-sm font-medium">张同学</span>
-          <span className="text-xs text-gray-500">申请进度：3/5</span>
+          <div className="flex flex-col">
+            <span className="text-sm font-medium">张同学</span>
+            <span className="text-xs text-gray-500">申请进度：3/5</span>
+          </div>
         </div>
 
         {/* Open Sidebar Button */}
