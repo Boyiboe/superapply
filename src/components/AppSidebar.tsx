@@ -51,19 +51,19 @@ const mainMenuItems = [
 
 const recentChats = {
   today: [
-    { title: "删除项目操作指南", url: "/chat/1" },
-    { title: "超级网申Logo设计方案", url: "/chat/2" },
+    { title: "温胜能申请递交", url: "/chat/1" },
+    { title: "张明轩申请递交", url: "/chat/2" },
   ],
   week: [
-    { title: "李陆春学位证书及毕业证书中英文对照", url: "/chat/3" },
-    { title: "恳请调整还款安排以缓解经营压力", url: "/chat/4" },
-    { title: "英国大学网申自动化开发时间", url: "/chat/5" },
+    { title: "李陆春申请递交", url: "/chat/3" },
+    { title: "王晓梅申请递交", url: "/chat/4" },
+    { title: "刘建国申请递交", url: "/chat/5" },
   ],
   month: [
-    { title: "艾臻教育科技AI智能服务转型方案", url: "/chat/6" },
-    { title: "爱尔兰教育专场活动开场白", url: "/chat/7" },
-    { title: "留学B2B机构客户线索工作流优化", url: "/chat/8" },
-    { title: "格拉斯哥网申开发工时评估", url: "/chat/9" },
+    { title: "陈思远申请递交", url: "/chat/6" },
+    { title: "郑慧琳申请递交", url: "/chat/7" },
+    { title: "黄志强申请递交", url: "/chat/8" },
+    { title: "吴佳妮申请递交", url: "/chat/9" },
   ],
 };
 
