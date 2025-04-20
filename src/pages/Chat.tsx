@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, Bot, UserRound } from 'lucide-react';
+import { MessageSquare, Bot } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import ChatSection from '@/components/ChatSection';
 
 interface Message {
@@ -181,7 +182,7 @@ const Chat = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
-      {/* Header - Updated to be fully left-aligned */}
+      {/* Header */}
       <div className="p-4 fixed top-0 left-0 right-0 z-10 bg-white/80 backdrop-blur-sm">
         <div className="max-w-full px-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
@@ -196,7 +197,7 @@ const Chat = () => {
         </div>
       </div>
 
-      {/* Chat Messages - Adjusted for header positioning */}
+      {/* Chat Messages */}
       <div className="max-w-4xl mx-auto px-4 py-4 mb-20 pt-20">
         <div className="space-y-6">
           {messages.map(message => 
@@ -209,7 +210,15 @@ const Chat = () => {
             ) : message.content === 'analysis' ? (
               <div key={message.id}>{renderAssistantResponse()}</div>
             ) : (
-              <div key={message.id} className="text-left">
+              <div key={message.id} className="text-left flex items-start gap-2">
+                <Avatar className="w-8 h-8">
+                  <AvatarImage src="/logo.png" alt="SuperApply Logo" />
+                  <AvatarFallback 
+                    className="w-full h-full bg-white flex items-center justify-center"
+                  >
+                    <img src="/logo.png" alt="SuperApply Logo" className="w-full h-full object-contain" />
+                  </AvatarFallback>
+                </Avatar>
                 <div className="inline-block max-w-[80%] px-6 py-4 rounded-2xl bg-white text-gray-800 shadow-sm">
                   {message.content}
                 </div>
@@ -219,7 +228,7 @@ const Chat = () => {
         </div>
       </div>
 
-      {/* Input Form - Adjusted for header positioning */}
+      {/* Input Form */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
         <form onSubmit={(e) => {
           e.preventDefault();

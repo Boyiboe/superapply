@@ -1,7 +1,8 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Bot, Sparkles, UserRound } from 'lucide-react';
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ArrowRight, Bot, Sparkles } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const Index = () => {
   const [question, setQuestion] = useState('');
@@ -55,10 +56,11 @@ const Index = () => {
         {/* Avatar Section */}
         <div className="mb-12">
           <Avatar className="w-32 h-32 mx-auto mb-4">
+            <AvatarImage src="/logo.png" alt="SuperApply Logo" />
             <AvatarFallback 
-              className="w-full h-full bg-gradient-to-br from-[#60A5FA] to-[#BFDBFE] flex items-center justify-center text-white"
+              className="w-full h-full bg-white flex items-center justify-center"
             >
-              <UserRound className="w-16 h-16 animate-pulse" />
+              <img src="/logo.png" alt="SuperApply Logo" className="w-full h-full object-contain" />
             </AvatarFallback>
           </Avatar>
         </div>
