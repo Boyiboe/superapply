@@ -26,7 +26,6 @@ export function SidebarHeader() {
           </Avatar>
           <div className="flex flex-col">
             <span className="text-sm font-medium">张同学</span>
-            <span className="text-xs text-gray-500">申请进度：3/5</span>
           </div>
         </div>
 
@@ -44,7 +43,7 @@ export function SidebarHeader() {
           </SidebarTrigger>
         </SidebarMenuButton>
         
-        {/* New Application Button */}
+        {/* New Application Button - Updated Style */}
         <SidebarMenuButton 
           key="/new"
           asChild
@@ -54,10 +53,10 @@ export function SidebarHeader() {
           <Link 
             to="/new"
             className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-              bg-blue-500 hover:bg-blue-600 text-white w-full max-w-[200px] h-[42px] group-data-[state=collapsed]:h-[42px] group-data-[state=collapsed]:w-[42px]"
+              bg-blue-600 hover:bg-blue-700 text-white w-full h-[42px]"
           >
             <Plus className="w-6 h-6 text-white" />
-            <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
+            <span>开启新申请</span>
           </Link>
         </SidebarMenuButton>
 
@@ -73,4 +72,3 @@ export function SidebarHeader() {
     </Header>
   );
 }
-
