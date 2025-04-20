@@ -59,7 +59,7 @@ export function SidebarHeader() {
           tooltip="查看学生详情"
           className="hidden group-data-[state=expanded]:flex w-full"
         >
-          <Link to="/profile" className="flex items-center gap-4 w-full">
+          <Link to="/" className="flex items-center gap-4 w-full">
             <Avatar className="w-12 h-12">
               <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
               <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-lg">SA</AvatarFallback>
@@ -77,10 +77,10 @@ export function SidebarHeader() {
           tooltip="查看学生详情"
           className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center"
         >
-          <Link to="/profile" className="flex justify-center">
+          <Link to="/" className="flex justify-center">
             <Avatar className="w-10 h-10">
               <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
-              <AvatarFallback className="bg-[#D3E4FD] text-gray-700 font-bold text-base">SA</AvatarFallback>
+              <AvatarFallback className="!bg-[#D3E4FD] !text-gray-700 font-bold text-base flex items-center justify-center">SA</AvatarFallback>
             </Avatar>
           </Link>
         </SidebarMenuButton>
