@@ -1,4 +1,3 @@
-
 import { Menu, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -26,6 +25,7 @@ export function SidebarHeader() {
           </Avatar>
           <div className="flex flex-col">
             <span className="text-sm font-medium">张同学</span>
+            <span className="text-xs text-gray-500">申请进度：3/5</span>
           </div>
         </div>
 
