@@ -47,7 +47,7 @@ export function SidebarHeader() {
           </div>
         </div>
         
-        {/* Avatar for collapsed state */}
+        {/* Avatar for collapsed state - centered */}
         <div className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center mb-2">
           <Avatar className="w-10 h-10">
             <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
