@@ -1,3 +1,4 @@
+
 import { Search, Plus, User, Menu } from "lucide-react";
 import {
   Sidebar,
@@ -178,13 +179,19 @@ export function AppSidebar() {
 
           {/* Recent Students Section - Updated styling */}
           <SidebarGroup className="mt-6">
-            <SidebarMenuButton asChild tooltip="我递交的学生">
-              <div className={`flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-            bg-blue-400 text-white w-full mx-3`}>
-                <User className="w-6 h-6 text-white" />
-                <span className="text-center w-full">我递交的学生</span>
-              </div>
-            </SidebarMenuButton>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="我递交的学生">
+                <Link 
+                  to="/students" 
+                  className={`flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+                    bg-blue-400 hover:bg-blue-500 text-white w-full mx-3`}
+                >
+                  <User className="w-6 h-6 text-white" />
+                  <span className="text-center w-full">我递交的学生</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            
             <SidebarGroupContent>
               <SidebarMenu>
                 {recentStudents.map((student, index) => (
