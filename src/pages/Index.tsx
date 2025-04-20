@@ -6,7 +6,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 const Index = () => {
   const [question, setQuestion] = useState('');
   const [placeholderText, setPlaceholderText] = useState('');
-  const fullText = "问一问想要了解的留学规划问题吧...";
+  const fullText = "快速上传学生材料，无需填写一键生成申请表";
   const navigate = useNavigate();
 
   useEffect(() => {
