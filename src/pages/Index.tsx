@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Bot, Sparkles, FileUp, ALargeSmall } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import FileUploadZone from '@/components/FileUploadZone';
 
 const Index = () => {
   const [question, setQuestion] = useState('');
@@ -78,22 +79,10 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Input Form with enhanced animations */}
+        {/* Input Form with enhanced animations and file upload */}
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mb-8 group">
           <div className="relative w-[898px] mx-auto">
-            <input
-              type="text"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              placeholder={placeholderText}
-              className="w-full px-6 py-4 text-[15px] rounded-2xl border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 pr-12 text-gray-700 placeholder:after:content-['|'] placeholder:after:ml-0.5 placeholder:after:animate-[blink_1s_infinite]"
-            />
-            <button
-              type="submit"
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all group-hover:translate-x-1"
-            >
-              <ArrowRight className="w-5 h-5" />
-            </button>
+            <FileUploadZone />
           </div>
         </form>
 
