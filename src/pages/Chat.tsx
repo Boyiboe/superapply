@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, Bot, ALargeSmall, Paperclip } from 'lucide-react';
+import { MessageSquare, Bot, ALargeSmall, Paperclip, File, X } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import ChatSection from '@/components/ChatSection';
@@ -393,14 +393,6 @@ const Chat = () => {
           onDragEnter={handleDrag}
           className="max-w-4xl mx-auto"
         >
-          {uploadedFiles.length > 0 && (
-            <div className="mb-4">
-              <ChatFileCard 
-                files={uploadedFiles}
-                onRemove={handleRemoveFile}
-              />
-            </div>
-          )}
           <div 
             className={`relative ${dragActive ? 'ring-2 ring-purple-400' : ''}`}
             onDragEnter={handleDrag}
@@ -408,6 +400,37 @@ const Chat = () => {
             onDragOver={handleDrag}
             onDrop={handleDrop}
           >
+            {/* Move file display inside input area */}
+            <div className="space-y-2 mb-2">
+              {uploadedFiles.map((file, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between bg-gray-50 rounded-lg p-2 border border-gray-100"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center">
+                      <File className="h-4 w-4 text-red-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {file.name}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {(file.size / 1024).toFixed(1)} KB
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveFile(file)}
+                    className="p-1 hover:bg-gray-200 rounded-full"
+                  >
+                    <X className="h-4 w-4 text-gray-400" />
+                  </button>
+                </div>
+              ))}
+            </div>
+
             <input
               type="text"
               value={input}
@@ -424,7 +447,7 @@ const Chat = () => {
                   onChange={(e) => {
                     const file = e.target.files?.[0];
                     if (file) {
-                      setSelectedFile(file);
+                      setUploadedFiles(prev => [...prev, file]);
                       toast({
                         title: "文件已选择",
                         description: file.name
