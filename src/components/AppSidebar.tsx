@@ -14,8 +14,15 @@ import {
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 
-// Main menu items with updated styling
+// Main menu items with updated order
 const mainMenuItems = [
+  {
+    title: "打开边栏",
+    url: "#", 
+    icon: Menu,
+    primary: true,
+    action: "sidebar"
+  },
   {
     title: "开启新申请",
     url: "/new",
@@ -23,11 +30,10 @@ const mainMenuItems = [
     primary: true
   },
   {
-    title: "打开边栏",
-    url: "#", 
-    icon: Menu,
-    primary: true,  // Changed to primary: true
-    action: "sidebar"
+    title: "搜索学生",
+    url: "/search",
+    icon: Search,
+    primary: true
   }
 ];
 
