@@ -1,6 +1,7 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, Bot } from 'lucide-react';
+import { MessageSquare, Bot, UserRound } from 'lucide-react';
 import ChatSection from '@/components/ChatSection';
 
 interface Message {
