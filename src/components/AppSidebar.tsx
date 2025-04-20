@@ -1,4 +1,3 @@
-
 import { Search, Plus, User, Menu, CircleCheck } from "lucide-react";
 import {
   Sidebar,
@@ -23,7 +22,7 @@ const mainMenuItems = [
   {
     title: "打开边栏",
     url: "#", 
-    icon: Menu,
+    icon: CircleCheck,
     primary: true,
     action: "sidebar"
   },
@@ -124,52 +123,62 @@ export function AppSidebar() {
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
         <div className="flex flex-col items-center gap-2 w-full"> 
-          {mainMenuItems.map((item) => (
-            <SidebarMenuButton 
-              key={item.url}
-              asChild
-              tooltip={item.title}
-              className="w-full max-w-[200px]"
+          <SidebarMenuButton 
+            tooltip="打开边栏"
+            className="w-full max-w-[200px]"
+          >
+            <SidebarTrigger className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+              bg-blue-400 hover:bg-blue-500 text-white w-full">
+              <CircleCheck className="w-6 h-6 text-white" />
+              <span className="group-data-[state=collapsed]:hidden">打开边栏</span>
+            </SidebarTrigger>
+          </SidebarMenuButton>
+          
+          {/* New Application Button */}
+          <SidebarMenuButton 
+            key="/new"
+            asChild
+            tooltip="开启新申请"
+            className="w-full max-w-[200px]"
+          >
+            <Link 
+              to="/new"
+              className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+                bg-blue-400 hover:bg-blue-500 text-white w-full"
             >
-              {item.action === "sidebar" ? (
-                <SidebarTrigger className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-                  bg-blue-400 hover:bg-blue-500 text-white w-full">
-                  <item.icon className="w-6 h-6 text-white" />
-                  <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
-                </SidebarTrigger>
-              ) : item.progress ? (
-                <Link 
-                  to={item.url}
-                  className="flex flex-col items-center p-4 rounded-lg text-base hover:bg-gray-100 w-full h-48"
-                >
-                  <div className="flex items-center gap-3 w-full mb-4">
-                    <item.icon className="w-10 h-10 text-blue-500" />
-                    <div className="group-data-[state=collapsed]:hidden flex flex-col flex-1">
-                      <span className="font-medium text-gray-900 text-xl">{item.progress.name}</span>
-                      <span className="text-sm font-medium text-gray-500 mt-1">
-                        申请进度：{item.progress.current}/{item.progress.total}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="group-data-[state=collapsed]:hidden w-full">
-                    <Progress 
-                      value={(item.progress.current / item.progress.total) * 100} 
-                      className="h-6 w-full"
-                    />
-                  </div>
-                </Link>
-              ) : (
-                <Link 
-                  to={item.url}
-                  className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-                    bg-blue-400 hover:bg-blue-500 text-white w-full"
-                >
-                  <item.icon className="w-6 h-6 text-white" />
-                  <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
-                </Link>
-              )}
-            </SidebarMenuButton>
-          ))}
+              <Plus className="w-6 h-6 text-white" />
+              <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
+            </Link>
+          </SidebarMenuButton>
+          
+          {/* Current Student Button */}
+          <SidebarMenuButton 
+            key="/current-student"
+            asChild
+            tooltip="当前学生"
+            className="w-full max-w-[200px]"
+          >
+            <Link 
+              to="/current-student"
+              className="flex flex-col items-center p-4 rounded-lg text-base hover:bg-gray-100 w-full h-48"
+            >
+              <div className="flex items-center gap-3 w-full mb-4">
+                <CircleCheck className="w-8 h-8 text-blue-500" />
+                <div className="group-data-[state=collapsed]:hidden flex flex-col flex-1">
+                  <span className="font-medium text-gray-900 text-lg">张同学</span>
+                  <span className="text-sm font-medium text-gray-500 mt-1">
+                    申请进度：3/5
+                  </span>
+                </div>
+              </div>
+              <div className="group-data-[state=collapsed]:hidden w-full">
+                <Progress 
+                  value={(3 / 5) * 100} 
+                  className="h-6 w-full"
+                />
+              </div>
+            </Link>
+          </SidebarMenuButton>
 
           {/* Search Box */}
           <div className="w-full px-2 group-data-[state=collapsed]:hidden">
