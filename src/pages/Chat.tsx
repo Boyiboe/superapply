@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import ChatSection from '@/components/ChatSection';
 import FileAnalysisSection from '@/components/FileAnalysisSection';
 import { analyzeFile, simulateProgressUpdates, AnalysisProgressUpdate } from '@/services/fileAnalysisService';
+import FileDropOverlay from '@/components/FileDropOverlay';
 
 interface Message {
   id: number;
@@ -124,14 +125,18 @@ const Chat = () => {
         'text/plain',
         'application/vnd.ms-excel',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'application/zip'
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'image/jpeg',
+        'image/png',
+        'text/csv'
       ];
 
       if (!allowedTypes.includes(file.type)) {
         toast({
           variant: "destructive",
           title: "文件类型不支持",
-          description: "请上传ZIP、PDF、DOCX、TXT、XLSX或XLS文件"
+          description: "请上传支持的文件格式"
         });
         return;
       }
@@ -335,7 +340,15 @@ const Chat = () => {
       </div>
 
       {/* Chat Messages */}
-      <div className="max-w-4xl mx-auto px-4 py-4 mb-20 pt-20">
+      <div 
+        className="max-w-4xl mx-auto px-4 py-4 mb-20 pt-20 relative"
+        onDragEnter={handleDrag}
+        onDragLeave={handleDrag}
+        onDragOver={handleDrag}
+        onDrop={handleDrop}
+      >
+        <FileDropOverlay isActive={dragActive} />
+        
         <div className="space-y-6">
           {fileAnalysis && (
             <FileAnalysisSection

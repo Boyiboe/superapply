@@ -29,7 +29,7 @@ const FileAnalysisSection: React.FC<FileAnalysisSectionProps> = ({
   }, [isAnalyzing, analysisProgress]);
   
   return (
-    <div className="mb-8 bg-white rounded-lg p-4 shadow-sm">
+    <div className="mb-8 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-purple-100">
       <div className="flex items-center mb-4">
         {isAnalyzing ? (
           <Loader className="w-5 h-5 text-purple-600 animate-spin mr-2" />
@@ -42,28 +42,28 @@ const FileAnalysisSection: React.FC<FileAnalysisSectionProps> = ({
       </div>
       
       <div className="flex items-start space-x-3 mb-3">
-        <div className="flex-shrink-0 p-2 bg-purple-100 rounded-lg">
+        <div className="flex-shrink-0 p-2.5 bg-purple-100 rounded-xl">
           <File className="w-6 h-6 text-purple-600" />
         </div>
         <div className="flex-1">
-          <p className="font-medium">{file.name}</p>
+          <p className="font-medium text-gray-800">{file.name}</p>
           <p className="text-sm text-gray-500">{(file.size / 1024).toFixed(2)} KB · {file.type}</p>
         </div>
       </div>
       
       {showProgress && (
-        <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+        <div className="w-full bg-gray-100 rounded-full h-2.5 mb-4 overflow-hidden">
           <div 
-            className="bg-purple-600 h-2.5 rounded-full transition-all duration-500 ease-out" 
+            className="bg-purple-600 h-2.5 rounded-full transition-all duration-500 ease-out"
             style={{ width: `${analysisProgress}%` }}
           ></div>
         </div>
       )}
       
       {analysisResult && !isAnalyzing && (
-        <div className="mt-4 bg-purple-50 p-3 rounded-lg">
-          <h4 className="font-medium mb-2">解析结果：</h4>
-          <div className="text-sm whitespace-pre-wrap">{analysisResult}</div>
+        <div className="mt-4 bg-purple-50 p-4 rounded-xl">
+          <h4 className="font-medium mb-2 text-purple-900">解析结果：</h4>
+          <div className="text-sm text-gray-700 whitespace-pre-wrap">{analysisResult}</div>
         </div>
       )}
     </div>
