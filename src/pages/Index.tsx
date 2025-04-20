@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const Index = () => {
   const [question, setQuestion] = useState('');
@@ -18,9 +19,11 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
       {/* Header */}
       <div className="p-4 flex items-center justify-between">
-        <div className="text-2xl font-bold text-blue-600">
-          <span className="text-blue-600">Ed</span>
-          <span className="text-purple-600">mate</span>
+        <div 
+          className="text-2xl font-bold bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] bg-clip-text text-transparent"
+        >
+          <span>Ed</span>
+          <span>mate</span>
         </div>
       </div>
 
@@ -28,13 +31,13 @@ const Index = () => {
       <div className="max-w-4xl mx-auto px-4 py-12 text-center">
         {/* Avatar Section */}
         <div className="mb-12">
-          <div className="w-48 h-48 mx-auto mb-4">
-            <img
-              src="/placeholder.svg"
-              alt="Professional Woman"
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <Avatar className="w-48 h-48 mx-auto mb-4">
+            <AvatarFallback 
+              className="w-full h-full bg-gradient-to-br from-[#7E69AB] to-[#D6BCFA] flex items-center justify-center text-white text-2xl font-bold"
+            >
+              Eva
+            </AvatarFallback>
+          </Avatar>
         </div>
 
         {/* Title Section */}
@@ -42,8 +45,8 @@ const Index = () => {
         <p className="text-gray-600 mb-12">一站式轻松规划完美留学</p>
 
         {/* Input Form */}
-        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-8">
-          <div className="relative">
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mb-8">
+          <div className="relative w-[898px] mx-auto">
             <input
               type="text"
               value={question}
@@ -60,7 +63,7 @@ const Index = () => {
           </div>
         </form>
 
-        {/* Question Tags - Moved to bottom */}
+        {/* Question Tags */}
         <div className="flex flex-wrap justify-center gap-2 mt-8">
           <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
             真的免费做申请吗?
@@ -75,4 +78,3 @@ const Index = () => {
 };
 
 export default Index;
-
