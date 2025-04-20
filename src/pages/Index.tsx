@@ -31,7 +31,7 @@ const Index = () => {
       <div className="max-w-4xl mx-auto px-4 py-12 text-center">
         {/* Avatar Section */}
         <div className="mb-12">
-          <Avatar className="w-48 h-48 mx-auto mb-4">
+          <Avatar className="w-32 h-32 mx-auto mb-4">
             <AvatarFallback 
               className="w-full h-full bg-gradient-to-br from-[#7E69AB] to-[#D6BCFA] flex items-center justify-center text-white text-2xl font-bold"
             >
@@ -66,10 +66,22 @@ const Index = () => {
         {/* Question Tags */}
         <div className="flex flex-wrap justify-center gap-2 mt-8">
           <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
-            真的免费做申请吗?
+            真的免费做申请吗？
           </span>
           <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
-            需要什么条件呢?
+            靠什么盈利呢？
+          </span>
+          <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
+            免费服务可信吗？
+          </span>
+          <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
+            你们的文书润色指导收不收费，专业吗？
+          </span>
+          <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
+            我是四川大学学化学的学生，均分85份，想要申请英国UCL大学有希望吗
+          </span>
+          <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
+            你们还有哪些其他的优势？
           </span>
         </div>
       </div>
