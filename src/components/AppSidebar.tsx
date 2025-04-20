@@ -1,4 +1,3 @@
-
 import { Search, Plus, User, Menu } from "lucide-react";
 import {
   Sidebar,
@@ -85,7 +84,9 @@ export function AppSidebar() {
           <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">SA</span>
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
-        <SidebarTrigger className="ml-auto h-8 w-8" />
+        <SidebarTrigger className="ml-auto h-8 w-8 group-data-[state=collapsed]:h-10 group-data-[state=collapsed]:w-10 group-data-[state=collapsed]:bg-blue-50 group-data-[state=collapsed]:hover:bg-blue-100 group-data-[state=collapsed]:rounded-lg">
+          <Menu className="w-6 h-6 text-gray-600" />
+        </SidebarTrigger>
       </SidebarHeader>
 
       <SidebarContent>
