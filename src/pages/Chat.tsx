@@ -61,12 +61,12 @@ const Chat = () => {
         <ChatSection
           title="正在理解用户需求，拆分任务"
           content={
-            <div className="space-y-2 flex items-start">
-              <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+            <div className="space-y-2 flex items-center">
+              <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0 mr-4">
                 <span className="text-white text-xs">AI</span>
               </div>
               <div className="flex-1">
-                <p className="text-gray-600 mb-4">留学管家</p>
+                <p className="text-gray-600 mb-4 font-bold">留学管家</p>
                 <div className="flex gap-2 items-start">
                   <div className="flex-1">
                     <p className="text-gray-600">
