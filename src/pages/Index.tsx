@@ -120,7 +120,7 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 py-12 text-center relative">
+      <div className="max-w-4xl mx-auto px-4 py-12 text-center relative">
         <FileDropOverlay isActive={dragActive} />
         
         <div className="mb-12">
@@ -136,35 +136,33 @@ const Index = () => {
         <h2 className="text-2xl font-bold mb-2 text-blue-800">Hi，我是小艾，您的超级智能网申管家</h2>
         <p className="text-blue-600 mb-8">一站式轻松生成申请表，一键完成网申</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-6 mb-8">
-          <div className="space-y-4">
-            <form onSubmit={handleSubmit} className="w-full group">
-              <div className="relative w-full">
-                <FileUploadZone />
-              </div>
-            </form>
-
-            <div className="flex justify-center">
-              <div className="flex items-center gap-2 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] p-4 rounded-xl text-left shadow-sm relative overflow-hidden w-full">
-                <FileUp className="w-5 h-5 text-white flex-shrink-0" />
-                <p className="text-white text-sm">
-                  拖动您的学生材料快速上传，支持ZIP压缩包，PDF，DOCX，txt、xlsx、xls等文件
-                </p>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_2s_infinite] -skew-x-12" />
-              </div>
-            </div>
+        {/* 显示上传的文件 */}
+        {uploadedFiles.length > 0 && (
+          <div className="mb-8">
+            <UploadedFileDisplay 
+              files={uploadedFiles}
+              onRemove={handleRemoveFile}
+            />
           </div>
+        )}
 
-          {uploadedFiles.length > 0 && (
-            <div>
-              <UploadedFileDisplay 
-                files={uploadedFiles}
-                onRemove={handleRemoveFile}
-              />
-            </div>
-          )}
+        <div className="flex justify-center mb-4">
+          <div className="flex items-center gap-2 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] p-4 rounded-xl text-left shadow-sm relative overflow-hidden">
+            <FileUp className="w-5 h-5 text-white flex-shrink-0" />
+            <p className="text-white text-sm">
+              拖动您的学生材料快速上传，支持ZIP压缩包，PDF，DOCX，txt、xlsx、 xls等文件
+            </p>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_2s_infinite] -skew-x-12" />
+          </div>
         </div>
 
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mb-8 group">
+          <div className="relative w-[898px] mx-auto">
+            <FileUploadZone />
+          </div>
+        </form>
+
+        {/* 保持其他部分不变 */}
         <div className="flex flex-wrap justify-center gap-2 mt-8">
           <div className="w-full flex justify-center mb-2">
             <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-xl text-sm">
