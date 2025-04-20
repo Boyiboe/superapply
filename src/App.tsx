@@ -28,6 +28,11 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/chat" element={<Chat />} />
+                <Route path="/new" element={<Index />} />
+                <Route path="/plus" element={<NotFound />} />
+                <Route path="/explore" element={<NotFound />} />
+                <Route path="/history" element={<NotFound />} />
+                <Route path="/all" element={<NotFound />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
