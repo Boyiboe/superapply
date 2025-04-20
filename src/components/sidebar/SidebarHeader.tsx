@@ -1,3 +1,4 @@
+
 import { Menu, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -6,7 +7,6 @@ import {
   SidebarTrigger,
   SidebarInput
 } from "@/components/ui/sidebar";
-import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function SidebarHeader() {
@@ -61,17 +61,6 @@ export function SidebarHeader() {
           </Link>
         </SidebarMenuButton>
 
-        {/* Progress bar - only show when expanded */}
-        <div className="group-data-[state=collapsed]:hidden w-full px-4">
-          <span className="text-sm font-medium text-gray-500 block mb-2">
-            申请进度：3/5
-          </span>
-          <Progress 
-            value={(3 / 5) * 100} 
-            className="h-2 w-full"
-          />
-        </div>
-
         {/* Search Box */}
         <div className="w-full px-2 group-data-[state=collapsed]:hidden mt-2">
           <SidebarInput 
@@ -84,3 +73,4 @@ export function SidebarHeader() {
     </Header>
   );
 }
+
