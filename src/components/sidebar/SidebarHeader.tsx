@@ -24,9 +24,9 @@ export function SidebarHeader() {
       
       <div className="flex flex-col items-center gap-2 w-full">
         <div className="flex items-center gap-4 w-full mb-2 group-data-[state=collapsed]:hidden">
-          <Avatar className="w-12 h-12">
+          <Avatar className="w-12 h-12 bg-[#33C3F0]">
             <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
-            <AvatarFallback>ZS</AvatarFallback>
+            <AvatarFallback className="bg-[#33C3F0] text-white">SA</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
             <span className="text-sm font-medium">张同学</span>
