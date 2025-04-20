@@ -82,7 +82,11 @@ const Index = () => {
         </form>
 
         <div className="flex flex-wrap justify-center gap-2 mt-8">
-        <div className="w-full text-center text-blue-800 mb-2">星号文件为必传文件</div>
+        <div className="w-full flex justify-center mb-2">
+          <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-xl text-sm">
+            星号文件为必传文件
+          </div>
+        </div>
         {[
           "*个人陈述（PS）",
           "*在读证明",
