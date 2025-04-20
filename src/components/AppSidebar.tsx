@@ -128,7 +128,7 @@ export function AppSidebar() {
             className="w-full max-w-[200px]"
           >
             <SidebarTrigger className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-              bg-blue-400 hover:bg-blue-500 text-white w-full">
+              bg-blue-400 hover:bg-blue-500 text-white w-full max-w-[200px] h-[42px]">
               <CircleCheck className="w-6 h-6 text-white" />
               <span className="group-data-[state=collapsed]:hidden">打开边栏</span>
             </SidebarTrigger>
