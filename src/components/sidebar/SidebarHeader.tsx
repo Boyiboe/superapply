@@ -1,5 +1,5 @@
 
-import { ChevronLeft, Plus } from "lucide-react";
+import { ChevronLeft, Plus, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   SidebarHeader as Header,
@@ -11,55 +11,51 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function SidebarHeader() {
   return (
-    <Header className="flex flex-col items-center gap-2 p-4 relative">
+    <Header className="flex flex-col items-center gap-2 p-4">
       {/* Logo Section */}
       <div className="flex w-full mb-4 items-center justify-center">
         <div className="text-2xl font-bold text-blue-500 text-center">
           <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">
             SA
           </span>
-          <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
+          <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">
+            SuperApply
+          </span>
         </div>
       </div>
 
-      {/* Toggle Button - Only visible when collapsed */}
-      <div className="hidden group-data-[state=collapsed]:block mb-2 absolute top-1/2 left-4 transform -translate-y-1/2">
-        <SidebarTrigger className="p-2 rounded-lg hover:bg-gray-100">
-          <ChevronLeft className="w-5 h-5" />
-        </SidebarTrigger>
-      </div>
+      <div className="flex flex-col items-center gap-3 w-full">
+        {/* Toggle Sidebar Button */}
+        <SidebarMenuButton 
+          asChild
+          tooltip="打开边栏"
+          className="w-full max-w-[200px]"
+        >
+          <SidebarTrigger className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+            bg-gray-100 hover:bg-gray-200 text-gray-700 w-full h-[42px]">
+            <ChevronLeft className="w-6 h-6" />
+            <span className="group-data-[state=collapsed]:hidden">打开边栏</span>
+          </SidebarTrigger>
+        </SidebarMenuButton>
 
-      {/* Toggle Button - Only visible when expanded */}
-      <div className="group-data-[state=collapsed]:hidden absolute right-4 top-4">
-        <SidebarTrigger className="p-1 rounded-lg hover:bg-gray-100">
-          <ChevronLeft className="w-5 h-5" />
-        </SidebarTrigger>
-      </div>
-      
-      <div className="flex flex-col items-center gap-2 w-full">
-        {/* Avatar section - only show when expanded */}
-        <div className="flex items-center gap-4 w-full mb-2 group-data-[state=collapsed]:hidden">
-          <Avatar className="w-12 h-12">
-            <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
-            <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-lg">SA</AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col">
-            <span className="text-sm font-medium">张同学</span>
-            <span className="text-xs text-gray-500">申请进度：3/5</span>
-          </div>
-        </div>
-        
-        {/* Avatar for collapsed state - centered */}
-        <div className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center items-center mb-2">
-          <Avatar className="w-10 h-10">
-            <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
-            <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-base flex items-center justify-center">SA</AvatarFallback>
-          </Avatar>
-        </div>
+        {/* Current Student Button */}
+        <SidebarMenuButton 
+          asChild
+          tooltip="当前学生"
+          className="w-full max-w-[200px]"
+        >
+          <Link 
+            to="/current-student"
+            className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+              bg-gray-100 hover:bg-gray-200 text-gray-700 w-full h-[42px]"
+          >
+            <User className="w-6 h-6" />
+            <span className="group-data-[state=collapsed]:hidden">当前学生</span>
+          </Link>
+        </SidebarMenuButton>
 
         {/* New Application Button */}
         <SidebarMenuButton 
-          key="/new"
           asChild
           tooltip="开启新申请"
           className="w-full max-w-[200px]"
@@ -74,6 +70,26 @@ export function SidebarHeader() {
           </Link>
         </SidebarMenuButton>
 
+        {/* Avatar section - only show when expanded */}
+        <div className="hidden group-data-[state=expanded]:flex items-center gap-4 w-full mt-2">
+          <Avatar className="w-12 h-12">
+            <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
+            <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-lg">SA</AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col">
+            <span className="text-sm font-medium">张同学</span>
+            <span className="text-xs text-gray-500">申请进度：3/5</span>
+          </div>
+        </div>
+        
+        {/* Avatar for collapsed state - centered */}
+        <div className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center items-center">
+          <Avatar className="w-10 h-10">
+            <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
+            <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-base flex items-center justify-center">SA</AvatarFallback>
+          </Avatar>
+        </div>
+
         {/* Search Box */}
         <div className="w-full px-2 group-data-[state=collapsed]:hidden mt-2">
           <SidebarInput 
@@ -86,4 +102,3 @@ export function SidebarHeader() {
     </Header>
   );
 }
-
