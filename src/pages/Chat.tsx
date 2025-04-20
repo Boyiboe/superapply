@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MessageSquare } from 'lucide-react';
@@ -60,27 +61,29 @@ const Chat = () => {
         <ChatSection
           title="正在理解用户需求，拆分任务"
           content={
-            <div className="space-y-2">
-              <p>留学管家</p>
-              <div className="flex gap-2 items-start mt-4">
-                <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0 mt-1">
-                  <span className="text-white text-xs">AI</span>
-                </div>
-                <div className="flex-1">
-                  <p className="text-gray-600">
-                    用户问题是：我是浙江大学大四的学生，计算机专业计划明年去英国或者美国留学，可以申请到哪些学校？
-                  </p>
-                  <p className="text-gray-600 mt-4">
-                    接下来会由多个留学助手，从案例分析、院校评估、留学生活：
-                  </p>
-                  <ul className="list-disc pl-5 mt-2 space-y-2 text-gray-600">
-                    <li>需要进一步确认学习成绩（例如均分为80）以便与择校规划</li>
-                    <li>查询历年浙江大学的历年英国美国院校申请案例</li>
-                    <li>根据浙江大学计算机及相近的专业进行院校推荐</li>
-                    <li>查询推荐院校申请详细信息和材料准备需求</li>
-                    <li>根据需求推荐材料准备方案</li>
-                    <li>最后汇总申请注意事项，生成完整留学申请方案</li>
-                  </ul>
+            <div className="space-y-2 flex items-start">
+              <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0 mr-4 mt-1">
+                <span className="text-white text-xs">AI</span>
+              </div>
+              <div className="flex-1">
+                <p className="text-gray-600 mb-4">留学管家</p>
+                <div className="flex gap-2 items-start">
+                  <div className="flex-1">
+                    <p className="text-gray-600">
+                      用户问题是：我是浙江大学大四的学生，计算机专业计划明年去英国或者美国留学，可以申请到哪些学校？
+                    </p>
+                    <p className="text-gray-600 mt-4">
+                      接下来会由多个留学助手，从案例分析、院校评估、留学生活：
+                    </p>
+                    <ul className="list-disc pl-5 mt-2 space-y-2 text-gray-600">
+                      <li>需要进一步确认学习成绩（例如均分为80）以便与择校规划</li>
+                      <li>查询历年浙江大学的历年英国美国院校申请案例</li>
+                      <li>根据浙江大学计算机及相近的专业进行院校推荐</li>
+                      <li>查询推荐院校申请详细信息和材料准备需求</li>
+                      <li>根据需求推荐材料准备方案</li>
+                      <li>最后汇总申请注意事项，生成完整留学申请方案</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
