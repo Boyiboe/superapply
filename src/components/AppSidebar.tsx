@@ -1,3 +1,4 @@
+
 import { Search, Plus, User } from "lucide-react";
 import {
   Sidebar,
@@ -79,10 +80,15 @@ export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarHeader className="flex items-center gap-2 p-4">
+        <img 
+          src="/logo.png" 
+          alt="Logo" 
+          className="h-8 w-8"
+        />
         <span className="text-2xl font-bold text-blue-500 group-data-[state=collapsed]:hidden">
           SuperApply
         </span>
-        <SidebarTrigger className="h-8 w-8" />
+        <SidebarTrigger className="ml-auto h-8 w-8" />
       </SidebarHeader>
 
       <SidebarContent>
@@ -104,7 +110,7 @@ export function AppSidebar() {
                           : 'hover:bg-blue-50 text-gray-700'
                       }`}
                     >
-                      <item.icon className={`w-5 h-5 ${item.primary ? 'text-white' : 'text-gray-600'}`} />
+                      <item.icon className={`w-6 h-6 ${item.primary ? 'text-white' : 'text-gray-600'}`} />
                       <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
@@ -116,7 +122,7 @@ export function AppSidebar() {
 
         {/* Application History */}
         <SidebarGroup className="mt-6">
-          <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700">申请历史</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700 group-data-[state=collapsed]:hidden">申请历史</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {recentApplications.map((app, index) => (
@@ -124,16 +130,16 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link 
                       to={`/application/${index}`}
-                      className="flex flex-col w-full p-3 gap-1 hover:bg-blue-50 rounded-lg"
+                      className="flex flex-col w-full p-3 gap-1 hover:bg-blue-50 rounded-lg group-data-[state=collapsed]:p-2"
                     >
                       <div className="flex items-center justify-between w-full">
-                        <span className="font-medium text-gray-800">{app.university}</span>
+                        <span className="font-medium text-gray-800 group-data-[state=collapsed]:hidden">{app.university}</span>
                         <span className={`px-2 py-0.5 text-xs rounded-full ${getStatusClass(app.status)}`}>
                           {app.status}
                         </span>
                       </div>
-                      <span className="text-sm text-gray-600">{app.major}</span>
-                      <span className="text-xs text-gray-500">{app.time}</span>
+                      <span className="text-sm text-gray-600 group-data-[state=collapsed]:hidden">{app.major}</span>
+                      <span className="text-xs text-gray-500 group-data-[state=collapsed]:hidden">{app.time}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -151,7 +157,7 @@ export function AppSidebar() {
                 to="/profile" 
                 className="flex items-center gap-2 w-full p-3 hover:bg-blue-50 rounded-lg text-gray-700"
               >
-                <User className="w-5 h-5 text-gray-600" />
+                <User className="w-6 h-6 text-gray-600" />
                 <span className="group-data-[state=collapsed]:hidden">个人信息</span>
               </Link>
             </SidebarMenuButton>
