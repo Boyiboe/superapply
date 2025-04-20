@@ -1,5 +1,5 @@
 
-import { ChevronLeft, Plus, User } from "lucide-react";
+import { ChevronLeft, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   SidebarHeader as Header,
@@ -32,26 +32,10 @@ export function SidebarHeader() {
           className="w-full max-w-[200px]"
         >
           <SidebarTrigger className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-            bg-gray-100 hover:bg-gray-200 text-gray-700 w-full h-[42px]">
+            bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]">
             <ChevronLeft className="w-6 h-6" />
             <span className="group-data-[state=collapsed]:hidden">打开边栏</span>
           </SidebarTrigger>
-        </SidebarMenuButton>
-
-        {/* Current Student Button */}
-        <SidebarMenuButton 
-          asChild
-          tooltip="当前学生"
-          className="w-full max-w-[200px]"
-        >
-          <Link 
-            to="/current-student"
-            className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-              bg-gray-100 hover:bg-gray-200 text-gray-700 w-full h-[42px]"
-          >
-            <User className="w-6 h-6" />
-            <span className="group-data-[state=collapsed]:hidden">当前学生</span>
-          </Link>
         </SidebarMenuButton>
 
         {/* New Application Button */}
