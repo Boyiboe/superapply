@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Bot, Sparkles, ALargeSmall } from 'lucide-react';
+import { ArrowRight, Bot, Sparkles, FileUp, ALargeSmall } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const Index = () => {
@@ -70,9 +70,9 @@ const Index = () => {
         {/* Example Query Section */}
         <div className="flex justify-center mb-4">
           <div className="flex items-center gap-2 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] p-4 rounded-xl text-left shadow-sm relative overflow-hidden">
-            <Sparkles className="w-5 h-5 text-white flex-shrink-0" />
+            <FileUp className="w-5 h-5 text-white flex-shrink-0" />
             <p className="text-white text-sm">
-              我是浙江大学计算机专业，均分85分，想要申请英美大学...求推荐！
+              拖动您的学生材料快速上传，支持ZIP压缩包，PDF，DOCX，txt、xlsx、 xls等文件
             </p>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_2s_infinite] -skew-x-12" />
           </div>
