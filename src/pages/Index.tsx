@@ -73,7 +73,7 @@ const Index = () => {
           <div className="flex items-center gap-2 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] p-4 rounded-xl text-left shadow-sm relative overflow-hidden">
             <FileUp className="w-5 h-5 text-white flex-shrink-0" />
             <p className="text-white text-sm">
-              拖动您的学生材料快速上传，支持ZIP压缩包，PDF，DOCX，txt、xlsx、 xls等文件
+              以下是材料模版，可下载使用，您上传的材料需要包含如下标星号的文件
             </p>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_2s_infinite] -skew-x-12" />
           </div>
@@ -89,12 +89,12 @@ const Index = () => {
         {/* Question Tags */}
         <div className="flex flex-wrap justify-center gap-2 mt-8">
           {[
-            "真的免费做申请吗？",
-            "靠什么盈利呢？",
-            "免费服务可信吗？",
-            "你们的文书润色指导收不收费，专业吗？",
-            "我是四川大学学化学的学生，均分85份，想要申请英国UCL大学有希望吗",
-            "你们还有哪些其他的优势？"
+            "*个人陈述（PS）模版",
+            "*在读证明模版",
+            "*学位证书/毕业证书及翻译件模版",
+            "*成绩单及翻译件模版",
+            "*推荐信模版",
+            "*英语水平证书（IELTS/TOEFL或其他证书）"
           ].map((tag, index) => (
             <span 
               key={index} 
