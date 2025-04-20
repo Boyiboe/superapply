@@ -7,6 +7,7 @@ import ChatSection from '@/components/ChatSection';
 import FileAnalysisSection from '@/components/FileAnalysisSection';
 import { analyzeFile, simulateProgressUpdates, AnalysisProgressUpdate } from '@/services/fileAnalysisService';
 import FileDropOverlay from '@/components/FileDropOverlay';
+import UploadedFileDisplay from '@/components/UploadedFileDisplay';
 
 interface Message {
   id: number;
@@ -32,6 +33,7 @@ const Chat = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileAnalysis, setFileAnalysis] = useState<FileAnalysis | null>(null);
   const { toast } = useToast();
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   
   useEffect(() => {
     const initialQuestion = location.state?.initialQuestion;
@@ -116,37 +118,35 @@ const Chat = () => {
     setDragActive(false);
 
     const files = Array.from(e.dataTransfer.files);
-    if (files.length > 0) {
-      const file = files[0];
-      const allowedTypes = [
-        'application/pdf',
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'text/plain',
-        'application/vnd.ms-excel',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'application/vnd.ms-powerpoint',
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-        'image/jpeg',
-        'image/png',
-        'text/csv'
-      ];
+    const allowedTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'text/plain',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.ms-powerpoint',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'image/jpeg',
+      'image/png',
+      'text/csv'
+    ];
 
-      if (!allowedTypes.includes(file.type)) {
-        toast({
-          variant: "destructive",
-          title: "文件类型不支持",
-          description: "请上传支持的文件格式"
-        });
-        return;
-      }
-
-      setSelectedFile(file);
+    const invalidFiles = files.filter(file => !allowedTypes.includes(file.type));
+    if (invalidFiles.length > 0) {
       toast({
-        title: "文件已选择",
-        description: file.name
+        variant: "destructive",
+        title: "文件类型不支持",
+        description: "请上传PDF、Word文档、Excel表格、PPT、图片或CSV文件"
       });
+      return;
     }
+
+    setUploadedFiles(prev => [...prev, ...files]);
+    toast({
+      title: "文件已接收",
+      description: `成功接收 ${files.length} 个文件`
+    });
   };
 
   const handleNewMessage = (content: string, file?: File) => {
@@ -321,6 +321,14 @@ const Chat = () => {
       </div>
     );
   };
+
+  const handleRemoveFile = (fileToRemove: File) => {
+    setUploadedFiles(prev => prev.filter(file => file !== fileToRemove));
+    toast({
+      title: "文件已移除",
+      description: fileToRemove.name
+    });
+  };
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
@@ -350,12 +358,10 @@ const Chat = () => {
         <FileDropOverlay isActive={dragActive} />
         
         <div className="space-y-6">
-          {fileAnalysis && (
-            <FileAnalysisSection
-              file={fileAnalysis.file}
-              isAnalyzing={fileAnalysis.isAnalyzing}
-              analysisProgress={fileAnalysis.progress}
-              analysisResult={fileAnalysis.result}
+          {uploadedFiles.length > 0 && (
+            <UploadedFileDisplay 
+              files={uploadedFiles}
+              onRemove={handleRemoveFile}
             />
           )}
           
