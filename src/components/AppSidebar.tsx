@@ -1,3 +1,4 @@
+
 import { Search, Plus, User, Menu } from "lucide-react";
 import {
   Sidebar,
@@ -86,12 +87,12 @@ const getStatusClass = (status: string) => {
 export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
-      <SidebarHeader className="flex items-center gap-2 p-4">
-        <div className="text-2xl font-bold text-blue-500">
+      <SidebarHeader className="flex flex-col items-start gap-2 p-4">
+        <div className="text-2xl font-bold text-blue-500 mb-4">
           <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">SA</span>
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
-        <div className="ml-auto flex gap-2">
+        <div className="flex flex-col gap-2 w-full">
           {mainMenuItems.map((item) => (
             <SidebarMenuButton 
               key={item.url}
@@ -101,7 +102,7 @@ export function AppSidebar() {
               {item.action === "sidebar" ? (
                 <SidebarTrigger 
                   className={`flex items-center gap-2 p-3 rounded-lg text-base 
-                    bg-blue-400 hover:bg-blue-500 text-white`}
+                    bg-blue-400 hover:bg-blue-500 text-white w-full`}
                 >
                   <item.icon className="w-6 h-6 text-white" />
                   <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
@@ -110,7 +111,7 @@ export function AppSidebar() {
                 <Link 
                   to={item.url}
                   className={`flex items-center gap-2 p-3 rounded-lg text-base 
-                    bg-blue-400 hover:bg-blue-500 text-white`}
+                    bg-blue-400 hover:bg-blue-500 text-white w-full`}
                 >
                   <item.icon className="w-6 h-6 text-white" />
                   <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
