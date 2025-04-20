@@ -1,4 +1,3 @@
-
 import { ChevronLeft, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -80,7 +79,7 @@ export function SidebarHeader() {
           <Link to="/profile" className="flex justify-center">
             <Avatar className="w-10 h-10">
               <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
-              <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-base flex items-center justify-center">SA</AvatarFallback>
+              <AvatarFallback className="bg-[#D3E4FD] text-gray-700 font-bold text-base flex items-center justify-center">SA</AvatarFallback>
             </Avatar>
           </Link>
         </SidebarMenuButton>
