@@ -21,15 +21,16 @@ const UploadedFileDisplay: React.FC<UploadedFileDisplayProps> = ({
   };
 
   return (
-    <div className="w-full space-y-2 rounded-lg bg-white p-4">
+    <div className="w-full space-y-2 rounded-lg bg-white p-4 shadow-sm border border-gray-100">
+      <h3 className="font-medium text-gray-700 mb-2">已上传的文件</h3>
       <div className="flex flex-wrap gap-2">
         {files.map((file, index) => (
           <div
             key={`${file.name}-${index}`}
             className="group relative flex items-center gap-2 rounded-lg bg-gray-50 p-3 pr-8"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100">
-              <File className="h-5 w-5 text-red-500" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+              <File className="h-5 w-5 text-blue-500" />
             </div>
             <div className="flex flex-col">
               <span className="text-sm font-medium text-gray-900">{file.name}</span>

@@ -5,9 +5,10 @@ import { useToast } from '@/hooks/use-toast';
 
 interface FileUploadZoneProps {
   className?: string;
+  onFileUpload?: (files: File[]) => void;
 }
 
-const FileUploadZone: React.FC<FileUploadZoneProps> = ({ className }) => {
+const FileUploadZone: React.FC<FileUploadZoneProps> = ({ className, onFileUpload }) => {
   const { toast } = useToast();
   
   const onDragOver = useCallback((e: React.DragEvent) => {
@@ -41,12 +42,16 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({ className }) => {
       return;
     }
 
-    // Handle valid files here
+    // Handle valid files
     toast({
       title: "文件上传成功",
       description: `已接收 ${files.length} 个文件`
     });
-  }, [toast]);
+    
+    if (onFileUpload) {
+      onFileUpload(files);
+    }
+  }, [toast, onFileUpload]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -55,6 +60,10 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({ className }) => {
         title: "文件上传成功",
         description: `已接收 ${files.length} 个文件`
       });
+      
+      if (onFileUpload) {
+        onFileUpload(Array.from(files));
+      }
     }
   };
 
