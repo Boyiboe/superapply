@@ -1,4 +1,3 @@
-
 import { MessageSquare, Plus, Smartphone, Timer, MoreVertical } from "lucide-react";
 import {
   Sidebar,
@@ -9,6 +8,8 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarHeader,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 
@@ -70,6 +71,12 @@ const recentChats = {
 export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
+      <SidebarHeader className="flex items-center justify-between p-4">
+        <span className="text-lg font-semibold group-data-[state=collapsed]:hidden">
+          SuperApply
+        </span>
+        <SidebarTrigger className="h-8 w-8" />
+      </SidebarHeader>
       <SidebarContent>
         {/* Main Menu Icons */}
         <SidebarGroup>
@@ -83,9 +90,9 @@ export function AppSidebar() {
                   >
                     <Link 
                       to={item.url}
-                      className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-blue-100 text-gray-700"
+                      className="flex items-center justify-center w-12 h-12 rounded-lg hover:bg-blue-100 text-gray-700"
                     >
-                      <item.icon className="w-5 h-5" />
+                      <item.icon className="w-6 h-6" />
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
