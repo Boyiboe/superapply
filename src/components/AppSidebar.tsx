@@ -191,13 +191,16 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild>
                       <Link 
                         to={`/student/${index}`}
-                        className="flex flex-col w-full p-3 gap-2 hover:bg-blue-50 rounded-lg"
+                        className={`flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+                          bg-blue-400 hover:bg-blue-500 text-white w-full`}
                       >
-                        <div className="flex items-center justify-between w-full">
-                          <span className="font-medium text-gray-800">{student.name}</span>
-                          <span className="text-xs text-gray-600">{student.status}</span>
+                        <div className="flex flex-col items-center w-full">
+                          <div className="flex justify-between w-full mb-2">
+                            <span className="font-medium">{student.name}</span>
+                            <span className="text-xs">{student.status}</span>
+                          </div>
+                          <Progress value={student.progress} className="h-2 bg-white/30" />
                         </div>
-                        <Progress value={student.progress} className="h-2" />
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
