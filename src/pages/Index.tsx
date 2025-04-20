@@ -64,8 +64,8 @@ const Index = () => {
         </div>
 
         {/* Title Section */}
-        <h2 className="text-2xl font-bold mb-2">我是Eva, Edmate AI智能留学管家</h2>
-        <p className="text-gray-600 mb-8">一站式轻松规划完美留学</p>
+        <h2 className="text-2xl font-bold mb-2">Hi，我是小艾，您的超级智能网申管家</h2>
+            <p className="text-gray-600 mb-8">一站式轻松生成申请表，一键完成网申</p>
 
         {/* Example Query Section */}
         <div className="flex justify-center mb-4">
