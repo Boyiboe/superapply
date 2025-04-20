@@ -46,15 +46,18 @@ const Index = () => {
 
         {/* Title Section */}
         <h2 className="text-2xl font-bold mb-2">我是Eva, Edmate AI智能留学管家</h2>
-        <p className="text-gray-600 mb-12">一站式轻松规划完美留学</p>
+        <p className="text-gray-600 mb-8">一站式轻松规划完美留学</p>
 
         {/* Example Query Section */}
-        <div className="max-w-4xl mx-auto mb-6">
-          <div className="flex items-center gap-2 bg-gradient-to-r from-purple-100 to-purple-50 p-4 rounded-lg text-left">
-            <Sparkles className="w-5 h-5 text-purple-600 flex-shrink-0" />
-            <p className="text-purple-800 text-sm">
-              我是浙江大学计算机专业，均分85分，想要申请英美大学...求推荐！
-            </p>
+        <div className="flex justify-center mb-4">
+          <div className="relative inline-block">
+            <div className="flex items-center gap-2 bg-gradient-to-r from-purple-200 to-purple-300 p-4 rounded-2xl text-left shadow-sm">
+              <Sparkles className="w-5 h-5 text-purple-700 flex-shrink-0" />
+              <p className="text-purple-900 text-sm">
+                我是浙江大学计算机专业，均分85分，想要申请英美大学...求推荐！
+              </p>
+              <div className="absolute -bottom-2 left-6 w-4 h-4 bg-purple-300 transform rotate-45"></div>
+            </div>
           </div>
         </div>
 
