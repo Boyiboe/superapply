@@ -16,9 +16,12 @@ const Index = () => {
         setPlaceholderText(fullText.slice(0, currentIndex));
         currentIndex++;
       } else {
-        currentIndex = 0; // Reset to start typing again
+        // Pause at the end before restarting
+        setTimeout(() => {
+          currentIndex = 0;
+        }, 2000);
       }
-    }, 150); // Adjust typing speed here
+    }, 200); // Slightly slower for more natural typing
 
     return () => clearInterval(typingInterval);
   }, []);
@@ -75,19 +78,19 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Input Form */}
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mb-8">
+        {/* Input Form with enhanced animations */}
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mb-8 group">
           <div className="relative w-[898px] mx-auto">
             <input
               type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               placeholder={placeholderText}
-              className="w-full px-6 py-4 text-[14px] rounded-2xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 pr-12 text-gray-700"
+              className="w-full px-6 py-4 text-base md:text-lg rounded-2xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 pr-12 text-gray-700 placeholder:after:content-['|'] placeholder:after:ml-0.5 placeholder:after:animate-[blink_1s_infinite]"
             />
             <button
               type="submit"
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-all group-hover:translate-x-1"
             >
               <ArrowRight className="w-5 h-5" />
             </button>
