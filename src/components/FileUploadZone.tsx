@@ -1,4 +1,3 @@
-
 import React, { useCallback, useState } from 'react';
 import { FileUp, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -8,7 +7,7 @@ interface FileUploadZoneProps {
   className?: string;
   onFileUpload?: (files: File[]) => void;
   onSendFiles?: (files: File[]) => void;
-  uploadedFiles: File[];
+  uploadedFiles?: File[]; // 使用可选属性
   isAnalyzing?: boolean;
   analysisProgress?: number;
 }
@@ -17,7 +16,7 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
   className, 
   onFileUpload, 
   onSendFiles,
-  uploadedFiles = [], // Add default empty array
+  uploadedFiles = [], // 默认为空数组
   isAnalyzing = false,
   analysisProgress = 0
 }) => {
@@ -81,6 +80,7 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({
   };
 
   const handleSendFiles = () => {
+    // 添加额外的非空检查
     if (onSendFiles && uploadedFiles && uploadedFiles.length > 0) {
       onSendFiles(uploadedFiles);
     }
