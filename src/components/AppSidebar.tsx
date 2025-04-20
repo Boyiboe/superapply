@@ -1,4 +1,3 @@
-
 import { Search, Plus, User, Menu } from "lucide-react";
 import {
   Sidebar,
@@ -177,9 +176,9 @@ export function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
 
-          {/* Recent Students Section - Updated styling */}
-          <SidebarGroup className="mt-6">
-            <SidebarMenuItem>
+          {/* Students Section - Centered Button */}
+          <SidebarGroup className="mt-6 flex flex-col items-center">
+            <SidebarMenuItem className="w-full flex justify-center">
               <SidebarMenuButton asChild tooltip="我递交的学生">
                 <Link 
                   to="/students" 
