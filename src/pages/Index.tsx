@@ -34,18 +34,18 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       {/* Header */}
       <div className="p-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">  {/* Changed from gap-4 to gap-2 */}
-          <div className="bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl p-1.5 flex items-center justify-center">
+        <div className="flex items-center gap-2">
+          <div className="bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl p-1.5 flex items-center justify-center">
             <Bot className="w-6 h-6 text-white" />
           </div>
           <div 
-            className="text-2xl font-bold bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] bg-clip-text text-transparent"
+            className="text-2xl font-bold bg-gradient-to-r from-[#3B82F6] to-[#93C5FD] bg-clip-text text-transparent"
           >
             <span>Ed</span>
-            <span>mate</span>
+            <span className="text-blue-600">mate</span>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@ const Index = () => {
         <div className="mb-12">
           <Avatar className="w-32 h-32 mx-auto mb-4">
             <AvatarFallback 
-              className="w-full h-full bg-gradient-to-br from-[#7E69AB] to-[#D6BCFA] flex items-center justify-center text-white"
+              className="w-full h-full bg-gradient-to-br from-[#60A5FA] to-[#BFDBFE] flex items-center justify-center text-white"
             >
               <UserRound className="w-16 h-16 animate-pulse" />
             </AvatarFallback>
@@ -64,12 +64,12 @@ const Index = () => {
         </div>
 
         {/* Title Section */}
-        <h2 className="text-2xl font-bold mb-2">Hi，我是小艾，您的超级智能网申管家</h2>
-            <p className="text-gray-600 mb-8">一站式轻松生成申请表，一键完成网申</p>
+        <h2 className="text-2xl font-bold mb-2 text-blue-800">Hi，我是小艾，您的超级智能网申管家</h2>
+        <p className="text-blue-600 mb-8">一站式轻松生成申请表，一键完成网申</p>
 
         {/* Example Query Section */}
         <div className="flex justify-center mb-4">
-          <div className="flex items-center gap-2 bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] p-4 rounded-xl text-left shadow-sm relative overflow-hidden">
+          <div className="flex items-center gap-2 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] p-4 rounded-xl text-left shadow-sm relative overflow-hidden">
             <Sparkles className="w-5 h-5 text-white flex-shrink-0" />
             <p className="text-white text-sm">
               我是浙江大学计算机专业，均分85分，想要申请英美大学...求推荐！
@@ -86,11 +86,11 @@ const Index = () => {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               placeholder={placeholderText}
-              className="w-full px-6 py-4 text-[15px] rounded-2xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 pr-12 text-gray-700 placeholder:after:content-['|'] placeholder:after:ml-0.5 placeholder:after:animate-[blink_1s_infinite]"
+              className="w-full px-6 py-4 text-[15px] rounded-2xl border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 pr-12 text-gray-700 placeholder:after:content-['|'] placeholder:after:ml-0.5 placeholder:after:animate-[blink_1s_infinite]"
             />
             <button
               type="submit"
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-all group-hover:translate-x-1"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all group-hover:translate-x-1"
             >
               <ArrowRight className="w-5 h-5" />
             </button>
@@ -99,24 +99,21 @@ const Index = () => {
 
         {/* Question Tags */}
         <div className="flex flex-wrap justify-center gap-2 mt-8">
-          <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
-            真的免费做申请吗？
-          </span>
-          <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
-            靠什么盈利呢？
-          </span>
-          <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
-            免费服务可信吗？
-          </span>
-          <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
-            你们的文书润色指导收不收费，专业吗？
-          </span>
-          <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
-            我是四川大学学化学的学生，均分85份，想要申请英国UCL大学有希望吗
-          </span>
-          <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm">
-            你们还有哪些其他的优势？
-          </span>
+          {[
+            "真的免费做申请吗？",
+            "靠什么盈利呢？",
+            "免费服务可信吗？",
+            "你们的文书润色指导收不收费，专业吗？",
+            "我是四川大学学化学的学生，均分85份，想要申请英国UCL大学有希望吗",
+            "你们还有哪些其他的优势？"
+          ].map((tag, index) => (
+            <span 
+              key={index} 
+              className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm"
+            >
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
     </div>
