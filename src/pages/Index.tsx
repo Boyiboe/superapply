@@ -104,6 +104,15 @@ const Index = () => {
             </span>
           ))}
         </div>
+
+        {/* New description section */}
+        <div className="text-center mt-4 px-4">
+          <p className="text-blue-700 text-sm">
+            These are material templates that can be downloaded for use. You need to upload files marked with "*". 
+            You can provide either a proof of enrollment or a degree certificate. 
+            These templates are clickable and downloadable.
+          </p>
+        </div>
       </div>
     </div>
   );
