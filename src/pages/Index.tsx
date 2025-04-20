@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Bot } from 'lucide-react';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const Index = () => {
@@ -19,11 +19,16 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
       {/* Header */}
       <div className="p-4 flex items-center justify-between">
-        <div 
-          className="text-2xl font-bold bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] bg-clip-text text-transparent"
-        >
-          <span>Ed</span>
-          <span>mate</span>
+        <div className="flex items-center gap-4">
+          <div className="bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl p-2 flex items-center justify-center">
+            <Bot className="w-8 h-8 text-white" />
+          </div>
+          <div 
+            className="text-2xl font-bold bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] bg-clip-text text-transparent"
+          >
+            <span>Ed</span>
+            <span>mate</span>
+          </div>
         </div>
       </div>
 
