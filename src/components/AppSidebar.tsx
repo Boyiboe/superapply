@@ -1,4 +1,3 @@
-
 import { Search, Plus, User, Menu } from "lucide-react";
 import {
   Sidebar,
@@ -82,11 +81,6 @@ const recentStudents = [
     name: "李四",
     progress: 100,
     status: "已完成"
-  },
-  {
-    name: "王五",
-    progress: 30,
-    status: "等待材料"
   },
   {
     name: "赵六",
