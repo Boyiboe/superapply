@@ -1,12 +1,27 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Bot, Sparkles, UserRound } from 'lucide-react';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const Index = () => {
   const [question, setQuestion] = useState('');
+  const [placeholderText, setPlaceholderText] = useState('');
+  const fullText = "问一问想要了解的留学规划问题吧...";
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= fullText.length) {
+        setPlaceholderText(fullText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        currentIndex = 0; // Reset to start typing again
+      }
+    }, 150); // Adjust typing speed here
+
+    return () => clearInterval(typingInterval);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,7 +82,7 @@ const Index = () => {
               type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              placeholder="请输入您的问题..."
+              placeholder={placeholderText}
               className="w-full px-6 py-4 text-[14px] rounded-2xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 pr-12 text-gray-700"
             />
             <button
