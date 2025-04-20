@@ -10,7 +10,7 @@ import { SidebarFooter } from "./sidebar/SidebarFooter";
 
 export function AppSidebar() {
   return (
-    <Sidebar variant="floating" collapsible="icon">
+    <Sidebar variant="floating" collapsible="icon" defaultOpen={false}>
       <SidebarHeader />
       <SidebarContent>
         <div className="group-data-[state=collapsed]:hidden">
