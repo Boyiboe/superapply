@@ -1,3 +1,4 @@
+
 import { ChevronLeft, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -22,6 +23,7 @@ export function SidebarHeader() {
       </div>
       
       <div className="flex flex-col items-center gap-2 w-full">
+        {/* Avatar section - only show when expanded */}
         <div className="flex items-center gap-4 w-full mb-2 group-data-[state=collapsed]:hidden">
           <Avatar className="w-12 h-12">
             <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
@@ -31,6 +33,14 @@ export function SidebarHeader() {
             <span className="text-sm font-medium">张同学</span>
             <span className="text-xs text-gray-500">申请进度：3/5</span>
           </div>
+        </div>
+        
+        {/* Avatar for collapsed state */}
+        <div className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center mb-2">
+          <Avatar className="w-10 h-10">
+            <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
+            <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-base">SA</AvatarFallback>
+          </Avatar>
         </div>
         
         {/* New Application Button - Updated Style */}
@@ -46,7 +56,7 @@ export function SidebarHeader() {
               bg-blue-600 hover:bg-blue-700 text-white w-full h-[42px]"
           >
             <Plus className="w-6 h-6 text-white" />
-            <span>开启新申请</span>
+            <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
           </Link>
         </SidebarMenuButton>
 
