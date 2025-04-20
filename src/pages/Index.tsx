@@ -105,12 +105,10 @@ const Index = () => {
           ))}
         </div>
 
-        {/* New description section */}
+        {/* 新的描述部分 */}
         <div className="text-center mt-4 px-4">
           <p className="text-blue-700 text-sm">
-            These are material templates that can be downloaded for use. You need to upload files marked with "*". 
-            You can provide either a proof of enrollment or a degree certificate. 
-            These templates are clickable and downloadable.
+            以下是材料模版，可下载使用，您上传的材料需要包含标记"*"的文件，在读证明和学位证书有一个即可。另外这些模版是可点击下载的。
           </p>
         </div>
       </div>
