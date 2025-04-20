@@ -11,6 +11,7 @@ import {
   SidebarHeader,
   SidebarTrigger,
   SidebarFooter,
+  SidebarInput,
 } from "@/components/ui/sidebar";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -32,7 +33,6 @@ const mainMenuItems = [
     primary: true
   },
   {
-    // Add current student progress menu item
     title: "当前学生",
     url: "/current-student",
     icon: CircleCheck,
@@ -42,12 +42,6 @@ const mainMenuItems = [
       current: 3,
       total: 5
     }
-  },
-  {
-    title: "搜索学生",
-    url: "/search",
-    icon: Search,
-    primary: true
   }
 ];
 
@@ -138,8 +132,8 @@ export function AppSidebar() {
             >
               {item.action === "sidebar" ? (
                 <SidebarTrigger 
-                  className={`flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-                    bg-blue-400 hover:bg-blue-500 text-white w-full`}
+                  className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+                    bg-blue-400 hover:bg-blue-500 text-white w-full"
                 >
                   <item.icon className="w-6 h-6 text-white" />
                   <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
@@ -147,29 +141,29 @@ export function AppSidebar() {
               ) : item.progress ? (
                 <Link 
                   to={item.url}
-                  className="flex items-center justify-between gap-2 p-3 rounded-lg text-base hover:bg-gray-100 w-full"
+                  className="flex items-center justify-between gap-2 p-4 rounded-lg text-base hover:bg-gray-100 w-full"
                 >
-                  <div className="flex items-center gap-2">
-                    <item.icon className="w-6 h-6 text-blue-500" />
+                  <div className="flex items-center gap-3">
+                    <item.icon className="w-8 h-8 text-blue-500" />
                     <div className="group-data-[state=collapsed]:hidden flex flex-col">
-                      <span className="font-medium text-gray-900">{item.progress.name}</span>
+                      <span className="font-medium text-gray-900 text-lg">{item.progress.name}</span>
                       <span className="text-sm text-gray-500">
                         申请进度：{item.progress.current}/{item.progress.total}
                       </span>
                     </div>
                   </div>
-                  <div className="group-data-[state=collapsed]:hidden w-24">
+                  <div className="group-data-[state=collapsed]:hidden w-32">
                     <Progress 
                       value={(item.progress.current / item.progress.total) * 100} 
-                      className="h-2"
+                      className="h-3"
                     />
                   </div>
                 </Link>
               ) : (
                 <Link 
                   to={item.url}
-                  className={`flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-                    bg-blue-400 hover:bg-blue-500 text-white w-full`}
+                  className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+                    bg-blue-400 hover:bg-blue-500 text-white w-full"
                 >
                   <item.icon className="w-6 h-6 text-white" />
                   <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
@@ -177,6 +171,15 @@ export function AppSidebar() {
               )}
             </SidebarMenuButton>
           ))}
+
+          {/* Search Box */}
+          <div className="w-full px-2 group-data-[state=collapsed]:hidden">
+            <SidebarInput 
+              type="search"
+              placeholder="搜索学生..." 
+              className="w-full"
+            />
+          </div>
         </div>
       </SidebarHeader>
 
