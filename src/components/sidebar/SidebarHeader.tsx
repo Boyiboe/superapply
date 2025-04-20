@@ -1,3 +1,4 @@
+
 import { ChevronLeft, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -13,7 +14,8 @@ export function SidebarHeader() {
     <Header className="flex flex-col items-center gap-2 p-4">
       <div className="flex items-center justify-between w-full mb-4">
         <div className="text-2xl font-bold text-blue-500">
-          <span>SA</span>
+          <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">SA</span>
+          <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
         <SidebarTrigger className="p-1 rounded-lg hover:bg-gray-100">
           <ChevronLeft className="w-5 h-5" />
