@@ -9,6 +9,8 @@ import { analyzeFile, simulateProgressUpdates, AnalysisProgressUpdate, AnalysisR
 import FileDropOverlay from '@/components/FileDropOverlay';
 import ApplicationForm from '@/components/ApplicationForm';
 import { Button } from '@/components/ui/button';
+import FileUploadZone from '@/components/FileUploadZone';
+import ChatFileCard from '@/components/ChatFileCard';
 
 interface Message {
   id: number;
@@ -214,6 +216,13 @@ const Chat = () => {
       handleNewMessage(input.trim());
     }
   };
+
+  const handleSendFiles = (files: File[]) => {
+    if (files.length > 0) {
+      // For now, just handle the first file for simplicity
+      handleNewMessage('已上传文件进行解析', files[0]);
+    }
+  };
   
   const renderAssistantResponse = () => {
     if (messages.length === 0) return null;
@@ -352,28 +361,9 @@ const Chat = () => {
       description: fileToRemove.name
     });
   };
-  
-  // Get file status based on analysis state
-  const getFileStatus = (file: File) => {
-    if (fileAnalysis && fileAnalysis.file.name === file.name) {
-      if (fileAnalysis.isAnalyzing) return { type: 'analyzing', text: '正在解析' };
-      if (fileAnalysis.progress === 100) return { type: 'success', text: '解析完成' };
-    }
-    return { type: 'waiting', text: '等待解析' };
-  };
 
-  // Render status icon based on status type
-  const getStatusIcon = (status: { type: string, text: string }) => {
-    switch (status.type) {
-      case 'analyzing':
-        return <Loader className="h-5 w-5 text-purple-600 animate-spin" />;
-      case 'success':
-        return <CheckCircle className="h-5 w-5 text-green-600" />;
-      case 'error':
-        return <X className="h-5 w-5 text-red-600 rounded-full bg-red-100 p-1" />;
-      default:
-        return <Circle className="h-5 w-5 text-gray-400" />;
-    }
+  const handleFileUpload = (files: File[]) => {
+    setUploadedFiles(prev => [...prev, ...files]);
   };
 
   return (
@@ -451,101 +441,20 @@ const Chat = () => {
           onDragEnter={handleDrag}
           className="max-w-4xl mx-auto"
         >
-          <div 
-            className={`relative bg-white rounded-xl shadow-sm ${dragActive ? 'ring-2 ring-purple-400' : 'border border-purple-200'}`}
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
-            onDragOver={handleDrag}
-            onDrop={handleDrop}
-          >
-            {uploadedFiles.length > 0 && (
-              <div className="w-full rounded-t-lg bg-gray-50/80 backdrop-blur-sm p-4 border-b border-gray-100">
-                <h3 className="font-medium text-gray-700 mb-3">已上传的文件</h3>
-                <div className="space-y-2">
-                  {uploadedFiles.map((file, index) => {
-                    const status = getFileStatus(file);
-                    return (
-                      <div
-                        key={index}
-                        className="group relative flex items-center justify-between bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:border-purple-200 transition-colors"
-                      >
-                        <div className="flex items-center gap-3 flex-1">
-                          <div className="flex-shrink-0">
-                            <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
-                              <File className="h-5 w-5 text-red-600" />
-                            </div>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center">
-                              <h4 className="text-sm font-medium text-gray-900 truncate pr-8">
-                                {file.name}
-                              </h4>
-                              <button
-                                type="button"
-                                onClick={() => handleRemoveFile(file)}
-                                className="absolute right-3 top-3 p-1 rounded-full hover:bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity"
-                              >
-                                <X className="h-4 w-4 text-gray-400" />
-                              </button>
-                            </div>
-                            <p className="text-xs text-gray-500 mt-0.5">
-                              {(file.size / 1024).toFixed(1)} KB
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            {getStatusIcon(status)}
-                            <span className={`text-sm ${
-                              status.type === 'analyzing' ? 'text-purple-600' : 
-                              status.type === 'success' ? 'text-green-600' : 'text-gray-600'
-                            }`}>
-                              {status.text}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-            
-            <div className="relative flex items-center">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={uploadedFiles.length > 0 ? "点击发送开始解析文件..." : "继续提问..."}
-                className="w-full px-6 py-4 bg-transparent text-lg focus:outline-none"
-              />
-              <div className="absolute right-3 flex gap-2">
-                <label className="cursor-pointer p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-colors">
-                  <input
-                    type="file"
-                    className="hidden"
-                    accept=".zip,.pdf,.docx,.txt,.xlsx,.xls"
-                    onChange={(e) => {
-                      const files = e.target.files;
-                      if (files && files.length > 0) {
-                        setUploadedFiles(prev => [...prev, ...Array.from(files)]);
-                        toast({
-                          title: "文件已选择",
-                          description: files[0].name
-                        });
-                      }
-                    }}
-                  />
-                  <Paperclip className="w-5 h-5" />
-                </label>
-                <Button
-                  type="submit"
-                  className={`p-2 ${uploadedFiles.length > 0 ? 'bg-green-600 hover:bg-green-700' : 'bg-purple-600 hover:bg-purple-700'} text-white rounded-lg transition-colors`}
-                  disabled={!input.trim() && uploadedFiles.length === 0}
-                >
-                  <MessageSquare className="w-5 h-5" />
-                </Button>
-              </div>
-            </div>
-          </div>
+          {uploadedFiles.length > 0 && (
+            <ChatFileCard
+              files={uploadedFiles}
+              onRemove={handleRemoveFile}
+            />
+          )}
+          
+          <FileUploadZone
+            onFileUpload={handleFileUpload}
+            onSendFiles={handleSendFiles}
+            uploadedFiles={uploadedFiles}
+            isAnalyzing={fileAnalysis?.isAnalyzing}
+            analysisProgress={fileAnalysis?.progress || 0}
+          />
         </form>
       </div>
     </div>
