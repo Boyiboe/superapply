@@ -1,4 +1,3 @@
-
 import { Search, Plus, User, Menu } from "lucide-react";
 import {
   Sidebar,
@@ -87,8 +86,8 @@ const getStatusClass = (status: string) => {
 export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
-      <SidebarHeader className="flex flex-col items-start gap-2 p-4">
-        <div className="text-2xl font-bold text-blue-500 mb-4">
+      <SidebarHeader className="flex flex-col items-center gap-2 p-4">
+        <div className="text-2xl font-bold text-blue-500 mb-4 text-center">
           <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">SA</span>
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
@@ -101,7 +100,7 @@ export function AppSidebar() {
             >
               {item.action === "sidebar" ? (
                 <SidebarTrigger 
-                  className={`flex items-center gap-2 p-3 rounded-lg text-base 
+                  className={`flex items-center justify-center gap-2 p-3 rounded-lg text-base 
                     bg-blue-400 hover:bg-blue-500 text-white w-full`}
                 >
                   <item.icon className="w-6 h-6 text-white" />
@@ -110,7 +109,7 @@ export function AppSidebar() {
               ) : (
                 <Link 
                   to={item.url}
-                  className={`flex items-center gap-2 p-3 rounded-lg text-base 
+                  className={`flex items-center justify-center gap-2 p-3 rounded-lg text-base 
                     bg-blue-400 hover:bg-blue-500 text-white w-full`}
                 >
                   <item.icon className="w-6 h-6 text-white" />
@@ -126,7 +125,7 @@ export function AppSidebar() {
         {/* Main Actions */}
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="flex items-center">
               {/*{mainMenuItems.map((item) => (*/}
               {/*  <SidebarMenuItem key={item.url}>*/}
               {/*    <SidebarMenuButton */}
@@ -160,7 +159,7 @@ export function AppSidebar() {
 
         {/* Application History */}
         <SidebarGroup className="mt-6">
-          <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700 group-data-[state=collapsed]:hidden">申请历史</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700 group-data-[state=collapsed]:hidden text-center">申请历史</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {recentApplications.map((app, index) => (
@@ -168,11 +167,11 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link 
                       to={`/application/${index}`}
-                      className="flex flex-col w-full p-3 gap-1 hover:bg-blue-50 rounded-lg group-data-[state=collapsed]:p-2"
+                      className="flex flex-col w-full p-3 gap-1 hover:bg-blue-50 rounded-lg group-data-[state=collapsed]:p-2 text-center"
                     >
-                      <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center justify-center w-full">
                         <span className="font-medium text-gray-800 group-data-[state=collapsed]:hidden">{app.university}</span>
-                        <span className={`px-2 py-0.5 text-xs rounded-full ${getStatusClass(app.status)}`}>
+                        <span className={`ml-2 px-2 py-0.5 text-xs rounded-full ${getStatusClass(app.status)}`}>
                           {app.status}
                         </span>
                       </div>
@@ -193,7 +192,7 @@ export function AppSidebar() {
             <SidebarMenuButton asChild tooltip="个人信息">
               <Link 
                 to="/profile" 
-                className="flex items-center gap-2 w-full p-3 hover:bg-blue-50 rounded-lg text-gray-700"
+                className="flex items-center justify-center gap-2 w-full p-3 hover:bg-blue-50 rounded-lg text-gray-700"
               >
                 <User className="w-6 h-6 text-gray-600" />
                 <span className="group-data-[state=collapsed]:hidden">个人信息</span>
