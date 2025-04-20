@@ -11,17 +11,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function SidebarHeader() {
   return (
-    <Header className="flex flex-col items-center gap-2 p-4">
+    <Header className="flex flex-col items-center gap-2 p-4 relative">
       {/* Logo Section */}
-      <div className="flex w-full mb-4">
-        <div className="text-2xl font-bold text-blue-500 w-full text-center">
-          <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">SA</span>
+      <div className="flex w-full mb-4 items-center justify-center">
+        <div className="text-2xl font-bold text-blue-500 text-center">
+          <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">
+            SA
+          </span>
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
       </div>
 
       {/* Toggle Button - Only visible when collapsed */}
-      <div className="hidden group-data-[state=collapsed]:block mb-2">
+      <div className="hidden group-data-[state=collapsed]:block mb-2 absolute top-1/2 left-4 transform -translate-y-1/2">
         <SidebarTrigger className="p-2 rounded-lg hover:bg-gray-100">
           <ChevronLeft className="w-5 h-5" />
         </SidebarTrigger>
@@ -48,10 +50,10 @@ export function SidebarHeader() {
         </div>
         
         {/* Avatar for collapsed state - centered */}
-        <div className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center mb-2">
+        <div className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center items-center mb-2">
           <Avatar className="w-10 h-10">
             <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
-            <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-base">SA</AvatarFallback>
+            <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-base flex items-center justify-center">SA</AvatarFallback>
           </Avatar>
         </div>
 
@@ -84,3 +86,4 @@ export function SidebarHeader() {
     </Header>
   );
 }
+
