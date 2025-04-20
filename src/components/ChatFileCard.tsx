@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { File, X, Circle, CircleCheck, CircleX, LoaderCircle } from 'lucide-react';
+import { FilePdf, X, Circle, CircleCheck, CircleX, LoaderCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface FileStatus {
@@ -73,7 +73,7 @@ const ChatFileCard: React.FC<ChatFileCardProps> = ({
               <div className="flex items-center gap-3 flex-1">
                 <div className="flex-shrink-0">
                   <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
-                    <File className="h-5 w-5 text-red-600" />
+                    <FilePdf className="h-5 w-5 text-red-600" />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">

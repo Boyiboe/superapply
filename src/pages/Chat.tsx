@@ -359,13 +359,6 @@ const Chat = () => {
         <FileDropOverlay isActive={dragActive} />
         
         <div className="space-y-6">
-          {uploadedFiles.length > 0 && (
-            <ChatFileCard 
-              files={uploadedFiles}
-              onRemove={handleRemoveFile}
-            />
-          )}
-          
           {messages.map(message => 
             message.type === 'user' ? (
               <div key={message.id} className="text-right">
@@ -400,6 +393,14 @@ const Chat = () => {
           onDragEnter={handleDrag}
           className="max-w-4xl mx-auto"
         >
+          {uploadedFiles.length > 0 && (
+            <div className="mb-4">
+              <ChatFileCard 
+                files={uploadedFiles}
+                onRemove={handleRemoveFile}
+              />
+            </div>
+          )}
           <div 
             className={`relative ${dragActive ? 'ring-2 ring-purple-400' : ''}`}
             onDragEnter={handleDrag}
