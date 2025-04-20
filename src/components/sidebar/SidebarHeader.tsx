@@ -1,4 +1,3 @@
-
 import { ChevronLeft, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -12,13 +11,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export function SidebarHeader() {
   return (
     <Header className="flex flex-col items-center gap-2 p-4 relative">
-      {/* Logo Section */}
-      <div className="flex w-full mb-4 items-center justify-center">
+      {/* Logo Section - 完全居中 */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 group-data-[state=collapsed]:block group-data-[state=expanded]:hidden">
         <div className="text-2xl font-bold text-blue-500 text-center">
-          <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">
-            SA
-          </span>
-          <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
+          <span>SA</span>
         </div>
       </div>
 
@@ -86,4 +82,3 @@ export function SidebarHeader() {
     </Header>
   );
 }
-
