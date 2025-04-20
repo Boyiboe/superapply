@@ -1,5 +1,5 @@
 
-import { Menu, Plus, CircleCheck } from "lucide-react";
+import { Menu, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   SidebarHeader as Header,
@@ -60,23 +60,6 @@ export function SidebarHeader() {
           </Link>
         </SidebarMenuButton>
 
-        {/* Current Student Button */}
-        <SidebarMenuButton 
-          key="/current-student"
-          asChild
-          tooltip="当前学生"
-          className="w-full max-w-[200px]"
-        >
-          <Link 
-            to="/current-student"
-            className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-              bg-blue-500 hover:bg-blue-600 text-white w-full max-w-[200px] h-[42px] group-data-[state=collapsed]:h-[42px] group-data-[state=collapsed]:w-[42px]"
-          >
-            <CircleCheck className="w-6 h-6 text-white" />
-            <span className="group-data-[state=collapsed]:hidden">张同学</span>
-          </Link>
-        </SidebarMenuButton>
-
         {/* Progress bar - only show when expanded */}
         <div className="group-data-[state=collapsed]:hidden w-full px-4">
           <span className="text-sm font-medium text-gray-500 block mb-2">
@@ -100,4 +83,3 @@ export function SidebarHeader() {
     </Header>
   );
 }
-
