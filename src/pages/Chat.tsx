@@ -8,6 +8,7 @@ import FileAnalysisSection from '@/components/FileAnalysisSection';
 import { analyzeFile, simulateProgressUpdates, AnalysisProgressUpdate } from '@/services/fileAnalysisService';
 import FileDropOverlay from '@/components/FileDropOverlay';
 import UploadedFileDisplay from '@/components/UploadedFileDisplay';
+import ChatFileCard from '@/components/ChatFileCard';
 
 interface Message {
   id: number;
@@ -359,7 +360,7 @@ const Chat = () => {
         
         <div className="space-y-6">
           {uploadedFiles.length > 0 && (
-            <UploadedFileDisplay 
+            <ChatFileCard 
               files={uploadedFiles}
               onRemove={handleRemoveFile}
             />
