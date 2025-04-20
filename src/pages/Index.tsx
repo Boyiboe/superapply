@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Bot, Sparkles, FileUp, ALargeSmall } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import FileUploadZone from '@/components/FileUploadZone';
+import FileDropOverlay from '@/components/FileDropOverlay';
+import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
   const [question, setQuestion] = useState('');
   const [placeholderText, setPlaceholderText] = useState('');
+  const [dragActive, setDragActive] = useState(false);
   const fullText = "快速上传学生材料，无需填写一键生成申请表";
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     let currentIndex = 0;
@@ -34,8 +38,62 @@ const Index = () => {
     }
   };
 
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+
+    const files = Array.from(e.dataTransfer.files);
+    const allowedTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.ms-powerpoint',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'image/jpeg',
+      'image/png',
+      'text/csv',
+      'text/plain'
+    ];
+
+    const invalidFiles = files.filter(file => !allowedTypes.includes(file.type));
+    if (invalidFiles.length > 0) {
+      toast({
+        variant: "destructive",
+        title: "文件类型不支持",
+        description: "请上传PDF、Word文档、Excel表格、PPT、图片或CSV文件"
+      });
+      return;
+    }
+
+    // Handle valid files
+    toast({
+      title: "文件已接收",
+      description: `成功接收 ${files.length} 个文件`
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
+    <div 
+      className="min-h-screen bg-gradient-to-b from-white to-blue-50"
+      onDragEnter={handleDrag}
+      onDragLeave={handleDrag}
+      onDragOver={handleDrag}
+      onDrop={handleDrop}
+    >
       {/* Header */}
       <div className="p-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -51,7 +109,9 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-12 text-center">
+      <div className="max-w-4xl mx-auto px-4 py-12 text-center relative">
+        <FileDropOverlay isActive={dragActive} />
+        
         <div className="mb-12">
           <Avatar className="w-32 h-32 mx-auto mb-4">
             <AvatarFallback 
