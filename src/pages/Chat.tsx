@@ -394,76 +394,79 @@ const Chat = () => {
           className="max-w-4xl mx-auto"
         >
           <div 
-            className={`relative ${dragActive ? 'ring-2 ring-purple-400' : ''}`}
+            className={`relative bg-white rounded-xl shadow-sm ${dragActive ? 'ring-2 ring-purple-400' : 'border border-purple-200'}`}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
             onDrop={handleDrop}
           >
-            {/* Move file display inside input area */}
-            <div className="space-y-2 mb-2">
-              {uploadedFiles.map((file, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between bg-gray-50 rounded-lg p-2 border border-gray-100"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center">
-                      <File className="h-4 w-4 text-red-600" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-900 truncate">
-                        {file.name}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {(file.size / 1024).toFixed(1)} KB
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveFile(file)}
-                    className="p-1 hover:bg-gray-200 rounded-full"
+            {uploadedFiles.length > 0 && (
+              <div className="px-6 pt-4 space-y-2">
+                {uploadedFiles.map((file, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between bg-purple-50/50 rounded-lg p-2"
                   >
-                    <X className="h-4 w-4 text-gray-400" />
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder={selectedFile ? `已选择文件: ${selectedFile.name}` : "继续提问..."}
-              className="w-full px-6 py-4 text-lg rounded-2xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 pr-24"
-            />
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-2">
-              <label className="cursor-pointer p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-colors">
-                <input
-                  type="file"
-                  className="hidden"
-                  accept=".zip,.pdf,.docx,.txt,.xlsx,.xls"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      setUploadedFiles(prev => [...prev, file]);
-                      toast({
-                        title: "文件已选择",
-                        description: file.name
-                      });
-                    }
-                  }}
-                />
-                <Paperclip className="w-5 h-5" />
-              </label>
-              <button
-                type="submit"
-                className="p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-                disabled={!input.trim() && !selectedFile}
-              >
-                <MessageSquare className="w-5 h-5" />
-              </button>
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+                        <File className="h-4 w-4 text-purple-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900 truncate max-w-[200px]">
+                          {file.name}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {(file.size / 1024).toFixed(1)} KB
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveFile(file)}
+                      className="p-1 hover:bg-purple-100 rounded-full transition-colors"
+                    >
+                      <X className="h-4 w-4 text-gray-400" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            <div className="relative flex items-center">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="继续提问..."
+                className="w-full px-6 py-4 bg-transparent text-lg focus:outline-none"
+              />
+              <div className="absolute right-3 flex gap-2">
+                <label className="cursor-pointer p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-colors">
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept=".zip,.pdf,.docx,.txt,.xlsx,.xls"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setUploadedFiles(prev => [...prev, file]);
+                        toast({
+                          title: "文件已选择",
+                          description: file.name
+                        });
+                      }
+                    }}
+                  />
+                  <Paperclip className="w-5 h-5" />
+                </label>
+                <button
+                  type="submit"
+                  className="p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                  disabled={!input.trim() && !selectedFile}
+                >
+                  <MessageSquare className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
         </form>
