@@ -26,9 +26,7 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/new" element={<Index />} />
-                <Route path="/plus" element={<NotFound />} />
-                <Route path="/mobile" element={<NotFound />} />
-                <Route path="/tiger" element={<NotFound />} />
+                <Route path="/profile" element={<NotFound />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

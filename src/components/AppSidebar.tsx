@@ -1,5 +1,4 @@
-
-import { Search, Plus, MoreVertical } from "lucide-react";
+import { Search, Plus, User } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -11,6 +10,7 @@ import {
   SidebarMenuItem,
   SidebarHeader,
   SidebarTrigger,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 
@@ -78,9 +78,9 @@ const getStatusClass = (status: string) => {
 export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
-      <SidebarHeader className="flex items-center justify-between p-4">
+      <SidebarHeader className="flex items-center gap-2 p-4">
         <span className="text-2xl font-bold text-blue-500 group-data-[state=collapsed]:hidden">
-          超级网申系统
+          SuperApply
         </span>
         <SidebarTrigger className="h-8 w-8" />
       </SidebarHeader>
@@ -142,6 +142,22 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter className="border-t border-gray-200">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="个人信息">
+              <Link 
+                to="/profile" 
+                className="flex items-center gap-2 w-full p-3 hover:bg-blue-50 rounded-lg text-gray-700"
+              >
+                <User className="w-5 h-5 text-gray-600" />
+                <span className="group-data-[state=collapsed]:hidden">个人信息</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }
