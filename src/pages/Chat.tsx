@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MessageSquare, Bot, ALargeSmall, Paperclip, File, X, Circle } from 'lucide-react';
@@ -5,10 +6,10 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import ChatSection from '@/components/ChatSection';
 import FileAnalysisSection from '@/components/FileAnalysisSection';
-import { analyzeFile, simulateProgressUpdates, AnalysisProgressUpdate } from '@/services/fileAnalysisService';
+import { analyzeFile, simulateProgressUpdates, AnalysisProgressUpdate, AnalysisResult } from '@/services/fileAnalysisService';
 import FileDropOverlay from '@/components/FileDropOverlay';
-import UploadedFileDisplay from '@/components/UploadedFileDisplay';
-import ChatFileCard from '@/components/ChatFileCard';
+import ApplicationForm from '@/components/ApplicationForm';
+import { Button } from '@/components/ui/button';
 
 interface Message {
   id: number;
@@ -22,7 +23,7 @@ interface FileAnalysis {
   file: File;
   isAnalyzing: boolean;
   progress: number;
-  result?: string;
+  result?: AnalysisResult;
 }
 
 const Chat = () => {
@@ -31,10 +32,10 @@ const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [dragActive, setDragActive] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileAnalysis, setFileAnalysis] = useState<FileAnalysis | null>(null);
   const { toast } = useToast();
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [showForm, setShowForm] = useState(false);
   
   useEffect(() => {
     const initialQuestion = location.state?.initialQuestion;
@@ -81,7 +82,13 @@ const Chat = () => {
       } : null);
       
       // Add analysis result as assistant message
-      const analysisMessage = `文件 "${file.name}" 解析完成:\n\n${result}`;
+      let analysisMessage = `文件 "${file.name}" 解析完成!\n\n`;
+      
+      if (result.documentTypes.length > 0) {
+        analysisMessage += `发现以下类型文件：${result.documentTypes.map(doc => doc.type).join('、')}\n\n`;
+        analysisMessage += result.summary;
+      }
+      
       setMessages(prev => [
         ...prev,
         {
@@ -91,6 +98,11 @@ const Chat = () => {
           visible: true
         }
       ]);
+      
+      // Show application form if we have extracted info
+      if (result.extractedInfo && Object.keys(result.extractedInfo).length > 0) {
+        setShowForm(true);
+      }
     } catch (error) {
       console.error('File analysis error:', error);
       toast({
@@ -120,6 +132,7 @@ const Chat = () => {
 
     const files = Array.from(e.dataTransfer.files);
     const allowedTypes = [
+      'application/zip',
       'application/pdf',
       'application/msword',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -133,12 +146,16 @@ const Chat = () => {
       'text/csv'
     ];
 
-    const invalidFiles = files.filter(file => !allowedTypes.includes(file.type));
+    const invalidFiles = files.filter(file => 
+      !allowedTypes.includes(file.type) && 
+      !file.name.endsWith('.zip') // Special handling for zip files
+    );
+    
     if (invalidFiles.length > 0) {
       toast({
         variant: "destructive",
         title: "文件类型不支持",
-        description: "请上传PDF、Word文档、Excel表格、PPT、图片或CSV文件"
+        description: "请上传ZIP、PDF、Word文档、Excel表格、PPT、图片或CSV文件"
       });
       return;
     }
@@ -183,13 +200,19 @@ const Chat = () => {
     
     setMessages(newMessages);
     setInput('');
-    setSelectedFile(null);
+    setUploadedFiles([]); // Clear uploaded files after sending
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (input.trim() || selectedFile) {
-      handleNewMessage(input.trim() || '已上传文件', selectedFile || undefined);
+    
+    // If there are uploaded files, send them as part of the message
+    if (uploadedFiles.length > 0) {
+      // For simplicity, we'll send the first file only
+      // In a real app, you might want to handle multiple files
+      handleNewMessage(input.trim() || '已上传文件进行解析', uploadedFiles[0]);
+    } else if (input.trim()) {
+      handleNewMessage(input.trim());
     }
   };
   
@@ -331,6 +354,29 @@ const Chat = () => {
     });
   };
   
+  // Get file status based on analysis state
+  const getFileStatus = (file: File) => {
+    if (fileAnalysis && fileAnalysis.file.name === file.name) {
+      if (fileAnalysis.isAnalyzing) return { type: 'analyzing', text: '正在解析' };
+      if (fileAnalysis.progress === 100) return { type: 'success', text: '解析完成' };
+    }
+    return { type: 'waiting', text: '等待解析' };
+  };
+
+  // Render status icon based on status type
+  const getStatusIcon = (status: { type: string, text: string }) => {
+    switch (status.type) {
+      case 'analyzing':
+        return <Loader className="h-5 w-5 text-purple-600 animate-spin" />;
+      case 'success':
+        return <CheckCircle className="h-5 w-5 text-green-600" />;
+      case 'error':
+        return <X className="h-5 w-5 text-red-600 rounded-full bg-red-100 p-1" />;
+      default:
+        return <Circle className="h-5 w-5 text-gray-400" />;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
       {/* Header */}
@@ -359,6 +405,10 @@ const Chat = () => {
         <FileDropOverlay isActive={dragActive} />
         
         <div className="space-y-6">
+          {showForm && fileAnalysis?.result?.extractedInfo && (
+            <ApplicationForm extractedInfo={fileAnalysis.result.extractedInfo} />
+          )}
+          
           {messages.map(message => 
             message.type === 'user' ? (
               <div key={message.id} className="text-right">
@@ -383,6 +433,15 @@ const Chat = () => {
               </div>
             )
           )}
+          
+          {fileAnalysis && (
+            <FileAnalysisSection 
+              file={fileAnalysis.file}
+              isAnalyzing={fileAnalysis.isAnalyzing}
+              analysisProgress={fileAnalysis.progress}
+              analysisResult={fileAnalysis.result}
+            />
+          )}
         </div>
       </div>
 
@@ -404,40 +463,49 @@ const Chat = () => {
               <div className="w-full rounded-t-lg bg-gray-50/80 backdrop-blur-sm p-4 border-b border-gray-100">
                 <h3 className="font-medium text-gray-700 mb-3">已上传的文件</h3>
                 <div className="space-y-2">
-                  {uploadedFiles.map((file, index) => (
-                    <div
-                      key={index}
-                      className="group relative flex items-center justify-between bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:border-purple-200 transition-colors"
-                    >
-                      <div className="flex items-center gap-3 flex-1">
-                        <div className="flex-shrink-0">
-                          <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
-                            <File className="h-5 w-5 text-red-600" />
+                  {uploadedFiles.map((file, index) => {
+                    const status = getFileStatus(file);
+                    return (
+                      <div
+                        key={index}
+                        className="group relative flex items-center justify-between bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:border-purple-200 transition-colors"
+                      >
+                        <div className="flex items-center gap-3 flex-1">
+                          <div className="flex-shrink-0">
+                            <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
+                              <File className="h-5 w-5 text-red-600" />
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center">
-                            <h4 className="text-sm font-medium text-gray-900 truncate pr-8">
-                              {file.name}
-                            </h4>
-                            <button
-                              onClick={() => handleRemoveFile(file)}
-                              className="absolute right-3 top-3 p-1 rounded-full hover:bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity"
-                            >
-                              <X className="h-4 w-4 text-gray-400" />
-                            </button>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center">
+                              <h4 className="text-sm font-medium text-gray-900 truncate pr-8">
+                                {file.name}
+                              </h4>
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveFile(file)}
+                                className="absolute right-3 top-3 p-1 rounded-full hover:bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <X className="h-4 w-4 text-gray-400" />
+                              </button>
+                            </div>
+                            <p className="text-xs text-gray-500 mt-0.5">
+                              {(file.size / 1024).toFixed(1)} KB
+                            </p>
                           </div>
-                          <p className="text-xs text-gray-500 mt-0.5">
-                            {(file.size / 1024).toFixed(1)} KB
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Circle className="h-5 w-5 text-gray-400" />
-                          <span className="text-sm text-gray-600">等待解析</span>
+                          <div className="flex items-center gap-2">
+                            {getStatusIcon(status)}
+                            <span className={`text-sm ${
+                              status.type === 'analyzing' ? 'text-purple-600' : 
+                              status.type === 'success' ? 'text-green-600' : 'text-gray-600'
+                            }`}>
+                              {status.text}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -447,7 +515,7 @@ const Chat = () => {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="继续提问..."
+                placeholder={uploadedFiles.length > 0 ? "点击发送开始解析文件..." : "继续提问..."}
                 className="w-full px-6 py-4 bg-transparent text-lg focus:outline-none"
               />
               <div className="absolute right-3 flex gap-2">
@@ -469,13 +537,13 @@ const Chat = () => {
                   />
                   <Paperclip className="w-5 h-5" />
                 </label>
-                <button
+                <Button
                   type="submit"
-                  className="p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                  className={`p-2 ${uploadedFiles.length > 0 ? 'bg-green-600 hover:bg-green-700' : 'bg-purple-600 hover:bg-purple-700'} text-white rounded-lg transition-colors`}
                   disabled={!input.trim() && uploadedFiles.length === 0}
                 >
                   <MessageSquare className="w-5 h-5" />
-                </button>
+                </Button>
               </div>
             </div>
           </div>

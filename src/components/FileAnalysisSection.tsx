@@ -2,12 +2,16 @@
 import React, { useEffect, useState } from 'react';
 import { File, Loader, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { DocumentType } from '@/services/fileAnalysisService';
 
 interface FileAnalysisSectionProps {
   file: File;
   isAnalyzing: boolean;
   analysisProgress: number;
-  analysisResult?: string;
+  analysisResult?: {
+    summary: string;
+    documentTypes: DocumentType[];
+  };
 }
 
 const FileAnalysisSection: React.FC<FileAnalysisSectionProps> = ({ 
@@ -27,6 +31,20 @@ const FileAnalysisSection: React.FC<FileAnalysisSectionProps> = ({
       return () => clearTimeout(timer);
     }
   }, [isAnalyzing, analysisProgress]);
+  
+  // Function to get document type icon color
+  const getDocTypeColor = (type: string) => {
+    switch (type) {
+      case '个人陈述': return 'bg-blue-100 text-blue-600';
+      case '在读证明/学位证书': return 'bg-green-100 text-green-600';
+      case '成绩单': return 'bg-yellow-100 text-yellow-600';
+      case '推荐信': return 'bg-purple-100 text-purple-600';
+      case '英语水平证书': return 'bg-indigo-100 text-indigo-600';
+      case '护照': return 'bg-red-100 text-red-600';
+      case '简历': return 'bg-orange-100 text-orange-600';
+      default: return 'bg-gray-100 text-gray-600';
+    }
+  };
   
   return (
     <div className="mb-8 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-purple-100">
@@ -61,10 +79,29 @@ const FileAnalysisSection: React.FC<FileAnalysisSectionProps> = ({
       )}
       
       {analysisResult && !isAnalyzing && (
-        <div className="mt-4 bg-purple-50 p-4 rounded-xl">
-          <h4 className="font-medium mb-2 text-purple-900">解析结果：</h4>
-          <div className="text-sm text-gray-700 whitespace-pre-wrap">{analysisResult}</div>
-        </div>
+        <>
+          <div className="mt-4 bg-purple-50 p-4 rounded-xl">
+            <h4 className="font-medium mb-2 text-purple-900">解析结果：</h4>
+            <div className="text-sm text-gray-700">{analysisResult.summary}</div>
+            
+            {analysisResult.documentTypes && analysisResult.documentTypes.length > 0 && (
+              <div className="mt-3">
+                <h4 className="font-medium mb-2 text-purple-900">文件分类：</h4>
+                <div className="flex flex-wrap gap-2">
+                  {analysisResult.documentTypes.map((doc, index) => (
+                    <div 
+                      key={index}
+                      className={cn("px-3 py-1 rounded-full text-xs font-medium", 
+                        getDocTypeColor(doc.type))}
+                    >
+                      {doc.type}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </>
       )}
     </div>
   );
