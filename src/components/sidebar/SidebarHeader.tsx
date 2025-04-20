@@ -47,41 +47,12 @@ export function SidebarHeader() {
           <Link 
             to="/new"
             className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-              bg-blue-600 hover:bg-blue-700 text-white w-full h-[42px]"
+              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]"
           >
-            <Plus className="w-6 h-6 text-white" />
+            <Plus className="w-6 h-6" />
             <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
           </Link>
         </SidebarMenuButton>
-
-        {/* Avatar section - only show when expanded */}
-        <div className="hidden group-data-[state=expanded]:flex items-center gap-4 w-full mt-2">
-          <Avatar className="w-12 h-12">
-            <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
-            <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-lg">SA</AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col">
-            <span className="text-sm font-medium">张同学</span>
-            <span className="text-xs text-gray-500">申请进度：3/5</span>
-          </div>
-        </div>
-        
-        {/* Avatar for collapsed state - centered */}
-        <div className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center items-center">
-          <Avatar className="w-10 h-10">
-            <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
-            <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-base flex items-center justify-center">SA</AvatarFallback>
-          </Avatar>
-        </div>
-
-        {/* Search Box */}
-        <div className="w-full px-2 group-data-[state=collapsed]:hidden mt-2">
-          <SidebarInput 
-            type="search"
-            placeholder="搜索申请记录..." 
-            className="w-full"
-          />
-        </div>
       </div>
     </Header>
   );
