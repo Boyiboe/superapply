@@ -24,9 +24,10 @@ const mainMenuItems = [
   },
   {
     title: "打开边栏",
-    url: "#", // Using # as this is a sidebar toggle
+    url: "#", 
     icon: Menu,
-    primary: false
+    primary: false,
+    action: "sidebar"
   }
 ];
 
@@ -100,17 +101,24 @@ export function AppSidebar() {
                     asChild
                     tooltip={item.title}
                   >
-                    <Link 
-                      to={item.url}
-                      className={`flex items-center gap-2 w-full p-3 rounded-lg text-base ${
-                        item.primary 
-                          ? 'bg-blue-400 hover:bg-blue-500 text-white' 
-                          : 'bg-blue-50 hover:bg-blue-100 text-gray-700'
-                      }`}
-                    >
-                      <item.icon className={`w-6 h-6 ${item.primary ? 'text-white' : 'text-gray-600'}`} />
-                      <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
-                    </Link>
+                    {item.action === "sidebar" ? (
+                      <SidebarTrigger 
+                        className={`flex items-center gap-2 w-full p-3 rounded-lg text-base 
+                          bg-blue-50 hover:bg-blue-100 text-gray-700`}
+                      >
+                        <item.icon className="w-6 h-6 text-gray-600" />
+                        <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
+                      </SidebarTrigger>
+                    ) : (
+                      <Link 
+                        to={item.url}
+                        className={`flex items-center gap-2 w-full p-3 rounded-lg text-base 
+                          bg-blue-400 hover:bg-blue-500 text-white`}
+                      >
+                        <item.icon className="w-6 h-6 text-white" />
+                        <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
+                      </Link>
+                    )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
