@@ -1,16 +1,18 @@
 
-import { MessageSquare, Plus, Smartphone, Timer } from "lucide-react";
+import { MessageSquare, Plus, Smartphone, Timer, MoreVertical } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 
+// Main menu items stay the same but with updated styling
 const mainMenuItems = [
   {
     title: "新建会话",
@@ -47,10 +49,29 @@ const mainMenuItems = [
   }
 ];
 
+const recentChats = {
+  today: [
+    { title: "删除项目操作指南", url: "/chat/1" },
+    { title: "超级网申Logo设计方案", url: "/chat/2" },
+  ],
+  week: [
+    { title: "李陆春学位证书及毕业证书中英文对照", url: "/chat/3" },
+    { title: "恳请调整还款安排以缓解经营压力", url: "/chat/4" },
+    { title: "英国大学网申自动化开发时间", url: "/chat/5" },
+  ],
+  month: [
+    { title: "艾臻教育科技AI智能服务转型方案", url: "/chat/6" },
+    { title: "爱尔兰教育专场活动开场白", url: "/chat/7" },
+    { title: "留学B2B机构客户线索工作流优化", url: "/chat/8" },
+    { title: "格拉斯哥网申开发工时评估", url: "/chat/9" },
+  ],
+};
+
 export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarContent>
+        {/* Main Menu Icons */}
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -62,9 +83,69 @@ export function AppSidebar() {
                   >
                     <Link 
                       to={item.url}
-                      className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100"
+                      className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100 text-gray-700"
                     >
-                      <item.icon className="w-5 h-5 text-gray-700" />
+                      <item.icon className="w-5 h-5" />
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Recent Chats - Only visible when expanded */}
+        <SidebarGroup className="hidden group-data-[state=expanded]:block mt-8">
+          <SidebarGroupLabel>今天</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {recentChats.today.map((chat) => (
+                <SidebarMenuItem key={chat.url}>
+                  <SidebarMenuButton asChild>
+                    <Link 
+                      to={chat.url}
+                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                    >
+                      <span className="truncate">{chat.title}</span>
+                      <MoreVertical className="w-4 h-4 opacity-0 group-hover:opacity-100" />
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+
+          <SidebarGroupLabel className="mt-6">7 天内</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {recentChats.week.map((chat) => (
+                <SidebarMenuItem key={chat.url}>
+                  <SidebarMenuButton asChild>
+                    <Link 
+                      to={chat.url}
+                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                    >
+                      <span className="truncate">{chat.title}</span>
+                      <MoreVertical className="w-4 h-4 opacity-0 group-hover:opacity-100" />
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+
+          <SidebarGroupLabel className="mt-6">30 天内</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {recentChats.month.map((chat) => (
+                <SidebarMenuItem key={chat.url}>
+                  <SidebarMenuButton asChild>
+                    <Link 
+                      to={chat.url}
+                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                    >
+                      <span className="truncate">{chat.title}</span>
+                      <MoreVertical className="w-4 h-4 opacity-0 group-hover:opacity-100" />
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
