@@ -21,7 +21,7 @@ const Index = () => {
           currentIndex = 0;
         }, 2000);
       }
-    }, 200); // Slightly slower for more natural typing
+    }, 100); // 加快打字速度
 
     return () => clearInterval(typingInterval);
   }, []);
@@ -86,7 +86,7 @@ const Index = () => {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               placeholder={placeholderText}
-              className="w-full px-6 py-4 text-base md:text-lg rounded-2xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 pr-12 text-gray-700 placeholder:after:content-['|'] placeholder:after:ml-0.5 placeholder:after:animate-[blink_1s_infinite]"
+              className="w-full px-6 py-4 text-[15px] rounded-2xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 pr-12 text-gray-700 placeholder:after:content-['|'] placeholder:after:ml-0.5 placeholder:after:animate-[blink_1s_infinite]"
             />
             <button
               type="submit"
