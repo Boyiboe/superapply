@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Bot } from 'lucide-react';
@@ -18,7 +19,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
       {/* Header */}
       <div className="p-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">  {/* Changed from gap-4 to gap-2 */}
           <div className="bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl p-1.5 flex items-center justify-center">
             <Bot className="w-6 h-6 text-white" />
           </div>
@@ -94,3 +95,4 @@ const Index = () => {
 };
 
 export default Index;
+
