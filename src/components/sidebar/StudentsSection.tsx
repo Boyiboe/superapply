@@ -13,6 +13,9 @@ import { Progress } from "@/components/ui/progress";
 import { recentStudents } from "@/data/sidebarData";
 
 export function StudentsSection() {
+  // Remove the second student from the list
+  const filteredStudents = recentStudents.filter((_, index) => index !== 1);
+
   return (
     <SidebarGroup className="mt-6 flex flex-col items-center">
       <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700 text-center">
@@ -34,7 +37,7 @@ export function StudentsSection() {
       
       <SidebarGroupContent>
         <SidebarMenu>
-          {recentStudents.map((student, index) => (
+          {filteredStudents.map((student, index) => (
             <SidebarMenuItem key={index}>
               <SidebarMenuButton asChild>
                 <Link 
