@@ -92,13 +92,13 @@ export function AppSidebar() {
           <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">SA</span>
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
-        <div className="flex flex-col items-center gap-2 w-full"> {/* Added items-center to center buttons */}
+        <div className="flex flex-col items-center gap-2 w-full"> 
           {mainMenuItems.map((item) => (
             <SidebarMenuButton 
               key={item.url}
               asChild
               tooltip={item.title}
-              className="w-full max-w-[200px]" // Added max-width and kept full width
+              className="w-full max-w-[200px]"
             >
               {item.action === "sidebar" ? (
                 <SidebarTrigger 
@@ -124,41 +124,6 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
-        {/* Main Actions */}
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu className="flex items-center">
-              {/*{mainMenuItems.map((item) => (*/}
-              {/*  <SidebarMenuItem key={item.url}>*/}
-              {/*    <SidebarMenuButton */}
-              {/*      asChild*/}
-              {/*      tooltip={item.title}*/}
-              {/*    >*/}
-              {/*      {item.action === "sidebar" ? (*/}
-              {/*        <SidebarTrigger */}
-              {/*          className={`flex items-center gap-2 w-full p-3 rounded-lg text-base */}
-              {/*            bg-blue-50 hover:bg-blue-100 text-gray-700`}*/}
-              {/*        >*/}
-              {/*          <item.icon className="w-6 h-6 text-gray-600" />*/}
-              {/*          <span className="group-data-[state=collapsed]:hidden">{item.title}</span>*/}
-              {/*        </SidebarTrigger>*/}
-              {/*      ) : (*/}
-              {/*        <Link */}
-              {/*          to={item.url}*/}
-              {/*          className={`flex items-center gap-2 w-full p-3 rounded-lg text-base */}
-              {/*            bg-blue-400 hover:bg-blue-500 text-white`}*/}
-              {/*        >*/}
-              {/*          <item.icon className="w-6 h-6 text-white" />*/}
-              {/*          <span className="group-data-[state=collapsed]:hidden">{item.title}</span>*/}
-              {/*        </Link>*/}
-              {/*      )}*/}
-              {/*    </SidebarMenuButton>*/}
-              {/*  </SidebarMenuItem>*/}
-              {/*))}*/}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
         {/* Application History */}
         <SidebarGroup className="mt-6">
           <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700 group-data-[state=collapsed]:hidden text-center">申请历史</SidebarGroupLabel>
@@ -172,7 +137,9 @@ export function AppSidebar() {
                       className="flex flex-col w-full p-3 gap-1 hover:bg-blue-50 rounded-lg group-data-[state=collapsed]:p-2 text-center"
                     >
                       <div className="flex items-center justify-center w-full">
+                        {/* Show only first character of university name when collapsed */}
                         <span className="font-medium text-gray-800 group-data-[state=collapsed]:hidden">{app.university}</span>
+                        <span className="font-medium text-gray-800 hidden group-data-[state=collapsed]:inline">{app.university.charAt(0)}</span>
                         <span className={`ml-2 px-2 py-0.5 text-xs rounded-full ${getStatusClass(app.status)}`}>
                           {app.status}
                         </span>
