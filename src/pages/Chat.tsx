@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MessageSquare, Bot } from 'lucide-react';
@@ -182,9 +181,9 @@ const Chat = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
-      {/* Header - Updated with Index page styling */}
-      <div className="p-4">
-        <div className="max-w-4xl mx-auto">
+      {/* Header - Updated to be fully left-aligned */}
+      <div className="p-4 fixed top-0 left-0 right-0 z-10 bg-white/80 backdrop-blur-sm">
+        <div className="max-w-full px-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
             <div className="bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl p-1.5 flex items-center justify-center">
               <Bot className="w-6 h-6 text-white" />
@@ -197,8 +196,8 @@ const Chat = () => {
         </div>
       </div>
 
-      {/* Chat Messages - Adjusted spacing */}
-      <div className="max-w-4xl mx-auto px-4 py-4 mb-20">
+      {/* Chat Messages - Adjusted for header positioning */}
+      <div className="max-w-4xl mx-auto px-4 py-4 mb-20 pt-20">
         <div className="space-y-6">
           {messages.map(message => 
             message.type === 'user' ? (
@@ -220,7 +219,7 @@ const Chat = () => {
         </div>
       </div>
 
-      {/* Input Form */}
+      {/* Input Form - Adjusted for header positioning */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
         <form onSubmit={(e) => {
           e.preventDefault();
@@ -250,4 +249,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
