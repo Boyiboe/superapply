@@ -82,22 +82,23 @@ const Index = () => {
         </form>
 
         <div className="flex flex-wrap justify-center gap-2 mt-8">
-          {[
-            "*个人陈述（PS）模版",
-            "*在读证明模版",
-            "*学位证书/毕业证书及翻译件模版",
-            "*成绩单及翻译件模版",
-            "*推荐信模版",
-            "*英语水平证书（IELTS/TOEFL或其他证书）"
-          ].map((tag, index) => (
-            <span 
-              key={index} 
-              className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+        <div className="w-full text-center text-blue-800 mb-2">星号文件为必传文件</div>
+        {[
+          "*个人陈述（PS）",
+          "*在读证明",
+          "*学位证书/毕业证书及翻译件",
+          "*成绩单及翻译件",
+          "*推荐信",
+          "*英语水平证书（IELTS/TOEFL或其他证书）"
+        ].map((tag, index) => (
+          <span 
+            key={index} 
+            className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
       </div>
     </div>
   );
