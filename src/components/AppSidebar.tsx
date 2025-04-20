@@ -26,7 +26,7 @@ const mainMenuItems = [
     title: "打开边栏",
     url: "#", 
     icon: Menu,
-    primary: false,
+    primary: true,  // Changed to primary: true
     action: "sidebar"
   }
 ];
@@ -85,9 +85,34 @@ export function AppSidebar() {
           <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">SA</span>
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
-        <SidebarTrigger className="ml-auto h-8 w-8 group-data-[state=collapsed]:h-10 group-data-[state=collapsed]:w-10 group-data-[state=collapsed]:bg-blue-50 group-data-[state=collapsed]:hover:bg-blue-100 group-data-[state=collapsed]:rounded-lg">
-          <Menu className="w-6 h-6 text-gray-600" />
-        </SidebarTrigger>
+        <div className="ml-auto flex gap-2">
+          {mainMenuItems.map((item) => (
+            <SidebarMenuButton 
+              key={item.url}
+              asChild
+              tooltip={item.title}
+            >
+              {item.action === "sidebar" ? (
+                <SidebarTrigger 
+                  className={`flex items-center gap-2 p-3 rounded-lg text-base 
+                    bg-blue-400 hover:bg-blue-500 text-white`}
+                >
+                  <item.icon className="w-6 h-6 text-white" />
+                  <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
+                </SidebarTrigger>
+              ) : (
+                <Link 
+                  to={item.url}
+                  className={`flex items-center gap-2 p-3 rounded-lg text-base 
+                    bg-blue-400 hover:bg-blue-500 text-white`}
+                >
+                  <item.icon className="w-6 h-6 text-white" />
+                  <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
+                </Link>
+              )}
+            </SidebarMenuButton>
+          ))}
+        </div>
       </SidebarHeader>
 
       <SidebarContent>
@@ -95,33 +120,33 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {mainMenuItems.map((item) => (
-                <SidebarMenuItem key={item.url}>
-                  <SidebarMenuButton 
-                    asChild
-                    tooltip={item.title}
-                  >
-                    {item.action === "sidebar" ? (
-                      <SidebarTrigger 
-                        className={`flex items-center gap-2 w-full p-3 rounded-lg text-base 
-                          bg-blue-50 hover:bg-blue-100 text-gray-700`}
-                      >
-                        <item.icon className="w-6 h-6 text-gray-600" />
-                        <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
-                      </SidebarTrigger>
-                    ) : (
-                      <Link 
-                        to={item.url}
-                        className={`flex items-center gap-2 w-full p-3 rounded-lg text-base 
-                          bg-blue-400 hover:bg-blue-500 text-white`}
-                      >
-                        <item.icon className="w-6 h-6 text-white" />
-                        <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
-                      </Link>
-                    )}
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {/*{mainMenuItems.map((item) => (*/}
+              {/*  <SidebarMenuItem key={item.url}>*/}
+              {/*    <SidebarMenuButton */}
+              {/*      asChild*/}
+              {/*      tooltip={item.title}*/}
+              {/*    >*/}
+              {/*      {item.action === "sidebar" ? (*/}
+              {/*        <SidebarTrigger */}
+              {/*          className={`flex items-center gap-2 w-full p-3 rounded-lg text-base */}
+              {/*            bg-blue-50 hover:bg-blue-100 text-gray-700`}*/}
+              {/*        >*/}
+              {/*          <item.icon className="w-6 h-6 text-gray-600" />*/}
+              {/*          <span className="group-data-[state=collapsed]:hidden">{item.title}</span>*/}
+              {/*        </SidebarTrigger>*/}
+              {/*      ) : (*/}
+              {/*        <Link */}
+              {/*          to={item.url}*/}
+              {/*          className={`flex items-center gap-2 w-full p-3 rounded-lg text-base */}
+              {/*            bg-blue-400 hover:bg-blue-500 text-white`}*/}
+              {/*        >*/}
+              {/*          <item.icon className="w-6 h-6 text-white" />*/}
+              {/*          <span className="group-data-[state=collapsed]:hidden">{item.title}</span>*/}
+              {/*        </Link>*/}
+              {/*      )}*/}
+              {/*    </SidebarMenuButton>*/}
+              {/*  </SidebarMenuItem>*/}
+              {/*))}*/}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
