@@ -66,7 +66,7 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({ className }) => {
     >
       <input
         type="text"
-        placeholder="输入你的问题，帮你深度解答"
+        placeholder="快速上传学生材料，无需填写一键生成申请表"
         className="w-full px-6 py-6 text-lg rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 pr-24"
       />
       <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-2">
