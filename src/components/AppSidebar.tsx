@@ -123,6 +123,7 @@ export function AppSidebar() {
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
         <div className="flex flex-col items-center gap-2 w-full"> 
+          {/* Open Sidebar Button - Updated to match New Application exactly */}
           <SidebarMenuButton 
             tooltip="打开边栏"
             className="w-full max-w-[200px]"
@@ -144,7 +145,7 @@ export function AppSidebar() {
             <Link 
               to="/new"
               className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-                bg-blue-400 hover:bg-blue-500 text-white w-full"
+                bg-blue-400 hover:bg-blue-500 text-white w-full max-w-[200px] h-[42px]"
             >
               <Plus className="w-6 h-6 text-white" />
               <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
