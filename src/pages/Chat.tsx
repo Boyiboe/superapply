@@ -66,8 +66,13 @@ const Chat = () => {
                 <span className="text-white text-xs">AI</span>
               </div>
               <div className="flex-1">
-                <p className="text-gray-600 mb-4 font-bold">留学管家</p>
-                <div className="flex gap-2 items-start">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-xs">AI</span>
+                  </div>
+                  <p className="text-gray-600 font-bold">留学管家</p>
+                </div>
+                <div className="flex gap-2 items-start mt-4">
                   <div className="flex-1">
                     <p className="text-gray-600">
                       用户问题是：我是浙江大学大四的学生，计算机专业计划明年去英国或者美国留学，可以申请到哪些学校？

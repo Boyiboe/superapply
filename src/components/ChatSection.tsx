@@ -44,4 +44,3 @@ const ChatSection = ({ title, content, delay, icon = "loader" }: ChatSectionProp
 };
 
 export default ChatSection;
-
