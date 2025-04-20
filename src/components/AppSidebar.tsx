@@ -1,4 +1,3 @@
-
 import { Search, Plus, User, Menu } from "lucide-react";
 import {
   Sidebar,
@@ -124,35 +123,35 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
-        {/* Application History */}
-        <SidebarGroup className="mt-6">
-          <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700 group-data-[state=collapsed]:hidden text-center">申请历史</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {recentApplications.map((app, index) => (
-                <SidebarMenuItem key={index}>
-                  <SidebarMenuButton asChild>
-                    <Link 
-                      to={`/application/${index}`}
-                      className="flex flex-col w-full p-3 gap-1 hover:bg-blue-50 rounded-lg group-data-[state=collapsed]:p-2 text-center"
-                    >
-                      <div className="flex items-center justify-center w-full">
-                        {/* Show only first character of university name when collapsed */}
-                        <span className="font-medium text-gray-800 group-data-[state=collapsed]:hidden">{app.university}</span>
-                        <span className="font-medium text-gray-800 hidden group-data-[state=collapsed]:inline">{app.university.charAt(0)}</span>
-                        <span className={`ml-2 px-2 py-0.5 text-xs rounded-full ${getStatusClass(app.status)}`}>
-                          {app.status}
-                        </span>
-                      </div>
-                      <span className="text-sm text-gray-600 group-data-[state=collapsed]:hidden">{app.major}</span>
-                      <span className="text-xs text-gray-500 group-data-[state=collapsed]:hidden">{app.time}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {/* Application History - Only visible when sidebar is expanded */}
+        <div className="group-data-[state=collapsed]:hidden">
+          <SidebarGroup className="mt-6">
+            <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700 text-center">申请历史</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {recentApplications.map((app, index) => (
+                  <SidebarMenuItem key={index}>
+                    <SidebarMenuButton asChild>
+                      <Link 
+                        to={`/application/${index}`}
+                        className="flex flex-col w-full p-3 gap-1 hover:bg-blue-50 rounded-lg text-center"
+                      >
+                        <div className="flex items-center justify-center w-full">
+                          <span className="font-medium text-gray-800">{app.university}</span>
+                          <span className={`ml-2 px-2 py-0.5 text-xs rounded-full ${getStatusClass(app.status)}`}>
+                            {app.status}
+                          </span>
+                        </div>
+                        <span className="text-sm text-gray-600">{app.major}</span>
+                        <span className="text-xs text-gray-500">{app.time}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </div>
       </SidebarContent>
 
       <SidebarFooter className="border-t border-gray-200">
