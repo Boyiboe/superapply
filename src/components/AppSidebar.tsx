@@ -160,7 +160,7 @@ export function AppSidebar() {
           >
             <Link 
               to="/current-student"
-              className="flex flex-col items-center p-4 rounded-lg text-base hover:bg-gray-100 w-full h-48"
+              className="flex flex-col items-center p-4 rounded-lg text-base hover:bg-gray-100 w-full h-[26px]"
             >
               <div className="flex items-center gap-3 w-full mb-4">
                 <CircleCheck className="w-8 h-8 text-blue-500" />
