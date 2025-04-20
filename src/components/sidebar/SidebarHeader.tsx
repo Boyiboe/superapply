@@ -1,9 +1,9 @@
-import { Menu, Plus } from "lucide-react";
+
+import { Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   SidebarHeader as Header,
   SidebarMenuButton,
-  SidebarTrigger,
   SidebarInput
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -17,7 +17,6 @@ export function SidebarHeader() {
       </div>
       
       <div className="flex flex-col items-center gap-2 w-full">
-        {/* User Profile - Now Horizontal */}
         <div className="flex items-center gap-4 w-full mb-2 group-data-[state=collapsed]:hidden">
           <Avatar className="w-12 h-12">
             <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
@@ -28,20 +27,6 @@ export function SidebarHeader() {
             <span className="text-xs text-gray-500">申请进度：3/5</span>
           </div>
         </div>
-
-        {/* Open Sidebar Button */}
-        <SidebarMenuButton 
-          tooltip="打开边栏"
-          className="w-full max-w-[200px]"
-        >
-          <SidebarTrigger 
-            className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-              bg-blue-500 hover:bg-blue-600 text-white w-full max-w-[200px] h-[42px] group-data-[state=collapsed]:h-[42px] group-data-[state=collapsed]:w-[42px]"
-          >
-            <Menu className="w-6 h-6 text-white" />
-            <span className="group-data-[state=collapsed]:hidden">打开边栏</span>
-          </SidebarTrigger>
-        </SidebarMenuButton>
         
         {/* New Application Button - Updated Style */}
         <SidebarMenuButton 
@@ -72,3 +57,4 @@ export function SidebarHeader() {
     </Header>
   );
 }
+
