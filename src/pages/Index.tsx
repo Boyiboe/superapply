@@ -51,9 +51,7 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 py-12 text-center">
-        {/* Avatar Section */}
         <div className="mb-12">
           <Avatar className="w-32 h-32 mx-auto mb-4">
             <AvatarFallback 
@@ -64,29 +62,25 @@ const Index = () => {
           </Avatar>
         </div>
 
-        {/* Title Section */}
         <h2 className="text-2xl font-bold mb-2 text-blue-800">Hi，我是小艾，您的超级智能网申管家</h2>
         <p className="text-blue-600 mb-8">一站式轻松生成申请表，一键完成网申</p>
 
-        {/* Example Query Section */}
         <div className="flex justify-center mb-4">
           <div className="flex items-center gap-2 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] p-4 rounded-xl text-left shadow-sm relative overflow-hidden">
             <FileUp className="w-5 h-5 text-white flex-shrink-0" />
             <p className="text-white text-sm">
-              以下是材料模版，可下载使用，您上传的材料需要包含如下标星号的文件
+              拖动您的学生材料快速上传，支持ZIP压缩包，PDF，DOCX，txt、xlsx、 xls等文件
             </p>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_2s_infinite] -skew-x-12" />
           </div>
         </div>
 
-        {/* Input Form with enhanced animations and file upload */}
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mb-8 group">
           <div className="relative w-[898px] mx-auto">
             <FileUploadZone />
           </div>
         </form>
 
-        {/* Question Tags */}
         <div className="flex flex-wrap justify-center gap-2 mt-8">
           {[
             "*个人陈述（PS）模版",
