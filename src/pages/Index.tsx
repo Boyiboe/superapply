@@ -1,6 +1,7 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Bot, Sparkles } from 'lucide-react';
+import { ArrowRight, Bot, Sparkles, UserRound } from 'lucide-react';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const Index = () => {
@@ -37,9 +38,9 @@ const Index = () => {
         <div className="mb-12">
           <Avatar className="w-32 h-32 mx-auto mb-4">
             <AvatarFallback 
-              className="w-full h-full bg-gradient-to-br from-[#7E69AB] to-[#D6BCFA] flex items-center justify-center text-white text-2xl font-bold"
+              className="w-full h-full bg-gradient-to-br from-[#7E69AB] to-[#D6BCFA] flex items-center justify-center text-white"
             >
-              Eva
+              <UserRound className="w-16 h-16 animate-pulse" />
             </AvatarFallback>
           </Avatar>
         </div>
@@ -50,11 +51,12 @@ const Index = () => {
 
         {/* Example Query Section */}
         <div className="flex justify-center mb-4">
-          <div className="flex items-center gap-2 bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] p-4 rounded-xl text-left shadow-sm">
+          <div className="flex items-center gap-2 bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] p-4 rounded-xl text-left shadow-sm relative overflow-hidden">
             <Sparkles className="w-5 h-5 text-white flex-shrink-0" />
             <p className="text-white text-sm">
               我是浙江大学计算机专业，均分85分，想要申请英美大学...求推荐！
             </p>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_2s_infinite] -skew-x-12" />
           </div>
         </div>
 
