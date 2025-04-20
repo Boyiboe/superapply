@@ -1,4 +1,4 @@
-import { Search, Plus, User, Menu } from "lucide-react";
+import { Search, Plus, User, Menu, CircleCheck } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -13,6 +13,7 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar";
 import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 
 // Main menu items with updated order
@@ -29,6 +30,18 @@ const mainMenuItems = [
     url: "/new",
     icon: Plus,
     primary: true
+  },
+  {
+    // Add current student progress menu item
+    title: "当前学生",
+    url: "/current-student",
+    icon: CircleCheck,
+    primary: true,
+    progress: {
+      name: "张同学",
+      current: 3,
+      total: 5
+    }
   },
   {
     title: "搜索学生",
@@ -131,6 +144,27 @@ export function AppSidebar() {
                   <item.icon className="w-6 h-6 text-white" />
                   <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
                 </SidebarTrigger>
+              ) : item.progress ? (
+                <Link 
+                  to={item.url}
+                  className="flex items-center justify-between gap-2 p-3 rounded-lg text-base hover:bg-gray-100 w-full"
+                >
+                  <div className="flex items-center gap-2">
+                    <item.icon className="w-6 h-6 text-blue-500" />
+                    <div className="group-data-[state=collapsed]:hidden flex flex-col">
+                      <span className="font-medium text-gray-900">{item.progress.name}</span>
+                      <span className="text-sm text-gray-500">
+                        申请进度：{item.progress.current}/{item.progress.total}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="group-data-[state=collapsed]:hidden w-24">
+                    <Progress 
+                      value={(item.progress.current / item.progress.total) * 100} 
+                      className="h-2"
+                    />
+                  </div>
+                </Link>
               ) : (
                 <Link 
                   to={item.url}
