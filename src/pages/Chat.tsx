@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MessageSquare, Bot, UserRound } from 'lucide-react';
@@ -190,8 +189,8 @@ const Chat = () => {
               <Bot className="w-6 h-6 text-white" />
             </div>
             <div className="text-2xl font-bold bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] bg-clip-text text-transparent">
-              <span>Ed</span>
-              <span>mate</span>
+              <span>Super</span>
+              <span>Apply</span>
             </div>
           </div>
         </div>
