@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, Bot } from 'lucide-react';
+import { MessageSquare, Bot, ALargeSmall } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import ChatSection from '@/components/ChatSection';
 
@@ -212,11 +212,10 @@ const Chat = () => {
             ) : (
               <div key={message.id} className="text-left flex items-start gap-2">
                 <Avatar className="w-8 h-8">
-                  <AvatarImage src="/logo.png" alt="SuperApply Logo" />
                   <AvatarFallback 
-                    className="w-full h-full bg-white flex items-center justify-center"
+                    className="w-full h-full bg-gradient-to-br from-[#6E59A5] to-[#9b87f5] flex items-center justify-center text-white"
                   >
-                    <img src="/logo.png" alt="SuperApply Logo" className="w-full h-full object-contain" />
+                    <ALargeSmall className="w-5 h-5" />
                   </AvatarFallback>
                 </Avatar>
                 <div className="inline-block max-w-[80%] px-6 py-4 rounded-2xl bg-white text-gray-800 shadow-sm">
