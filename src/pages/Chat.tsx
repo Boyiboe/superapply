@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, Bot, ALargeSmall, Paperclip, File, X, Circle } from 'lucide-react';
+import { MessageSquare, Bot, ALargeSmall, Paperclip, File, X, Circle, Loader, CheckCircle } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import ChatSection from '@/components/ChatSection';
