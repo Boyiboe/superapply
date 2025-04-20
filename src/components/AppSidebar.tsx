@@ -133,13 +133,13 @@ export function AppSidebar() {
               {item.progress ? (
                 <Link 
                   to={item.url}
-                  className="flex flex-col items-center p-4 rounded-lg text-base hover:bg-gray-100 w-full h-48" // Increased height to h-48
+                  className="flex flex-col items-center p-4 rounded-lg text-base hover:bg-gray-100 w-full h-48"
                 >
                   <div className="flex items-center gap-3 w-full mb-4">
-                    <item.icon className="w-12 h-12 text-blue-500" /> {/* Increased icon size */}
+                    <item.icon className="w-10 h-10 text-blue-500" /> {/* Reduced icon size */}
                     <div className="group-data-[state=collapsed]:hidden flex flex-col flex-1">
-                      <span className="font-medium text-gray-900 text-2xl">{item.progress.name}</span>
-                      <span className="text-base font-medium text-gray-500 mt-1">
+                      <span className="font-medium text-gray-900 text-xl">{item.progress.name}</span> {/* Reduced font size by ~20% */}
+                      <span className="text-sm font-medium text-gray-500 mt-1">
                         申请进度：{item.progress.current}/{item.progress.total}
                       </span>
                     </div>
@@ -147,7 +147,7 @@ export function AppSidebar() {
                   <div className="group-data-[state=collapsed]:hidden w-full">
                     <Progress 
                       value={(item.progress.current / item.progress.total) * 100} 
-                      className="h-6 w-full" // Increased progress bar height
+                      className="h-6 w-full"
                     />
                   </div>
                 </Link>
