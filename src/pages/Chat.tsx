@@ -4,6 +4,8 @@ import { MessageSquare, Bot, ALargeSmall, Paperclip } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import ChatSection from '@/components/ChatSection';
+import FileAnalysisSection from '@/components/FileAnalysisSection';
+import { analyzeFile, simulateProgressUpdates, AnalysisProgressUpdate } from '@/services/fileAnalysisService';
 
 interface Message {
   id: number;
@@ -13,6 +15,13 @@ interface Message {
   file?: File;
 }
 
+interface FileAnalysis {
+  file: File;
+  isAnalyzing: boolean;
+  progress: number;
+  result?: string;
+}
+
 const Chat = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -20,6 +29,7 @@ const Chat = () => {
   const [input, setInput] = useState('');
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [fileAnalysis, setFileAnalysis] = useState<FileAnalysis | null>(null);
   const { toast } = useToast();
   
   useEffect(() => {
@@ -27,7 +37,67 @@ const Chat = () => {
     if (initialQuestion) {
       handleNewMessage(initialQuestion);
     }
-  }, []);
+  }, [location.state]);
+
+  useEffect(() => {
+    // Start analysis when a file is sent in a message
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage?.file && lastMessage.type === 'user') {
+      startFileAnalysis(lastMessage.file);
+    }
+  }, [messages]);
+
+  const startFileAnalysis = async (file: File) => {
+    setFileAnalysis({
+      file,
+      isAnalyzing: true,
+      progress: 0
+    });
+    
+    // Start progress updates simulation
+    const analysisTime = Math.min(Math.max(file.size / 1024, 3), 10) * 1000;
+    const cancelProgress = simulateProgressUpdates(
+      (update: AnalysisProgressUpdate) => {
+        setFileAnalysis(prev => prev ? {
+          ...prev,
+          progress: update.progress
+        } : null);
+      },
+      analysisTime
+    );
+    
+    // Perform actual analysis
+    try {
+      const result = await analyzeFile(file);
+      setFileAnalysis(prev => prev ? {
+        ...prev,
+        isAnalyzing: false,
+        progress: 100,
+        result
+      } : null);
+      
+      // Add analysis result as assistant message
+      const analysisMessage = `文件 "${file.name}" 解析完成:\n\n${result}`;
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now(),
+          content: analysisMessage,
+          type: 'assistant',
+          visible: true
+        }
+      ]);
+    } catch (error) {
+      console.error('File analysis error:', error);
+      toast({
+        variant: "destructive",
+        title: "文件解析失败",
+        description: "请重新上传或尝试其他文件"
+      });
+    } finally {
+      cancelProgress();
+    }
+  };
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -86,20 +156,23 @@ const Chat = () => {
       },
     ];
     
-    if (content.includes('浙江大学') && content.includes('留学')) {
-      newMessages.push({
-        id: Date.now() + 1,
-        content: 'analysis',
-        type: 'assistant',
-        visible: true
-      });
-    } else {
-      newMessages.push({
-        id: Date.now() + 1,
-        content: '感谢您的提问！我是Eva，您的AI留学顾问。我会根据您的具体情况为您提供专业的建议。',
-        type: 'assistant',
-        visible: true
-      });
+    if (!file) {
+      // Only add automatic response if there's no file (file analysis will add its own response)
+      if (content.includes('浙江大学') && content.includes('留学')) {
+        newMessages.push({
+          id: Date.now() + 1,
+          content: 'analysis',
+          type: 'assistant',
+          visible: true
+        });
+      } else {
+        newMessages.push({
+          id: Date.now() + 1,
+          content: '感谢您的提问！我是Eva，您的AI留学顾问。我会根据您的具体情况为您提供专业的建议。',
+          type: 'assistant',
+          visible: true
+        });
+      }
     }
     
     setMessages(newMessages);
@@ -113,7 +186,7 @@ const Chat = () => {
       handleNewMessage(input.trim() || '已上传文件', selectedFile || undefined);
     }
   };
-
+  
   const renderAssistantResponse = () => {
     if (messages.length === 0) return null;
     
@@ -243,7 +316,7 @@ const Chat = () => {
       </div>
     );
   };
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
       {/* Header */}
@@ -264,6 +337,15 @@ const Chat = () => {
       {/* Chat Messages */}
       <div className="max-w-4xl mx-auto px-4 py-4 mb-20 pt-20">
         <div className="space-y-6">
+          {fileAnalysis && (
+            <FileAnalysisSection
+              file={fileAnalysis.file}
+              isAnalyzing={fileAnalysis.isAnalyzing}
+              analysisProgress={fileAnalysis.progress}
+              analysisResult={fileAnalysis.result}
+            />
+          )}
+          
           {messages.map(message => 
             message.type === 'user' ? (
               <div key={message.id} className="text-right">
@@ -282,7 +364,7 @@ const Chat = () => {
                     <ALargeSmall className="w-5 h-5" />
                   </AvatarFallback>
                 </Avatar>
-                <div className="inline-block max-w-[80%] px-6 py-4 rounded-2xl bg-white text-gray-800 shadow-sm">
+                <div className="inline-block max-w-[80%] px-6 py-4 rounded-2xl bg-white text-gray-800 shadow-sm whitespace-pre-wrap">
                   {message.content}
                 </div>
               </div>
