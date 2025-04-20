@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import {
   SidebarHeader as Header,
   SidebarMenuButton,
-  SidebarInput,
   SidebarTrigger
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -51,6 +50,38 @@ export function SidebarHeader() {
           >
             <Plus className="w-6 h-6" />
             <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
+          </Link>
+        </SidebarMenuButton>
+
+        {/* Avatar for expanded state - with details */}
+        <SidebarMenuButton 
+          asChild
+          tooltip="查看学生详情"
+          className="hidden group-data-[state=expanded]:flex w-full"
+        >
+          <Link to="/profile" className="flex items-center gap-4 w-full">
+            <Avatar className="w-12 h-12">
+              <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
+              <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-lg">SA</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="text-sm font-medium">张同学</span>
+              <span className="text-xs text-gray-500">申请进度：3/5</span>
+            </div>
+          </Link>
+        </SidebarMenuButton>
+        
+        {/* Avatar for collapsed state - centered */}
+        <SidebarMenuButton 
+          asChild
+          tooltip="查看学生详情"
+          className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center"
+        >
+          <Link to="/profile" className="flex justify-center">
+            <Avatar className="w-10 h-10">
+              <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
+              <AvatarFallback className="bg-[#33C3F0] text-white font-bold text-base flex items-center justify-center">SA</AvatarFallback>
+            </Avatar>
           </Link>
         </SidebarMenuButton>
       </div>
