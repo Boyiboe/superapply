@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, Bot, ALargeSmall } from 'lucide-react';
+import { MessageSquare, Bot, ALargeSmall, Paperclip } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useToast } from "@/hooks/use-toast";
 import ChatSection from '@/components/ChatSection';
 
 interface Message {
@@ -9,6 +10,7 @@ interface Message {
   content: string;
   type: 'user' | 'assistant';
   visible: boolean;
+  file?: File;
 }
 
 const Chat = () => {
@@ -16,6 +18,9 @@ const Chat = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const [dragActive, setDragActive] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const { toast } = useToast();
   
   useEffect(() => {
     const initialQuestion = location.state?.initialQuestion;
@@ -24,10 +29,61 @@ const Chat = () => {
     }
   }, []);
 
-  const handleNewMessage = (content: string) => {
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+
+    const files = Array.from(e.dataTransfer.files);
+    if (files.length > 0) {
+      const file = files[0];
+      const allowedTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'text/plain',
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/zip'
+      ];
+
+      if (!allowedTypes.includes(file.type)) {
+        toast({
+          variant: "destructive",
+          title: "文件类型不支持",
+          description: "请上传ZIP、PDF、DOCX、TXT、XLSX或XLS文件"
+        });
+        return;
+      }
+
+      setSelectedFile(file);
+      toast({
+        title: "文件已选择",
+        description: file.name
+      });
+    }
+  };
+
+  const handleNewMessage = (content: string, file?: File) => {
     const newMessages: Message[] = [
       ...messages,
-      { id: Date.now(), content, type: 'user', visible: true },
+      { 
+        id: Date.now(), 
+        content: file ? `${content} [文件: ${file.name}]` : content, 
+        type: 'user', 
+        visible: true,
+        file 
+      },
     ];
     
     if (content.includes('浙江大学') && content.includes('留学')) {
@@ -48,6 +104,14 @@ const Chat = () => {
     
     setMessages(newMessages);
     setInput('');
+    setSelectedFile(null);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (input.trim() || selectedFile) {
+      handleNewMessage(input.trim() || '已上传文件', selectedFile || undefined);
+    }
   };
 
   const renderAssistantResponse = () => {
@@ -229,26 +293,52 @@ const Chat = () => {
 
       {/* Input Form */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          if (input.trim()) {
-            handleNewMessage(input);
-          }
-        }} className="max-w-4xl mx-auto">
-          <div className="relative">
+        <form 
+          onSubmit={handleSubmit} 
+          onDragEnter={handleDrag}
+          className="max-w-4xl mx-auto"
+        >
+          <div 
+            className={`relative ${dragActive ? 'ring-2 ring-purple-400' : ''}`}
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
+          >
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="继续提问..."
-              className="w-full px-6 py-4 text-lg rounded-2xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 pr-12"
+              placeholder={selectedFile ? `已选择文件: ${selectedFile.name}` : "继续提问..."}
+              className="w-full px-6 py-4 text-lg rounded-2xl border border-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-400 pr-24"
             />
-            <button
-              type="submit"
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              <MessageSquare className="w-5 h-5" />
-            </button>
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-2">
+              <label className="cursor-pointer p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-colors">
+                <input
+                  type="file"
+                  className="hidden"
+                  accept=".zip,.pdf,.docx,.txt,.xlsx,.xls"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      setSelectedFile(file);
+                      toast({
+                        title: "文件已选择",
+                        description: file.name
+                      });
+                    }
+                  }}
+                />
+                <Paperclip className="w-5 h-5" />
+              </label>
+              <button
+                type="submit"
+                className="p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                disabled={!input.trim() && !selectedFile}
+              >
+                <MessageSquare className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </form>
       </div>
