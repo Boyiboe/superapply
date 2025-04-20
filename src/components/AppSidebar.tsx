@@ -181,9 +181,15 @@ export function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
 
-          {/* Recent Students Section */}
+          {/* Recent Students Section - Updated styling */}
           <SidebarGroup className="mt-6">
-            <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700 text-center">我递交的学生</SidebarGroupLabel>
+            <SidebarMenuButton asChild tooltip="我递交的学生">
+              <div className={`flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+                bg-blue-400 text-white w-full mx-3`}>
+                <User className="w-6 h-6 text-white" />
+                <span>我递交的学生</span>
+              </div>
+            </SidebarMenuButton>
             <SidebarGroupContent>
               <SidebarMenu>
                 {recentStudents.map((student, index) => (
@@ -191,16 +197,15 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild>
                       <Link 
                         to={`/student/${index}`}
-                        className={`flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-                          bg-blue-400 hover:bg-blue-500 text-white w-full`}
+                        className="flex flex-col w-full p-3 gap-1 hover:bg-blue-50 rounded-lg text-center"
                       >
-                        <div className="flex flex-col items-center w-full">
-                          <div className="flex justify-between w-full mb-2">
-                            <span className="font-medium">{student.name}</span>
-                            <span className="text-xs">{student.status}</span>
-                          </div>
-                          <Progress value={student.progress} className="h-2 bg-white/30" />
+                        <div className="flex items-center justify-center w-full">
+                          <span className="font-medium text-gray-800">{student.name}</span>
+                          <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-800">
+                            {student.status}
+                          </span>
                         </div>
+                        <Progress value={student.progress} className="h-2 mt-2" />
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
