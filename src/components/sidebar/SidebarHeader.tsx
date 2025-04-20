@@ -17,6 +17,9 @@ export function SidebarHeader() {
           <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">SA</span>
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
+        <SidebarTrigger className="p-1 rounded-lg hover:bg-gray-100">
+          <ChevronLeft className="w-5 h-5" />
+        </SidebarTrigger>
       </div>
       
       <div className="flex flex-col items-center gap-2 w-full">
@@ -40,29 +43,22 @@ export function SidebarHeader() {
           </Avatar>
         </div>
 
-        <div className="flex gap-2 w-full max-w-[200px]">
-          {/* Toggle Sidebar Button */}
-          <SidebarTrigger className="flex items-center justify-center p-3 rounded-lg hover:bg-gray-100 h-[42px] w-[42px]">
-            <ChevronLeft className="w-5 h-5" />
-          </SidebarTrigger>
-          
-          {/* New Application Button */}
-          <SidebarMenuButton 
-            key="/new"
-            asChild
-            tooltip="开启新申请"
-            className="flex-1"
+        {/* New Application Button - Updated Style */}
+        <SidebarMenuButton 
+          key="/new"
+          asChild
+          tooltip="开启新申请"
+          className="w-full max-w-[200px]"
+        >
+          <Link 
+            to="/new"
+            className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+              bg-blue-600 hover:bg-blue-700 text-white w-full h-[42px]"
           >
-            <Link 
-              to="/new"
-              className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-                bg-blue-600 hover:bg-blue-700 text-white w-full h-[42px]"
-            >
-              <Plus className="w-6 h-6 text-white" />
-              <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
-            </Link>
-          </SidebarMenuButton>
-        </div>
+            <Plus className="w-6 h-6 text-white" />
+            <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
+          </Link>
+        </SidebarMenuButton>
 
         {/* Search Box */}
         <div className="w-full px-2 group-data-[state=collapsed]:hidden mt-2">
