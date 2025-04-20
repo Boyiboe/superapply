@@ -1,5 +1,4 @@
-
-import { Search, Plus, User } from "lucide-react";
+import { Search, Plus, User, Menu } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -24,9 +23,10 @@ const mainMenuItems = [
     primary: true
   },
   {
-    title: "搜索申请记录",
-    url: "/chat",
-    icon: Search,
+    title: "打开边栏",
+    url: "#", // Using # as this is a sidebar toggle
+    icon: Menu,
+    primary: false
   }
 ];
 
@@ -80,14 +80,9 @@ export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarHeader className="flex items-center gap-2 p-4">
-        <img 
-          src="/logo.png" 
-          alt="Logo" 
-          className="h-8 w-8"
-        />
-        <span className="text-2xl font-bold text-blue-500 group-data-[state=collapsed]:hidden">
-          SuperApply
-        </span>
+        <div className="text-2xl font-bold text-blue-500 group-data-[state=collapsed]:hidden">
+          SA
+        </div>
         <SidebarTrigger className="ml-auto h-8 w-8" />
       </SidebarHeader>
 
@@ -107,7 +102,7 @@ export function AppSidebar() {
                       className={`flex items-center gap-2 w-full p-3 rounded-lg text-base ${
                         item.primary 
                           ? 'bg-blue-400 hover:bg-blue-500 text-white' 
-                          : 'hover:bg-blue-50 text-gray-700'
+                          : 'bg-blue-50 hover:bg-blue-100 text-gray-700'
                       }`}
                     >
                       <item.icon className={`w-6 h-6 ${item.primary ? 'text-white' : 'text-gray-600'}`} />
