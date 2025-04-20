@@ -50,14 +50,11 @@ const Index = () => {
 
         {/* Example Query Section */}
         <div className="flex justify-center mb-4">
-          <div className="relative inline-block">
-            <div className="flex items-center gap-2 bg-gradient-to-r from-purple-200 to-purple-300 p-4 rounded-2xl text-left shadow-sm">
-              <Sparkles className="w-5 h-5 text-purple-700 flex-shrink-0" />
-              <p className="text-purple-900 text-sm">
-                我是浙江大学计算机专业，均分85分，想要申请英美大学...求推荐！
-              </p>
-              <div className="absolute -bottom-2 left-6 w-4 h-4 bg-purple-300 transform rotate-45"></div>
-            </div>
+          <div className="flex items-center gap-2 bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] p-4 rounded-xl text-left shadow-sm">
+            <Sparkles className="w-5 h-5 text-white flex-shrink-0" />
+            <p className="text-white text-sm">
+              我是浙江大学计算机专业，均分85分，想要申请英美大学...求推荐！
+            </p>
           </div>
         </div>
 
