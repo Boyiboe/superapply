@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, Bot } from 'lucide-react';
 import ChatSection from '@/components/ChatSection';
 
 interface Message {
@@ -182,20 +182,23 @@ const Chat = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
-      {/* Header */}
-      <div className="p-4 border-b">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <button 
-            onClick={() => navigate('/')}
-            className="text-2xl font-bold text-blue-600"
-          >
-            Edmate
-          </button>
+      {/* Header - Updated with Index page styling */}
+      <div className="p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
+            <div className="bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl p-1.5 flex items-center justify-center">
+              <Bot className="w-6 h-6 text-white" />
+            </div>
+            <div className="text-2xl font-bold bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] bg-clip-text text-transparent">
+              <span>Ed</span>
+              <span>mate</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Chat Messages */}
-      <div className="max-w-4xl mx-auto px-4 py-8 mb-20">
+      {/* Chat Messages - Adjusted spacing */}
+      <div className="max-w-4xl mx-auto px-4 py-4 mb-20">
         <div className="space-y-6">
           {messages.map(message => 
             message.type === 'user' ? (
@@ -247,3 +250,4 @@ const Chat = () => {
 };
 
 export default Chat;
+
