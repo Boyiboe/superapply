@@ -83,7 +83,7 @@ export function AppSidebar() {
                   >
                     <Link 
                       to={item.url}
-                      className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray-100 text-gray-700"
+                      className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-blue-100 text-gray-700"
                     >
                       <item.icon className="w-5 h-5" />
                     </Link>
@@ -104,7 +104,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link 
                       to={chat.url}
-                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-blue-50 data-[active=true]:bg-blue-100"
                     >
                       <span className="truncate">{chat.title}</span>
                       <MoreVertical className="w-4 h-4 opacity-0 group-hover:opacity-100" />
@@ -123,7 +123,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link 
                       to={chat.url}
-                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-blue-50 data-[active=true]:bg-blue-100"
                     >
                       <span className="truncate">{chat.title}</span>
                       <MoreVertical className="w-4 h-4 opacity-0 group-hover:opacity-100" />
@@ -142,7 +142,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link 
                       to={chat.url}
-                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-blue-50 data-[active=true]:bg-blue-100"
                     >
                       <span className="truncate">{chat.title}</span>
                       <MoreVertical className="w-4 h-4 opacity-0 group-hover:opacity-100" />
