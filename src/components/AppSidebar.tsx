@@ -1,4 +1,5 @@
-import { MessageSquare, Plus, Smartphone, Timer, MoreVertical } from "lucide-react";
+
+import { Search, Plus, MoreVertical } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -13,86 +14,98 @@ import {
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 
-// Main menu items stay the same but with updated styling
+// Main menu items with updated styling
 const mainMenuItems = [
   {
-    title: "新建会话",
+    title: "开启新申请",
     url: "/new",
-    icon: MessageSquare,
+    icon: Plus,
+    primary: true
   },
   {
-    title: "Kimi+",
-    url: "/plus",
-    icon: () => (
-      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 3v18M3 12h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-      </svg>
-    ),
-  },
-  {
-    title: "消息",
+    title: "搜索申请记录",
     url: "/chat",
-    icon: () => (
-      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.862 9.862 0 01-4.255-.949L3 20l1.395-3.72C3.512 14.042 3 12.574 3 11c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-  },
-  {
-    title: "移动端",
-    url: "/mobile",
-    icon: Smartphone,
-  },
-  {
-    title: "Timer",
-    url: "/tiger",
-    icon: Timer,
+    icon: Search,
   }
 ];
 
-const recentChats = {
-  today: [
-    { title: "温胜能申请递交", url: "/chat/1" },
-    { title: "张明轩申请递交", url: "/chat/2" },
-  ],
-  week: [
-    { title: "李陆春申请递交", url: "/chat/3" },
-    { title: "王晓梅申请递交", url: "/chat/4" },
-    { title: "刘建国申请递交", url: "/chat/5" },
-  ],
-  month: [
-    { title: "陈思远申请递交", url: "/chat/6" },
-    { title: "郑慧琳申请递交", url: "/chat/7" },
-    { title: "黄志强申请递交", url: "/chat/8" },
-    { title: "吴佳妮申请递交", url: "/chat/9" },
-  ],
+const recentApplications = [
+  {
+    university: "哈佛大学",
+    major: "计算机科学",
+    time: "今天",
+    status: "进行中"
+  },
+  {
+    university: "斯坦福大学",
+    major: "人工智能",
+    time: "今天",
+    status: "已完成"
+  },
+  {
+    university: "麻省理工",
+    major: "数据科学",
+    time: "昨天",
+    status: "待处理"
+  },
+  {
+    university: "伯克利",
+    major: "电子工程",
+    time: "3天前",
+    status: "已完成"
+  },
+  {
+    university: "剑桥大学",
+    major: "计算机视觉",
+    time: "5天前",
+    status: "已完成"
+  }
+];
+
+const getStatusClass = (status: string) => {
+  switch (status) {
+    case "进行中":
+      return "bg-yellow-100 text-yellow-800";
+    case "已完成":
+      return "bg-green-100 text-green-800";
+    case "待处理":
+      return "bg-blue-100 text-blue-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
 };
 
 export function AppSidebar() {
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarHeader className="flex items-center justify-between p-4">
-        <span className="text-lg font-semibold group-data-[state=collapsed]:hidden">
-          SuperApply
+        <span className="text-2xl font-bold text-blue-500 group-data-[state=collapsed]:hidden">
+          超级网申系统
         </span>
         <SidebarTrigger className="h-8 w-8" />
       </SidebarHeader>
+
       <SidebarContent>
-        {/* Main Menu Icons */}
+        {/* Main Actions */}
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
               {mainMenuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.url}>
                   <SidebarMenuButton 
                     asChild
                     tooltip={item.title}
                   >
                     <Link 
                       to={item.url}
-                      className="flex items-center justify-center w-12 h-12 rounded-lg hover:bg-blue-100 text-gray-700"
+                      className={`flex items-center gap-2 w-full p-3 rounded-lg text-base ${
+                        item.primary 
+                          ? 'bg-blue-400 hover:bg-blue-500 text-white' 
+                          : 'hover:bg-blue-50 text-gray-700'
+                      }`}
                     >
-                      <item.icon className="w-6 h-6" />
+                      <item.icon className={`w-5 h-5 ${item.primary ? 'text-white' : 'text-gray-600'}`} />
+                      <span className="group-data-[state=collapsed]:hidden">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -101,58 +114,26 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Recent Chats - Only visible when expanded */}
-        <SidebarGroup className="hidden group-data-[state=expanded]:block mt-8">
-          <SidebarGroupLabel>今天</SidebarGroupLabel>
+        {/* Application History */}
+        <SidebarGroup className="mt-6">
+          <SidebarGroupLabel className="px-3 text-base font-medium text-gray-700">申请历史</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {recentChats.today.map((chat) => (
-                <SidebarMenuItem key={chat.url}>
+              {recentApplications.map((app, index) => (
+                <SidebarMenuItem key={index}>
                   <SidebarMenuButton asChild>
                     <Link 
-                      to={chat.url}
-                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-blue-50 data-[active=true]:bg-blue-100"
+                      to={`/application/${index}`}
+                      className="flex flex-col w-full p-3 gap-1 hover:bg-blue-50 rounded-lg"
                     >
-                      <span className="truncate">{chat.title}</span>
-                      <MoreVertical className="w-4 h-4 opacity-0 group-hover:opacity-100" />
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-
-          <SidebarGroupLabel className="mt-6">7 天内</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {recentChats.week.map((chat) => (
-                <SidebarMenuItem key={chat.url}>
-                  <SidebarMenuButton asChild>
-                    <Link 
-                      to={chat.url}
-                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-blue-50 data-[active=true]:bg-blue-100"
-                    >
-                      <span className="truncate">{chat.title}</span>
-                      <MoreVertical className="w-4 h-4 opacity-0 group-hover:opacity-100" />
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-
-          <SidebarGroupLabel className="mt-6">30 天内</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {recentChats.month.map((chat) => (
-                <SidebarMenuItem key={chat.url}>
-                  <SidebarMenuButton asChild>
-                    <Link 
-                      to={chat.url}
-                      className="flex items-center justify-between w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-blue-50 data-[active=true]:bg-blue-100"
-                    >
-                      <span className="truncate">{chat.title}</span>
-                      <MoreVertical className="w-4 h-4 opacity-0 group-hover:opacity-100" />
+                      <div className="flex items-center justify-between w-full">
+                        <span className="font-medium text-gray-800">{app.university}</span>
+                        <span className={`px-2 py-0.5 text-xs rounded-full ${getStatusClass(app.status)}`}>
+                          {app.status}
+                        </span>
+                      </div>
+                      <span className="text-sm text-gray-600">{app.major}</span>
+                      <span className="text-xs text-gray-500">{app.time}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
