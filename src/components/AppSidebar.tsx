@@ -185,9 +185,6 @@ export function AppSidebar() {
                 <span className="text-center w-full">我递交的学生</span>
               </div>
             </SidebarMenuButton>
-            <SidebarGroupLabel className="text-center w-full px-3 text-base font-medium text-gray-700">
-              我递交的学生
-            </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {recentStudents.map((student, index) => (
