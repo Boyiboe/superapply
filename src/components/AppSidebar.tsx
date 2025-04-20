@@ -141,21 +141,21 @@ export function AppSidebar() {
               ) : item.progress ? (
                 <Link 
                   to={item.url}
-                  className="flex items-center justify-between gap-2 p-4 rounded-lg text-base hover:bg-gray-100 w-full"
+                  className="flex flex-col items-center p-4 rounded-lg text-base hover:bg-gray-100 w-full"
                 >
-                  <div className="flex items-center gap-3">
-                    <item.icon className="w-8 h-8 text-blue-500" />
-                    <div className="group-data-[state=collapsed]:hidden flex flex-col">
-                      <span className="font-medium text-gray-900 text-lg">{item.progress.name}</span>
-                      <span className="text-sm text-gray-500">
+                  <div className="flex items-center gap-3 w-full mb-2">
+                    <item.icon className="w-10 h-10 text-blue-500" />
+                    <div className="group-data-[state=collapsed]:hidden flex flex-col flex-1">
+                      <span className="font-medium text-gray-900 text-xl">{item.progress.name}</span>
+                      <span className="text-sm font-medium text-gray-500">
                         申请进度：{item.progress.current}/{item.progress.total}
                       </span>
                     </div>
                   </div>
-                  <div className="group-data-[state=collapsed]:hidden w-32">
+                  <div className="group-data-[state=collapsed]:hidden w-full">
                     <Progress 
                       value={(item.progress.current / item.progress.total) * 100} 
-                      className="h-3"
+                      className="h-5 w-full"
                     />
                   </div>
                 </Link>
