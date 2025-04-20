@@ -1,3 +1,4 @@
+
 import { Search, Plus, User, Menu } from "lucide-react";
 import {
   Sidebar,
@@ -91,12 +92,13 @@ export function AppSidebar() {
           <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">SA</span>
           <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">SuperApply</span>
         </div>
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col items-center gap-2 w-full"> {/* Added items-center to center buttons */}
           {mainMenuItems.map((item) => (
             <SidebarMenuButton 
               key={item.url}
               asChild
               tooltip={item.title}
+              className="w-full max-w-[200px]" // Added max-width and kept full width
             >
               {item.action === "sidebar" ? (
                 <SidebarTrigger 
