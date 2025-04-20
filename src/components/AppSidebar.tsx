@@ -185,11 +185,12 @@ export function AppSidebar() {
           <SidebarGroup className="mt-6">
             <SidebarMenuButton asChild tooltip="我递交的学生">
               <div className={`flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-                bg-blue-400 text-white w-full mx-3`}>
+            bg-blue-400 text-white w-full mx-3`}>
                 <User className="w-6 h-6 text-white" />
-                <span>我递交的学生</span>
+                <span className="text-center w-full">我递交的学生</span>
               </div>
             </SidebarMenuButton>
+            <SidebarGroupLabel className="text-center w-full px-3 text-base font-medium text-gray-700">我递交的学生</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {recentStudents.map((student, index) => (
