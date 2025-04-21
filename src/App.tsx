@@ -27,6 +27,7 @@ const App = () => (
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/new" element={<Index />} />
                 <Route path="/profile" element={<Navigate to="/" replace />} />
+                <Route path="/students" element={<Index />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

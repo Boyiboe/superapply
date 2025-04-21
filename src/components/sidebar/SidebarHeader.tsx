@@ -13,7 +13,7 @@ export function SidebarHeader() {
     <Header className="flex flex-col items-center gap-2 p-4">
       {/* Logo Section */}
       <div className="flex w-full mb-4 items-center justify-center">
-        <div className="text-2xl font-bold text-blue-500 text-center">
+        <div className="text-2xl font-bold text-blue-500 text-center group-data-[state=collapsed]:w-12">
           <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">
             SA
           </span>
@@ -29,7 +29,7 @@ export function SidebarHeader() {
         <SidebarMenuButton 
           asChild
           tooltip="打开边栏"
-          className="w-full max-w-[200px] group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:justify-center group-data-[state=collapsed]:flex"
+          className="w-full max-w-[200px] group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:justify-center"
         >
           <SidebarTrigger className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
             bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:p-0"
@@ -43,7 +43,7 @@ export function SidebarHeader() {
         <SidebarMenuButton 
           asChild
           tooltip="开启新申请"
-          className="w-full max-w-[200px] group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:justify-center group-data-[state=collapsed]:flex"
+          className="w-full max-w-[200px] group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:justify-center"
         >
           <Link 
             to="/new"
@@ -77,10 +77,10 @@ export function SidebarHeader() {
         <SidebarMenuButton 
           asChild
           tooltip="查看学生详情"
-          className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center"
+          className="hidden group-data-[state=collapsed]:flex group-data-[state=collapsed]:justify-center w-full"
         >
           <Link to="/" className="flex justify-center w-12">
-            <Avatar className="w-10 h-10 mx-auto">
+            <Avatar className="w-10 h-10">
               <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
               <AvatarFallback className="!bg-[#D3E4FD] !text-gray-700 font-bold text-base flex items-center justify-center">SA</AvatarFallback>
             </Avatar>
