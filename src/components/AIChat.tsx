@@ -1,9 +1,10 @@
+
 import React, { useRef, useState } from "react";
 import ChatMessage from "./ChatMessage";
 import ChatInputBox from "./ChatInputBox";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
-import { FileUp, Loader, X } from "lucide-react";
+import { Loader } from "lucide-react";
 
 type ChatMsg = {
   id: number;
@@ -34,7 +35,6 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [lastFileName, setLastFileName] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // 新增：输入区内部文件状态
   const [chatFiles, setChatFiles] = useState<File[]>([]);
@@ -46,15 +46,13 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
     scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
   }, [messages, uploading]);
 
-  // 修改后的发送消息
+  // 发送消息逻辑
   const sendMessage = async () => {
     if (input.trim() === "" && chatFiles.length === 0) return;
 
     const timestamp = Date.now();
 
-    // 支持：文件+文本一起传递
     if (chatFiles.length > 0) {
-      // 只用首个文件（如有多个）
       const file = chatFiles[0];
       setMessages((prev) => [
         ...prev,
@@ -65,7 +63,6 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
           content: (
             <>
               <div className="flex items-center gap-2">
-                {/* 文件描述区缩略模板 */}
                 <img
                   src="/lovable-uploads/e59cb0e9-29eb-49d4-9673-c3a678939296.png"
                   alt="文件预览"
@@ -83,7 +80,6 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
       setProgress(0);
       setLastFileName(file.name);
 
-      // AI收到文件展开气泡，内部进度条
       setTimeout(() => {
         setMessages((prev) => [
           ...prev,
@@ -105,7 +101,6 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
       }, 500);
 
       try {
-        // 假定调用parseFileAsync
         const aiRespContent = await new Promise<string>((resolve) => {
           let percent = 0;
           const timer = setInterval(() => {
@@ -159,7 +154,7 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
       return;
     }
 
-    // 只发文本消息
+    // 纯文本消息
     setMessages((prev) => [
       ...prev,
       {
@@ -189,37 +184,6 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
     setInput("");
   };
 
-  // 简易AI对话
-  function getAIResponse(question: string): string {
-    if (/成绩|GPA/.test(question)) {
-      return "请上传您的成绩单PDF，我会帮您自动提取关键信息。";
-    }
-    if (/推荐信/.test(question)) {
-      return "推荐信请上传扫描件或Word文档，我将自动结构化信息并提示缺失项。";
-    }
-    if (/你好|hi|hello/i.test(question)) {
-      return "你好！我是你的智能申请助手，有任何问题随时问我~";
-    }
-    return "好的，我会尽力为你解答。也可以通过上传材料获得更智能的表单填写体验！";
-  }
-
-  // 输入文件
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      sendMessage();
-    }
-    e.target.value = "";
-  };
-
-  // 聊天输入按回车发送
-  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
-
   // 拖拽上传
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
@@ -234,31 +198,23 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
 
   return (
     <div
-      className="h-[600px] w-full flex flex-col border border-blue-100 rounded-xl shadow bg-white"
-      onDrop={e => {
-        e.preventDefault();
-        const files = Array.from(e.dataTransfer.files);
-        if (files && files.length > 0) {
-          setChatFiles(files);
-        }
-      }}
-      onDragOver={e => e.preventDefault()}
+      className={cn("flex flex-col h-[600px] w-full rounded-xl shadow bg-white p-4", className)}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
     >
-      {/* Top: 聊天消息流 */}
-      <div ref={scrollRef} className="flex-1 w-full overflow-y-auto px-4 py-4 space-y-1">
+      <div ref={scrollRef} className="flex-1 w-full overflow-y-auto space-y-1 pr-2">
         {messages.map((msg) => (
           <ChatMessage key={msg.id} sender={msg.sender} content={msg.content} />
         ))}
         {uploading && lastFileName && (
-          <div className="flex items-center gap-2 text-blue-500 text-sm mb-2">
+          <div className="flex items-center gap-2 text-blue-500 text-sm">
             <Loader className="animate-spin w-4 h-4" />
             正在解析 {lastFileName}...
             <Progress value={progress} className="h-1 bg-blue-200 ml-3 flex-1" />
           </div>
         )}
       </div>
-      {/* 新输入区 */}
-      <div className="p-2 border-t">
+      <div className="mt-2">
         <ChatInputBox
           files={chatFiles}
           onFilesChange={setChatFiles}
