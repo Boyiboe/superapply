@@ -12,22 +12,21 @@ export function SidebarHeader() {
   return (
     <Header className="flex flex-col items-center gap-2 p-4">
       {/* Logo Section */}
-      <div className="w-full flex group-data-[state=collapsed]:justify-start group-data-[state=expanded]:justify-center mb-4 transition-all duration-200">
+      <div className="w-full flex justify-center mb-4">
         <div
           className={
-            "text-2xl font-bold text-blue-500 text-center transition-all w-full flex group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:min-w-12 group-data-[state=collapsed]:max-w-12 group-data-[state=collapsed]:justify-start group-data-[state=expanded]:justify-center"
+            "text-2xl font-bold text-blue-500 text-center transition-all w-full flex justify-center"
           }
         >
           <span
             className="
               group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden
-              flex group-data-[state=collapsed]:justify-start group-data-[state=collapsed]:items-center group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:min-w-12 group-data-[state=collapsed]:max-w-12
-              group-data-[state=expanded]:justify-center w-full
+              w-full flex justify-center
             "
           >
             <span
               className="
-                flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-blue-500 text-2xl select-none font-extrabold transition-all duration-200
+                flex items-center justify-center w-12 h-12 mx-auto rounded-lg bg-blue-100 text-blue-500 text-2xl select-none font-extrabold
               "
             >
               SA
@@ -48,19 +47,16 @@ export function SidebarHeader() {
           tooltip="打开边栏"
           className="
             w-full
-            group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:min-w-12 group-data-[state=collapsed]:max-w-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:justify-start group-data-[state=collapsed]:items-center group-data-[state=collapsed]:mx-0
+            group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
             group-data-[state=expanded]:max-w-[200px]
-            transition-all duration-200
           "
         >
           <SidebarTrigger
             className="
-              flex items-center gap-2 rounded-lg text-base
-              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700
-              w-full h-[42px]
-              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:min-w-12 group-data-[state=collapsed]:max-w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:justify-start group-data-[state=collapsed]:items-center group-data-[state=collapsed]:mx-0
+              flex items-center justify-center gap-2 rounded-lg text-base
+              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]
+              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
               group-data-[state=expanded]:p-3 group-data-[state=expanded]:w-full
-              transition-all duration-200
             "
           >
             <ChevronLeft className="w-6 h-6" />
@@ -73,20 +69,17 @@ export function SidebarHeader() {
           tooltip="开启新申请"
           className="
             w-full
-            group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:min-w-12 group-data-[state=collapsed]:max-w-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:justify-start group-data-[state=collapsed]:items-center group-data-[state=collapsed]:mx-0
+            group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
             group-data-[state=expanded]:max-w-[200px]
-            transition-all duration-200
           "
         >
           <Link
             to="/new"
             className="
-              flex items-center gap-2 rounded-lg text-base
-              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700
-              w-full h-[42px]
-              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:min-w-12 group-data-[state=collapsed]:max-w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:justify-start group-data-[state=collapsed]:items-center group-data-[state=collapsed]:mx-0
+              flex items-center justify-center gap-2 rounded-lg text-base
+              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]
+              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
               group-data-[state=expanded]:p-3 group-data-[state=expanded]:w-full
-              transition-all duration-200
             "
           >
             <Plus className="w-6 h-6" />
@@ -112,15 +105,15 @@ export function SidebarHeader() {
             </div>
           </Link>
         </SidebarMenuButton>
-        {/* Avatar for collapsed state - 对齐左侧 */}
+        {/* Avatar for collapsed state - 居中宽度对齐 */}
         <SidebarMenuButton
           asChild
           tooltip="查看学生详情"
           className="
-            hidden group-data-[state=collapsed]:flex group-data-[state=collapsed]:justify-start group-data-[state=collapsed]:items-center w-full group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:min-w-12 group-data-[state=collapsed]:max-w-12 group-data-[state=collapsed]:h-12 p-0
+            hidden group-data-[state=collapsed]:flex group-data-[state=collapsed]:justify-center w-full group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:mx-auto p-0
           "
         >
-          <Link to="/" className="flex items-center w-12 h-12">
+          <Link to="/" className="flex justify-center items-center w-12 h-12 mx-auto">
             <Avatar className="w-8 h-8">
               <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
               <AvatarFallback className="!bg-[#D3E4FD] !text-gray-700 font-bold text-sm flex items-center justify-center">SA</AvatarFallback>
@@ -131,3 +124,4 @@ export function SidebarHeader() {
     </Header>
   );
 }
+
