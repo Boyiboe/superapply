@@ -10,7 +10,7 @@ import {
 
 export function SidebarFooter() {
   return (
-    <Footer className="border-t border-gray-200">
+    <Footer>
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton asChild tooltip="个人信息">
