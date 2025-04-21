@@ -222,14 +222,14 @@ const Sidebar = React.forwardRef<
         data-variant={variant}
         data-side={side}
       >
-        {/* 调整 Sidebar 收起时宽度为原始 3rem */}
+        {/* 调整 Sidebar 收起时宽度与 padding，左侧留白为 16px */}
         <div
           className={cn(
             "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
             "group-data-[collapsible=offcanvas]:w-0",
             "group-data-[side=right]:rotate-180",
-            // 收起时宽度用 --sidebar-width-icon，且无 padding、无边框
-            "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
+            // 收起时宽度用 --sidebar-width-icon，且有左 padding 16px（留白），无 padding、无边框
+            "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[collapsible=icon]:pl-4"
           )}
         />
         <div
@@ -246,7 +246,7 @@ const Sidebar = React.forwardRef<
         >
           <div
             data-sidebar="sidebar"
-            // 移除浮窗变体的border/shadow，仅保留圆角（如果浮窗需要圆角可保留，否则可以去掉）
+            // 这里不用加 padding，内容区内元素已根据 collapsed 状态自行增加左缩进
             className="flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg"
           >
             {children}
