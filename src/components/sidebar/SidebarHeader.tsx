@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import {
   SidebarHeader as Header,
   SidebarMenuButton,
-  SidebarTrigger,
+  SidebarTrigger
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function SidebarHeader() {
   return (
-    <Header className="flex flex-col justify-center items-center gap-2 p-4 h-full">
+    <Header className="flex flex-col items-center gap-2 p-4">
       {/* Logo Section */}
       <div className="flex w-full mb-4 items-center justify-center">
         <div className="text-2xl font-bold text-blue-500 text-center">
@@ -24,7 +24,7 @@ export function SidebarHeader() {
       </div>
 
       {/* 四大项都加上 collapsed 状态下的统一居中和宽度 */}
-      <div className="flex flex-col justify-center items-center gap-3 w-full flex-1">
+      <div className="flex flex-col items-center gap-3 w-full">
         {/* Toggle Sidebar Button */}
         <SidebarMenuButton
           asChild
@@ -71,7 +71,7 @@ export function SidebarHeader() {
             </div>
           </Link>
         </SidebarMenuButton>
-
+        
         {/* Avatar for collapsed state - centered and full width for alignment */}
         <SidebarMenuButton
           asChild
