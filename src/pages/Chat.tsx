@@ -376,13 +376,10 @@ const Chat = () => {
     setUploadedFiles(prev => [...prev, ...files]);
   };
 
-  // 修改头像和头图区域样式，去掉遮挡侧栏的层
-  // 整体页面底色用淡绿 (#F2FCE2)
-  // 输入框和聊天消息区域合并容器，使用白色背景和圆角，阴影
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F2FCE2] to-[#e6f0d8]">
+    <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
       {/* Header */}
-      <div className="p-4 fixed top-0 left-0 right-0 z-20 bg-white/90 backdrop-blur-sm border-b border-gray-200">
+      <div className="p-4 fixed top-0 left-0 right-0 z-0 bg-white/80 backdrop-blur-sm border-b border-gray-200">
         <div className="max-w-4xl mx-auto flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
           <div className="bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl p-1.5 flex items-center justify-center">
             <Bot className="w-6 h-6 text-white" />
@@ -394,18 +391,17 @@ const Chat = () => {
         </div>
       </div>
 
-      {/* 聊天及输入区域一体化容器 */}
-      <div className="max-w-4xl mx-auto mt-20 mb-20 rounded-3xl bg-white shadow-lg flex flex-col">
-        {/* Chat Messages */}
-        <div 
-          className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-thumb-rounded"
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-        >
-          <FileDropOverlay isActive={dragActive} />
-          
+      {/* Chat Messages */}
+      <div 
+        className="max-w-4xl mx-auto px-4 py-4 mb-20 pt-20 relative"
+        onDragEnter={handleDrag}
+        onDragLeave={handleDrag}
+        onDragOver={handleDrag}
+        onDrop={handleDrop}
+      >
+        <FileDropOverlay isActive={dragActive} />
+        
+        <div className="space-y-6">
           {showForm && fileAnalysis?.result?.extractedInfo && (
             <ApplicationForm extractedInfo={fileAnalysis.result.extractedInfo} />
           )}
@@ -428,7 +424,7 @@ const Chat = () => {
                     <ALargeSmall className="w-5 h-5" />
                   </AvatarFallback>
                 </Avatar>
-                <div className="inline-block max-w-[80%] px-6 py-4 rounded-2xl bg-gray-50 text-gray-800 shadow-sm whitespace-pre-wrap">
+                <div className="inline-block max-w-[80%] px-6 py-4 rounded-2xl bg-white text-gray-800 shadow-sm whitespace-pre-wrap">
                   {message.content}
                 </div>
               </div>
@@ -444,29 +440,30 @@ const Chat = () => {
             />
           )}
         </div>
+      </div>
 
-        {/* Input Form */}
-        <div className="border-t border-gray-200 p-4">
-          <form 
-            onSubmit={handleSubmit} 
-            onDragEnter={handleDrag}
-            className="flex flex-col gap-3"
-          >
-            {uploadedFiles.length > 0 && (
-              <ChatFileCard
-                files={uploadedFiles}
-                onRemove={handleRemoveFile}
-              />
-            )}
-            <FileUploadZone
-              onFileUpload={handleFileUpload}
-              onSendFiles={handleSendFiles}
-              uploadedFiles={uploadedFiles}
-              isAnalyzing={fileAnalysis?.isAnalyzing}
-              analysisProgress={fileAnalysis?.progress || 0}
+      {/* Input Form */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
+        <form 
+          onSubmit={handleSubmit} 
+          onDragEnter={handleDrag}
+          className="max-w-4xl mx-auto"
+        >
+          {uploadedFiles.length > 0 && (
+            <ChatFileCard
+              files={uploadedFiles}
+              onRemove={handleRemoveFile}
             />
-          </form>
-        </div>
+          )}
+          
+          <FileUploadZone
+            onFileUpload={handleFileUpload}
+            onSendFiles={handleSendFiles}
+            uploadedFiles={uploadedFiles}
+            isAnalyzing={fileAnalysis?.isAnalyzing}
+            analysisProgress={fileAnalysis?.progress || 0}
+          />
+        </form>
       </div>
     </div>
   );
