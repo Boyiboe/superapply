@@ -1,5 +1,5 @@
 
-import { ChevronLeft, Plus } from "lucide-react";
+import { ChevronLeft, Plus, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   SidebarHeader as Header,
@@ -23,15 +23,17 @@ export function SidebarHeader() {
         </div>
       </div>
 
+      {/* 顶部按钮区：收起时居中、固定宽度 */}
       <div className="flex flex-col items-center gap-3 w-full">
         {/* Toggle Sidebar Button */}
         <SidebarMenuButton 
           asChild
           tooltip="打开边栏"
-          className="w-full max-w-[200px]"
+          className="w-full max-w-[200px] group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:justify-center group-data-[state=collapsed]:flex"
         >
           <SidebarTrigger className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-            bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]">
+            bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:p-0"
+          >
             <ChevronLeft className="w-6 h-6" />
             <span className="group-data-[state=collapsed]:hidden">打开边栏</span>
           </SidebarTrigger>
@@ -41,12 +43,12 @@ export function SidebarHeader() {
         <SidebarMenuButton 
           asChild
           tooltip="开启新申请"
-          className="w-full max-w-[200px]"
+          className="w-full max-w-[200px] group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:justify-center group-data-[state=collapsed]:flex"
         >
           <Link 
             to="/new"
             className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]"
+              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:p-0"
           >
             <Plus className="w-6 h-6" />
             <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
@@ -71,14 +73,14 @@ export function SidebarHeader() {
           </Link>
         </SidebarMenuButton>
         
-        {/* Avatar for collapsed state - centered */}
+        {/* Avatar for collapsed state - centered + 居中宽度对齐 */}
         <SidebarMenuButton 
           asChild
           tooltip="查看学生详情"
           className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center"
         >
-          <Link to="/" className="flex justify-center">
-            <Avatar className="w-10 h-10">
+          <Link to="/" className="flex justify-center w-12">
+            <Avatar className="w-10 h-10 mx-auto">
               <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
               <AvatarFallback className="!bg-[#D3E4FD] !text-gray-700 font-bold text-base flex items-center justify-center">SA</AvatarFallback>
             </Avatar>
