@@ -36,7 +36,7 @@ const ChatFileCard: React.FC<ChatFileCardProps> = ({
   const getStatusIcon = (status: FileStatus['type']) => {
     switch (status) {
       case 'analyzing':
-        return <LoaderCircle className="h-5 w-5 text-purple-600 animate-spin" />;
+        return <LoaderCircle className="h-5 w-5 text-blue-600 animate-spin" />;
       case 'success':
         return <CircleCheck className="h-5 w-5 text-green-600" />;
       case 'error':
@@ -49,7 +49,7 @@ const ChatFileCard: React.FC<ChatFileCardProps> = ({
   const getStatusClass = (status: FileStatus['type']) => {
     switch (status) {
       case 'analyzing':
-        return 'text-purple-600';
+        return 'text-blue-600';
       case 'success':
         return 'text-green-600';
       case 'error':
@@ -68,7 +68,7 @@ const ChatFileCard: React.FC<ChatFileCardProps> = ({
           return (
             <div
               key={`${file.name}-${index}`}
-              className="group relative flex items-center justify-between bg-white rounded-lg p-3 shadow-sm border border-gray-100 hover:border-purple-200 transition-colors"
+              className="group relative flex items-center justify-between bg-white rounded-lg p-3 shadow-sm border border-gray-100"
             >
               <div className="flex items-center gap-3 flex-1">
                 <div className="flex-shrink-0">
