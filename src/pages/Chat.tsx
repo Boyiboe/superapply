@@ -379,7 +379,7 @@ const Chat = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
       {/* Header */}
-      <div className="p-4 fixed top-0 left-0 right-0 z-10 bg-white/80 backdrop-blur-sm">
+      <div className="p-4 fixed top-0 left-0 right-0 z-20 bg-white/80 backdrop-blur-sm pl-[16rem]">
         <div className="max-w-full px-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
             <div className="bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl p-1.5 flex items-center justify-center">
