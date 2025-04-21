@@ -23,13 +23,13 @@ export function SidebarHeader() {
         </div>
       </div>
 
-      {/* 四大项都加上 collapsed 状态下的统一居中 */}
+      {/* 四大项都加上 collapsed 状态下的统一居中和宽度 */}
       <div className="flex flex-col items-center gap-3 w-full">
         {/* Toggle Sidebar Button */}
         <SidebarMenuButton
           asChild
           tooltip="打开边栏"
-          className="w-full max-w-[200px] group-data-[state=collapsed]:justify-center"
+          className="w-full max-w-[200px] group-data-[state=collapsed]:justify-center group-data-[state=collapsed]:max-w-full"
         >
           <SidebarTrigger className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
             bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]">
@@ -42,7 +42,7 @@ export function SidebarHeader() {
         <SidebarMenuButton
           asChild
           tooltip="开启新申请"
-          className="w-full max-w-[200px] group-data-[state=collapsed]:justify-center"
+          className="w-full max-w-[200px] group-data-[state=collapsed]:justify-center group-data-[state=collapsed]:max-w-full"
         >
           <Link
             to="/new"
@@ -72,13 +72,13 @@ export function SidebarHeader() {
           </Link>
         </SidebarMenuButton>
         
-        {/* Avatar for collapsed state - centered */}
+        {/* Avatar for collapsed state - centered and full width for alignment */}
         <SidebarMenuButton
           asChild
           tooltip="查看学生详情"
           className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center"
         >
-          <Link to="/" className="flex justify-center">
+          <Link to="/" className="flex justify-center w-full">
             <Avatar className="w-10 h-10">
               <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
               <AvatarFallback className="!bg-[#D3E4FD] !text-gray-700 font-bold text-base flex items-center justify-center">SA</AvatarFallback>
