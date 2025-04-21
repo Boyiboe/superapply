@@ -1,6 +1,6 @@
 
 import React, { useRef } from "react";
-import { paperclip, box, arrow-up } from "lucide-react";
+import { Paperclip, Box, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ChatInputBoxProps {
@@ -122,8 +122,8 @@ const ChatInputBox: React.FC<ChatInputBoxProps> = ({
               aria-label="上传文件"
               disabled={disabled}
             >
-              {/* lucide-react paperclip */}
-              <svg className="w-5 h-5" fill="none" stroke="currentColor"><path d="M21.44 11.05l-9.19 9.19a5.003 5.003 0 01-7.08-7.08l9.2-9.19a3.002 3.002 0 014.25 4.25l-9.2 9.19"/></svg>
+              {/* Using Paperclip component */}
+              <Paperclip className="w-5 h-5" />
             </button>
           </label>
           <button
@@ -132,8 +132,8 @@ const ChatInputBox: React.FC<ChatInputBoxProps> = ({
             aria-label="更多"
             disabled={disabled}
           >
-            {/* lucide-react box */}
-            <svg className="w-5 h-5" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 6.83 12 12.01 20.71 6.83"/></svg>
+            {/* Using Box component */}
+            <Box className="w-5 h-5" />
           </button>
           <span className="mx-2 w-px h-8 bg-gray-200" />
           <button
@@ -143,8 +143,8 @@ const ChatInputBox: React.FC<ChatInputBoxProps> = ({
             type="button"
             disabled={disabled || input.trim() === ""}
           >
-            {/* lucide-react arrow-up */}
-            <svg className="w-6 h-6" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7" strokeWidth="2" /></svg>
+            {/* Using ArrowUp component */}
+            <ArrowUp className="w-6 h-6" />
           </button>
         </div>
       </div>
