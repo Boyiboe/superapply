@@ -38,12 +38,22 @@ const Chat = () => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [showForm, setShowForm] = useState(false);
   
+  // 检查入口 state，如果带有上传文件，则自动加入消息队列并清空 location.state
   useEffect(() => {
     const initialQuestion = location.state?.initialQuestion;
-    if (initialQuestion) {
+    // 新增：如果有文件，从 location.state 读取并触发解析
+    if (location.state?.uploadedFiles && location.state.uploadedFiles.length > 0) {
+      const files = location.state.uploadedFiles as File[];
+      setUploadedFiles(files);
+      // 自动提交分析（以第一个文件为主，如果需多文件并发后面可调整）
+      handleNewMessage('已上传文件进行解析', files[0]);
+      // 清空 state，避免重复
+      navigate(location.pathname, { replace: true, state: {} });
+    } else if (initialQuestion) {
       handleNewMessage(initialQuestion);
     }
-  }, [location.state]);
+  // eslint-disable-next-line
+  }, [location.state, navigate]);
 
   useEffect(() => {
     // Start analysis when a file is sent in a message
