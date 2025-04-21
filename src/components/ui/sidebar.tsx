@@ -180,7 +180,7 @@ const Sidebar = React.forwardRef<
         <div
           className={cn(
             "flex h-full w-[--sidebar-width] flex-col",
-            // Remove bg-sidebar and border here, instead use the blue gradient background like homepage
+            // 移除边框、阴影，只保留渐变蓝背景
             "bg-gradient-to-b from-white to-blue-50", 
             className
           )}
@@ -202,8 +202,7 @@ const Sidebar = React.forwardRef<
             style={
               {
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-                // Add gradient background for mobile sheet content too
-                background: 'linear-gradient(to bottom, #ffffff, #bfdbfe)',
+                background: 'linear-gradient(to bottom, #ffffff, #bfdbfe)', // 渐变蓝背景
               } as React.CSSProperties
             }
             side={side}
@@ -223,15 +222,14 @@ const Sidebar = React.forwardRef<
         data-variant={variant}
         data-side={side}
       >
-        {/* This is what handles the sidebar gap on desktop */}
+        {/* 调整 Sidebar 收起时宽度为原始 3rem */}
         <div
           className={cn(
             "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
             "group-data-[collapsible=offcanvas]:w-0",
             "group-data-[side=right]:rotate-180",
-            variant === "floating" || variant === "inset"
-              ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
-              : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
+            // 收起时宽度用 --sidebar-width-icon，且无 padding、无边框
+            "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
           )}
         />
         <div
@@ -240,9 +238,7 @@ const Sidebar = React.forwardRef<
             side === "left"
               ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
               : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
-            // Removed border and background colors, use gradient background here for sidebar area
-            // Remove: "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
-            // Replace with gradient background aligned with homepage
+            // 移除所有 border、阴影样式，使用渐变蓝色背景
             "bg-gradient-to-b from-white to-blue-50",
             className
           )}
@@ -250,7 +246,8 @@ const Sidebar = React.forwardRef<
         >
           <div
             data-sidebar="sidebar"
-            className="flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
+            // 移除浮窗变体的border/shadow，仅保留圆角（如果浮窗需要圆角可保留，否则可以去掉）
+            className="flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg"
           >
             {children}
           </div>
