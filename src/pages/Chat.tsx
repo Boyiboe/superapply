@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, Bot, ALargeSmall, Paperclip, File, X } from 'lucide-react';
+import { MessageSquare, Bot, ALargeSmall, Paperclip, File, X, Circle, Loader, CheckCircle } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import ChatSection from '@/components/ChatSection';
 import FileAnalysisSection from '@/components/FileAnalysisSection';
-import { analyzeFile, simulateProgressUpdates, AnalysisProgressUpdate } from '@/services/fileAnalysisService';
+import { analyzeFile, simulateProgressUpdates, AnalysisProgressUpdate, AnalysisResult } from '@/services/fileAnalysisService';
 import FileDropOverlay from '@/components/FileDropOverlay';
-import UploadedFileDisplay from '@/components/UploadedFileDisplay';
+import ApplicationForm from '@/components/ApplicationForm';
+import { Button } from '@/components/ui/button';
+import FileUploadZone from '@/components/FileUploadZone';
 import ChatFileCard from '@/components/ChatFileCard';
 
 interface Message {
@@ -22,7 +24,7 @@ interface FileAnalysis {
   file: File;
   isAnalyzing: boolean;
   progress: number;
-  result?: string;
+  result?: AnalysisResult;
 }
 
 const Chat = () => {
@@ -31,17 +33,27 @@ const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [dragActive, setDragActive] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileAnalysis, setFileAnalysis] = useState<FileAnalysis | null>(null);
   const { toast } = useToast();
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [showForm, setShowForm] = useState(false);
   
+  // 检查入口 state，如果带有上传文件，则自动加入消息队列并清空 location.state
   useEffect(() => {
     const initialQuestion = location.state?.initialQuestion;
-    if (initialQuestion) {
+    // 新增：如果有文件，从 location.state 读取并触发解析
+    if (location.state?.uploadedFiles && location.state.uploadedFiles.length > 0) {
+      const files = location.state.uploadedFiles as File[];
+      setUploadedFiles(files);
+      // 自动提交分析（以第一个文件为主，如果需多文件并发后面可调整）
+      handleNewMessage('已上传文件进行解析', files[0]);
+      // 清空 state，避免重复
+      navigate(location.pathname, { replace: true, state: {} });
+    } else if (initialQuestion) {
       handleNewMessage(initialQuestion);
     }
-  }, [location.state]);
+  // eslint-disable-next-line
+  }, [location.state, navigate]);
 
   useEffect(() => {
     // Start analysis when a file is sent in a message
@@ -81,7 +93,13 @@ const Chat = () => {
       } : null);
       
       // Add analysis result as assistant message
-      const analysisMessage = `文件 "${file.name}" 解析完成:\n\n${result}`;
+      let analysisMessage = `文件 "${file.name}" 解析完成!\n\n`;
+      
+      if (result.documentTypes.length > 0) {
+        analysisMessage += `发现以下类型文件：${result.documentTypes.map(doc => doc.type).join('、')}\n\n`;
+        analysisMessage += result.summary;
+      }
+      
       setMessages(prev => [
         ...prev,
         {
@@ -91,6 +109,11 @@ const Chat = () => {
           visible: true
         }
       ]);
+      
+      // Show application form if we have extracted info
+      if (result.extractedInfo && Object.keys(result.extractedInfo).length > 0) {
+        setShowForm(true);
+      }
     } catch (error) {
       console.error('File analysis error:', error);
       toast({
@@ -120,6 +143,7 @@ const Chat = () => {
 
     const files = Array.from(e.dataTransfer.files);
     const allowedTypes = [
+      'application/zip',
       'application/pdf',
       'application/msword',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -133,12 +157,16 @@ const Chat = () => {
       'text/csv'
     ];
 
-    const invalidFiles = files.filter(file => !allowedTypes.includes(file.type));
+    const invalidFiles = files.filter(file => 
+      !allowedTypes.includes(file.type) && 
+      !file.name.endsWith('.zip') // Special handling for zip files
+    );
+    
     if (invalidFiles.length > 0) {
       toast({
         variant: "destructive",
         title: "文件类型不支持",
-        description: "请上传PDF、Word文档、Excel表格、PPT、图片或CSV文件"
+        description: "请上传ZIP、PDF、Word文档、Excel表格、PPT、图片或CSV文件"
       });
       return;
     }
@@ -183,13 +211,26 @@ const Chat = () => {
     
     setMessages(newMessages);
     setInput('');
-    setSelectedFile(null);
+    setUploadedFiles([]); // Clear uploaded files after sending
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (input.trim() || selectedFile) {
-      handleNewMessage(input.trim() || '已上传文件', selectedFile || undefined);
+    
+    // If there are uploaded files, send them as part of the message
+    if (uploadedFiles.length > 0) {
+      // For simplicity, we'll send the first file only
+      // In a real app, you might want to handle multiple files
+      handleNewMessage(input.trim() || '已上传文件进行解析', uploadedFiles[0]);
+    } else if (input.trim()) {
+      handleNewMessage(input.trim());
+    }
+  };
+
+  const handleSendFiles = (files: File[]) => {
+    if (files.length > 0) {
+      // For now, just handle the first file for simplicity
+      handleNewMessage('已上传文件进行解析', files[0]);
     }
   };
   
@@ -330,20 +371,22 @@ const Chat = () => {
       description: fileToRemove.name
     });
   };
-  
+
+  const handleFileUpload = (files: File[]) => {
+    setUploadedFiles(prev => [...prev, ...files]);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50">
       {/* Header */}
-      <div className="p-4 fixed top-0 left-0 right-0 z-10 bg-white/80 backdrop-blur-sm">
-        <div className="max-w-full px-4">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-            <div className="bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl p-1.5 flex items-center justify-center">
-              <Bot className="w-6 h-6 text-white" />
-            </div>
-            <div className="text-2xl font-bold bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] bg-clip-text text-transparent">
-              <span>Super</span>
-              <span>Apply</span>
-            </div>
+      <div className="p-4 fixed top-0 left-0 right-0 z-0 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+        <div className="max-w-4xl mx-auto flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
+          <div className="bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl p-1.5 flex items-center justify-center">
+            <Bot className="w-6 h-6 text-white" />
+          </div>
+          <div className="text-2xl font-bold bg-gradient-to-r from-[#6E59A5] to-[#9b87f5] bg-clip-text text-transparent select-none">
+            <span>Super</span>
+            <span>Apply</span>
           </div>
         </div>
       </div>
@@ -359,6 +402,10 @@ const Chat = () => {
         <FileDropOverlay isActive={dragActive} />
         
         <div className="space-y-6">
+          {showForm && fileAnalysis?.result?.extractedInfo && (
+            <ApplicationForm extractedInfo={fileAnalysis.result.extractedInfo} />
+          )}
+          
           {messages.map(message => 
             message.type === 'user' ? (
               <div key={message.id} className="text-right">
@@ -383,6 +430,15 @@ const Chat = () => {
               </div>
             )
           )}
+          
+          {fileAnalysis && (
+            <FileAnalysisSection 
+              file={fileAnalysis.file}
+              isAnalyzing={fileAnalysis.isAnalyzing}
+              analysisProgress={fileAnalysis.progress}
+              analysisResult={fileAnalysis.result}
+            />
+          )}
         </div>
       </div>
 
@@ -393,82 +449,20 @@ const Chat = () => {
           onDragEnter={handleDrag}
           className="max-w-4xl mx-auto"
         >
-          <div 
-            className={`relative bg-white rounded-xl shadow-sm ${dragActive ? 'ring-2 ring-purple-400' : 'border border-purple-200'}`}
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
-            onDragOver={handleDrag}
-            onDrop={handleDrop}
-          >
-            {uploadedFiles.length > 0 && (
-              <div className="px-6 pt-4 space-y-2">
-                {uploadedFiles.map((file, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between bg-purple-50/50 rounded-lg p-2"
-                  >
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
-                        <File className="h-4 w-4 text-purple-600" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900 truncate max-w-[200px]">
-                          {file.name}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {(file.size / 1024).toFixed(1)} KB
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveFile(file)}
-                      className="p-1 hover:bg-purple-100 rounded-full transition-colors"
-                    >
-                      <X className="h-4 w-4 text-gray-400" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-            
-            <div className="relative flex items-center">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="继续提问..."
-                className="w-full px-6 py-4 bg-transparent text-lg focus:outline-none"
-              />
-              <div className="absolute right-3 flex gap-2">
-                <label className="cursor-pointer p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 transition-colors">
-                  <input
-                    type="file"
-                    className="hidden"
-                    accept=".zip,.pdf,.docx,.txt,.xlsx,.xls"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        setUploadedFiles(prev => [...prev, file]);
-                        toast({
-                          title: "文件已选择",
-                          description: file.name
-                        });
-                      }
-                    }}
-                  />
-                  <Paperclip className="w-5 h-5" />
-                </label>
-                <button
-                  type="submit"
-                  className="p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-                  disabled={!input.trim() && !selectedFile}
-                >
-                  <MessageSquare className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
+          {uploadedFiles.length > 0 && (
+            <ChatFileCard
+              files={uploadedFiles}
+              onRemove={handleRemoveFile}
+            />
+          )}
+          
+          <FileUploadZone
+            onFileUpload={handleFileUpload}
+            onSendFiles={handleSendFiles}
+            uploadedFiles={uploadedFiles}
+            isAnalyzing={fileAnalysis?.isAnalyzing}
+            analysisProgress={fileAnalysis?.progress || 0}
+          />
         </form>
       </div>
     </div>

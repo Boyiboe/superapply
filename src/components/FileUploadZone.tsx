@@ -1,15 +1,27 @@
-
-import React, { useCallback } from 'react';
-import { FileUp } from 'lucide-react';
+import React, { useCallback, useState } from 'react';
+import { FileUp, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Progress } from '@/components/ui/progress';
 
 interface FileUploadZoneProps {
   className?: string;
   onFileUpload?: (files: File[]) => void;
+  onSendFiles?: (files: File[]) => void;
+  uploadedFiles?: File[]; // 使用可选属性
+  isAnalyzing?: boolean;
+  analysisProgress?: number;
 }
 
-const FileUploadZone: React.FC<FileUploadZoneProps> = ({ className, onFileUpload }) => {
+const FileUploadZone: React.FC<FileUploadZoneProps> = ({ 
+  className, 
+  onFileUpload, 
+  onSendFiles,
+  uploadedFiles = [], // 默认为空数组
+  isAnalyzing = false,
+  analysisProgress = 0
+}) => {
   const { toast } = useToast();
+  const [inputText, setInputText] = useState('');
   
   const onDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -67,14 +79,33 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({ className, onFileUpload
     }
   };
 
+  const handleSendFiles = () => {
+    // 添加额外的非空检查
+    if (onSendFiles && uploadedFiles && uploadedFiles.length > 0) {
+      onSendFiles(uploadedFiles);
+    }
+  };
+
   return (
     <div 
       onDragOver={onDragOver}
       onDrop={onDrop}
       className={`relative w-full ${className}`}
     >
+      {isAnalyzing && (
+        <div className="absolute -top-10 left-0 right-0 bg-white p-3 rounded-lg shadow-sm border border-purple-100">
+          <div className="flex justify-between mb-2 items-center">
+            <p className="text-sm font-medium text-gray-700">正在解析文件...</p>
+            <p className="text-sm text-purple-600">{analysisProgress}%</p>
+          </div>
+          <Progress value={analysisProgress} className="h-2 bg-purple-100" />
+        </div>
+      )}
+
       <input
         type="text"
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
         placeholder="快速上传学生材料，无需填写一键生成申请表"
         className="w-full px-6 py-6 text-lg rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 pr-24"
       />
@@ -90,10 +121,12 @@ const FileUploadZone: React.FC<FileUploadZoneProps> = ({ className, onFileUpload
           <FileUp className="w-5 h-5" />
         </label>
         <button
-          type="submit"
-          className="p-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center gap-1"
+          type="button"
+          onClick={handleSendFiles}
+          disabled={!uploadedFiles || uploadedFiles.length === 0}
+          className={`p-2.5 ${uploadedFiles && uploadedFiles.length > 0 ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-300'} text-white rounded-xl transition-colors flex items-center gap-1`}
         >
-          发送
+          <Send className="w-5 h-5" />
         </button>
       </div>
     </div>

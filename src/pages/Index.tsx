@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Bot, Sparkles, FileUp, ALargeSmall } from 'lucide-react';
@@ -12,6 +13,8 @@ const Index = () => {
   const [placeholderText, setPlaceholderText] = useState('');
   const [dragActive, setDragActive] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisProgress, setAnalysisProgress] = useState(0);
   const fullText = "快速上传学生材料，无需填写一键生成申请表";
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -97,6 +100,17 @@ const Index = () => {
     });
   };
 
+  const handleFileUpload = (files: File[]) => {
+    setUploadedFiles(prev => [...prev, ...files]);
+  };
+
+  const handleSendFiles = (files: File[]) => {
+    if (files.length > 0) {
+      // Navigate to chat page with the files
+      navigate('/chat', { state: { uploadedFiles: files } });
+    }
+  };
+
   return (
     <div 
       className="min-h-screen bg-gradient-to-b from-white to-blue-50"
@@ -158,7 +172,13 @@ const Index = () => {
 
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mb-8 group">
           <div className="relative w-[898px] mx-auto">
-            <FileUploadZone />
+            <FileUploadZone 
+              uploadedFiles={uploadedFiles}
+              onFileUpload={handleFileUpload}
+              onSendFiles={handleSendFiles}
+              isAnalyzing={isAnalyzing}
+              analysisProgress={analysisProgress}
+            />
           </div>
         </form>
 
