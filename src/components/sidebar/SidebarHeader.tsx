@@ -13,18 +13,22 @@ export function SidebarHeader() {
     <Header className="flex flex-col items-center gap-2 p-4">
       {/* Logo Section */}
       <div className="w-full flex justify-center mb-4">
-        {/* Expanded: SuperApply；Collapsed: SA，居中+宽度对齐 */}
         <div
           className={
-            "text-2xl font-bold text-blue-500 text-center transition-all " +
-            "w-full flex justify-center" // 宽度始终铺满
+            "text-2xl font-bold text-blue-500 text-center transition-all w-full flex justify-center"
           }
         >
           <span
-            className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden"
+            className="
+              group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden
+              w-full flex justify-center
+            "
           >
-            {/* Collapsed 用蓝色小方框内居中的 SA，和按钮对齐 */}
-            <span className="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-blue-500 text-2xl select-none font-extrabold">
+            <span
+              className="
+                flex items-center justify-center w-12 h-12 mx-auto rounded-lg bg-blue-100 text-blue-500 text-2xl select-none font-extrabold
+              "
+            >
               SA
             </span>
           </span>
@@ -35,7 +39,7 @@ export function SidebarHeader() {
           </span>
         </div>
       </div>
-      {/* 顶部按钮区和头像：收起时全部48px宽，按钮正方且内容居中 */}
+      {/* 按钮与头像区 */}
       <div className="flex flex-col items-center gap-3 w-full">
         {/* Toggle Sidebar Button */}
         <SidebarMenuButton
@@ -43,10 +47,7 @@ export function SidebarHeader() {
           tooltip="打开边栏"
           className="
             w-full
-            group-data-[state=collapsed]:w-12
-            group-data-[state=collapsed]:h-12
-            group-data-[state=collapsed]:max-w-[48px]
-            group-data-[state=collapsed]:p-0
+            group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
             group-data-[state=expanded]:max-w-[200px]
           "
         >
@@ -54,7 +55,7 @@ export function SidebarHeader() {
             className="
               flex items-center justify-center gap-2 rounded-lg text-base
               bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]
-              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0
+              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
               group-data-[state=expanded]:p-3 group-data-[state=expanded]:w-full
             "
           >
@@ -68,10 +69,7 @@ export function SidebarHeader() {
           tooltip="开启新申请"
           className="
             w-full
-            group-data-[state=collapsed]:w-12
-            group-data-[state=collapsed]:h-12
-            group-data-[state=collapsed]:max-w-[48px]
-            group-data-[state=collapsed]:p-0
+            group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
             group-data-[state=expanded]:max-w-[200px]
           "
         >
@@ -80,7 +78,7 @@ export function SidebarHeader() {
             className="
               flex items-center justify-center gap-2 rounded-lg text-base
               bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]
-              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0
+              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
               group-data-[state=expanded]:p-3 group-data-[state=expanded]:w-full
             "
           >
@@ -112,11 +110,10 @@ export function SidebarHeader() {
           asChild
           tooltip="查看学生详情"
           className="
-            hidden group-data-[state=collapsed]:flex group-data-[state=collapsed]:justify-center w-full
-            group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:h-12 p-0
+            hidden group-data-[state=collapsed]:flex group-data-[state=collapsed]:justify-center w-full group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:mx-auto p-0
           "
         >
-          <Link to="/" className="flex justify-center items-center w-12 h-12">
+          <Link to="/" className="flex justify-center items-center w-12 h-12 mx-auto">
             <Avatar className="w-8 h-8">
               <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
               <AvatarFallback className="!bg-[#D3E4FD] !text-gray-700 font-bold text-sm flex items-center justify-center">SA</AvatarFallback>
@@ -127,3 +124,4 @@ export function SidebarHeader() {
     </Header>
   );
 }
+
