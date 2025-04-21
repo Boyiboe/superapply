@@ -23,12 +23,13 @@ export function SidebarHeader() {
         </div>
       </div>
 
+      {/* 四大项都加上 collapsed 状态下的统一居中 */}
       <div className="flex flex-col items-center gap-3 w-full">
         {/* Toggle Sidebar Button */}
-        <SidebarMenuButton 
+        <SidebarMenuButton
           asChild
           tooltip="打开边栏"
-          className="w-full max-w-[200px]"
+          className="w-full max-w-[200px] group-data-[state=collapsed]:justify-center"
         >
           <SidebarTrigger className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
             bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]">
@@ -38,12 +39,12 @@ export function SidebarHeader() {
         </SidebarMenuButton>
 
         {/* New Application Button */}
-        <SidebarMenuButton 
+        <SidebarMenuButton
           asChild
           tooltip="开启新申请"
-          className="w-full max-w-[200px]"
+          className="w-full max-w-[200px] group-data-[state=collapsed]:justify-center"
         >
-          <Link 
+          <Link
             to="/new"
             className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
               bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]"
@@ -54,7 +55,7 @@ export function SidebarHeader() {
         </SidebarMenuButton>
 
         {/* Avatar for expanded state - with details */}
-        <SidebarMenuButton 
+        <SidebarMenuButton
           asChild
           tooltip="查看学生详情"
           className="hidden group-data-[state=expanded]:flex w-full"
@@ -72,7 +73,7 @@ export function SidebarHeader() {
         </SidebarMenuButton>
         
         {/* Avatar for collapsed state - centered */}
-        <SidebarMenuButton 
+        <SidebarMenuButton
           asChild
           tooltip="查看学生详情"
           className="hidden group-data-[state=collapsed]:flex group-data-[state=expanded]:hidden w-full justify-center"
