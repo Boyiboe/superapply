@@ -12,28 +12,33 @@ export function SidebarHeader() {
   return (
     <Header className="flex flex-col items-center gap-2 p-4">
       {/* Logo Section */}
-      <div className="w-full flex justify-center mb-4">
+      <div className="w-full flex mb-4 group-data-[state=collapsed]:mb-2">
         <div
           className={
-            "text-2xl font-bold text-blue-500 text-center transition-all w-full flex justify-center"
+            // 重点：折叠时左对齐，保留16px留白
+            "text-2xl font-bold text-blue-500 transition-all w-full" +
+            " group-data-[state=collapsed]:flex group-data-[state=collapsed]:justify-start group-data-[state=collapsed]:pl-4" +
+            " group-data-[state=expanded]:flex group-data-[state=expanded]:justify-center"
           }
         >
           <span
             className="
               group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden
-              w-full flex justify-center
+              w-full
             "
           >
             <span
               className="
-                flex items-center justify-center w-12 h-12 mx-auto rounded-lg bg-blue-100 text-blue-500 text-2xl select-none font-extrabold
+                flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-blue-500 text-2xl select-none font-extrabold
               "
+              // 去掉 mx-auto，使 logo 贴左 
+              // group-data-[state=collapsed]:ml-4
             >
               SA
             </span>
           </span>
           <span
-            className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline"
+            className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline text-center"
           >
             SuperApply
           </span>
@@ -47,15 +52,16 @@ export function SidebarHeader() {
           tooltip="打开边栏"
           className="
             w-full
-            group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
+            group-data-[state=collapsed]:pl-4 group-data-[state=collapsed]:pr-0
+            group-data-[state=collapsed]:max-w-none group-data-[state=collapsed]:w-full group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0
             group-data-[state=expanded]:max-w-[200px]
           "
         >
           <SidebarTrigger
             className="
-              flex items-center justify-center gap-2 rounded-lg text-base
-              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]
-              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
+              flex items-center gap-2 rounded-lg text-base
+              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 h-[42px]
+              group-data-[state=collapsed]:pl-0 group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12
               group-data-[state=expanded]:p-3 group-data-[state=expanded]:w-full
             "
           >
@@ -69,16 +75,17 @@ export function SidebarHeader() {
           tooltip="开启新申请"
           className="
             w-full
-            group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
+            group-data-[state=collapsed]:pl-4 group-data-[state=collapsed]:pr-0
+            group-data-[state=collapsed]:max-w-none group-data-[state=collapsed]:w-full group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0
             group-data-[state=expanded]:max-w-[200px]
           "
         >
           <Link
             to="/new"
             className="
-              flex items-center justify-center gap-2 rounded-lg text-base
-              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]
-              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-auto
+              flex items-center gap-2 rounded-lg text-base
+              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 h-[42px]
+              group-data-[state=collapsed]:pl-0 group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12
               group-data-[state=expanded]:p-3 group-data-[state=expanded]:w-full
             "
           >
@@ -105,15 +112,15 @@ export function SidebarHeader() {
             </div>
           </Link>
         </SidebarMenuButton>
-        {/* Avatar for collapsed state - 居中宽度对齐 */}
+        {/* Avatar for collapsed state - 左侧对齐，留白 16px */}
         <SidebarMenuButton
           asChild
           tooltip="查看学生详情"
           className="
-            hidden group-data-[state=collapsed]:flex group-data-[state=collapsed]:justify-center w-full group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:mx-auto p-0
+            hidden group-data-[state=collapsed]:flex w-full group-data-[state=collapsed]:pl-4 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0
           "
         >
-          <Link to="/" className="flex justify-center items-center w-12 h-12 mx-auto">
+          <Link to="/" className="flex items-center w-12 h-12">
             <Avatar className="w-8 h-8">
               <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
               <AvatarFallback className="!bg-[#D3E4FD] !text-gray-700 font-bold text-sm flex items-center justify-center">SA</AvatarFallback>
@@ -124,4 +131,3 @@ export function SidebarHeader() {
     </Header>
   );
 }
-
