@@ -28,11 +28,11 @@ export function SidebarFooter() {
               className="
                 flex items-center gap-2 rounded-lg text-base
                 bg-blue-400 hover:bg-blue-500 text-white w-full h-[42px]
-                group-data-[state=collapsed]:justify-start
-                group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-0
+                group-data-[state=collapsed]:justify-center
+                group-data-[state=collapsed]:w-8 group-data-[state=collapsed]:h-8 group-data-[state=collapsed]:p-0
               "
             >
-              <User className="w-6 h-6 text-white" />
+              <User className="w-5 h-5 text-white" />
               <span className="group-data-[state=collapsed]:hidden">个人信息</span>
             </Link>
           </SidebarMenuButton>

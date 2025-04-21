@@ -1,4 +1,3 @@
-
 import { ChevronLeft, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -13,7 +12,7 @@ export function SidebarHeader() {
     <Header className="flex flex-col items-center gap-2 p-4">
       {/* Logo Section */}
       <div className="w-full flex justify-center mb-4">
-        {/* 修改点：collapsed 时左对齐 */}
+        {/* 修改：collapsed 时左对齐，保持与打开侧栏按钮一致的对齐方式 */}
         <div
           className={
             "text-2xl font-bold text-blue-500 text-center transition-all w-full " +
@@ -29,7 +28,7 @@ export function SidebarHeader() {
           >
             <span
               className="
-                flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-blue-500 text-2xl select-none font-extrabold
+                flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-500 text-xl select-none font-extrabold
               "
             >
               SA
@@ -47,7 +46,7 @@ export function SidebarHeader() {
         {/* Toggle Sidebar Button */}
         <SidebarMenuButton
           asChild
-          tooltip="打开边栏"
+          tooltip="打开侧栏"
           className="
             w-full
             group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-0 group-data-[state=collapsed]:ml-4
@@ -58,12 +57,12 @@ export function SidebarHeader() {
             className="
               flex items-center gap-2 rounded-lg text-base
               bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]
-              group-data-[state=collapsed]:justify-start
-              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-0
+              group-data-[state=collapsed]:justify-center
+              group-data-[state=collapsed]:w-8 group-data-[state=collapsed]:h-8 group-data-[state=collapsed]:p-0
               group-data-[state=expanded]:justify-center group-data-[state=expanded]:p-3 group-data-[state=expanded]:w-full
             "
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5" />
             <span className="group-data-[state=collapsed]:hidden">打开边栏</span>
           </SidebarTrigger>
         </SidebarMenuButton>
@@ -82,12 +81,12 @@ export function SidebarHeader() {
             className="
               flex items-center gap-2 rounded-lg text-base
               bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]
-              group-data-[state=collapsed]:justify-start
-              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0 group-data-[state=collapsed]:mx-0
+              group-data-[state=collapsed]:justify-center
+              group-data-[state=collapsed]:w-8 group-data-[state=collapsed]:h-8 group-data-[state=collapsed]:p-0
               group-data-[state=expanded]:justify-center group-data-[state=expanded]:p-3 group-data-[state=expanded]:w-full
             "
           >
-            <Plus className="w-6 h-6" />
+            <Plus className="w-5 h-5" />
             <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
           </Link>
         </SidebarMenuButton>
