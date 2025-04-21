@@ -1,5 +1,6 @@
 
 import React, { useRef, useState } from "react";
+import { cn } from "@/lib/utils"; // Add this import to fix the error
 import ChatMessage from "./ChatMessage";
 import ChatInputBox from "./ChatInputBox";
 import { useToast } from "@/hooks/use-toast";
@@ -229,3 +230,4 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
 };
 
 export default AIChat;
+
