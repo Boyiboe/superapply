@@ -1,9 +1,9 @@
-
 import React, { useRef, useState } from "react";
 import ChatMessage from "./ChatMessage";
-import { FileUp, Loader, X } from "lucide-react";
+import ChatInputBox from "./ChatInputBox";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
+import { FileUp, Loader, X } from "lucide-react";
 
 type ChatMsg = {
   id: number;
@@ -15,24 +15,6 @@ type ChatMsg = {
 interface AIChatProps {
   className?: string;
 }
-
-const parseFileAsync = (file: File, onProgress: (percent: number) => void): Promise<string> => {
-  // 模拟解析过程
-  return new Promise((resolve) => {
-    let percent = 0;
-    const timer = setInterval(() => {
-      percent += Math.floor(Math.random() * 20) + 10;
-      if (percent > 100) percent = 100;
-      onProgress(percent);
-      if (percent === 100) {
-        clearInterval(timer);
-        setTimeout(() => {
-          resolve(`已提取关键信息，例如：姓名 李小明，GPA 3.8。\n可继续完善/核验您的信息。`);
-        }, 800);
-      }
-    }, 600);
-  });
-};
 
 const AIChat: React.FC<AIChatProps> = ({ className }) => {
   const { toast } = useToast();
@@ -54,6 +36,9 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
   const [lastFileName, setLastFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // 新增：输入区内部文件状态
+  const [chatFiles, setChatFiles] = useState<File[]>([]);
+
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   // 滚动到底部
@@ -61,13 +46,16 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
     scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);
   }, [messages, uploading]);
 
-  // 发送消息（支持文本或文件）
-  const sendMessage = async (text: string, file?: File) => {
-    if (!text && !file) return;
+  // 修改后的发送消息
+  const sendMessage = async () => {
+    if (input.trim() === "" && chatFiles.length === 0) return;
 
     const timestamp = Date.now();
-    if (file) {
-      // 显示用户file上传气泡
+
+    // 支持：文件+文本一起传递
+    if (chatFiles.length > 0) {
+      // 只用首个文件（如有多个）
+      const file = chatFiles[0];
       setMessages((prev) => [
         ...prev,
         {
@@ -77,9 +65,16 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
           content: (
             <>
               <div className="flex items-center gap-2">
-                <FileUp className="w-4 h-4" />
-                <span>{file.name}</span>
+                {/* 文件描述区缩略模板 */}
+                <img
+                  src="/lovable-uploads/e59cb0e9-29eb-49d4-9673-c3a678939296.png"
+                  alt="文件预览"
+                  className="w-8 h-8 rounded border object-cover"
+                />
+                <span className="font-semibold">{file.name}</span>
+                <span className="ml-2 text-xs text-gray-400">{(file.size / 1024).toFixed(1)} KB</span>
               </div>
+              {input && <div className="mt-1 text-sm text-gray-700">{input}</div>}
             </>
           ),
         },
@@ -88,7 +83,7 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
       setProgress(0);
       setLastFileName(file.name);
 
-      // AI：收到文件，开始解析
+      // AI收到文件展开气泡，内部进度条
       setTimeout(() => {
         setMessages((prev) => [
           ...prev,
@@ -109,9 +104,22 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
         ]);
       }, 500);
 
-      // 开始模拟解析
       try {
-        const aiRespContent = await parseFileAsync(file, setProgress);
+        // 假定调用parseFileAsync
+        const aiRespContent = await new Promise<string>((resolve) => {
+          let percent = 0;
+          const timer = setInterval(() => {
+            percent += Math.floor(Math.random() * 20) + 10;
+            if (percent > 100) percent = 100;
+            setProgress(percent);
+            if (percent === 100) {
+              clearInterval(timer);
+              setTimeout(() => {
+                resolve(`已提取关键信息，例如：姓名 李小明，GPA 3.8。\n可继续完善/核验您的信息。`);
+              }, 800);
+            }
+          }, 600);
+        });
         setUploading(false);
         setProgress(100);
         setMessages((prev) => [
@@ -145,23 +153,37 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
           },
         ]);
       }
+      setChatFiles([]);
+      setInput("");
       setLastFileName(null);
       return;
     }
-    // 发送文本消息
+
+    // 只发文本消息
     setMessages((prev) => [
       ...prev,
       {
         id: timestamp,
         sender: "user",
         type: "text",
-        content: text,
+        content: input,
       },
       {
         id: timestamp + 1,
         sender: "ai",
         type: "text",
-        content: <>🤖 {getAIResponse(text)}</>,
+        content: <>🤖 {(() => {
+          if (/成绩|GPA/.test(input)) {
+            return "请上传您的成绩单PDF，我会帮您自动提取关键信息。";
+          }
+          if (/推荐信/.test(input)) {
+            return "推荐信请上传扫描件或Word文档，我将自动结构化信息并提示缺失项。";
+          }
+          if (/你好|hi|hello/i.test(input)) {
+            return "你好！我是你的智能申请助手，有任何问题随时问我~";
+          }
+          return "好的，我会尽力为你解答。也可以通过上传材料获得更智能的表单填写体验！";
+        })()}</>,
       },
     ]);
     setInput("");
@@ -185,7 +207,7 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      sendMessage("", files[0]);
+      sendMessage();
     }
     e.target.value = "";
   };
@@ -194,7 +216,7 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      sendMessage(input.trim());
+      sendMessage();
     }
   };
 
@@ -203,7 +225,7 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
     e.preventDefault();
     const files = Array.from(e.dataTransfer.files);
     if (files && files.length > 0) {
-      sendMessage("", files[0]);
+      setChatFiles(files);
     }
   };
   const handleDragOver = (e: React.DragEvent) => {
@@ -213,8 +235,14 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
   return (
     <div
       className="h-[600px] w-full flex flex-col border border-blue-100 rounded-xl shadow bg-white"
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
+      onDrop={e => {
+        e.preventDefault();
+        const files = Array.from(e.dataTransfer.files);
+        if (files && files.length > 0) {
+          setChatFiles(files);
+        }
+      }}
+      onDragOver={e => e.preventDefault()}
     >
       {/* Top: 聊天消息流 */}
       <div ref={scrollRef} className="flex-1 w-full overflow-y-auto px-4 py-4 space-y-1">
@@ -224,45 +252,21 @@ const AIChat: React.FC<AIChatProps> = ({ className }) => {
         {uploading && lastFileName && (
           <div className="flex items-center gap-2 text-blue-500 text-sm mb-2">
             <Loader className="animate-spin w-4 h-4" />
-            文件 <span className="mx-1 font-semibold">{lastFileName}</span> 正在解析中...
+            正在解析 {lastFileName}...
             <Progress value={progress} className="h-1 bg-blue-200 ml-3 flex-1" />
           </div>
         )}
       </div>
-      {/* Bottom: 输入栏 */}
-      <div className="flex items-center gap-2 border-t p-3">
-        <input
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={handleInputKeyDown}
-          placeholder="输入你的问题或上传学生材料"
-          className="flex-1 px-4 py-3 rounded-xl border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      {/* 新输入区 */}
+      <div className="p-2 border-t">
+        <ChatInputBox
+          files={chatFiles}
+          onFilesChange={setChatFiles}
+          input={input}
+          onInputChange={setInput}
+          onSend={sendMessage}
           disabled={uploading}
         />
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          className="p-2 rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200"
-          aria-label="上传文件"
-          disabled={uploading}
-        >
-          <FileUp className="w-5 h-5" />
-        </button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          className="hidden"
-          accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-          onChange={handleFileInput}
-          disabled={uploading}
-        />
-        <button
-          onClick={() => sendMessage(input.trim())}
-          className="p-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition disabled:bg-blue-200"
-          disabled={!input.trim() || uploading}
-        >
-          发送
-        </button>
       </div>
     </div>
   );
