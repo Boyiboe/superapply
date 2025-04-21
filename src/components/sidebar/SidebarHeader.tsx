@@ -12,54 +12,89 @@ export function SidebarHeader() {
   return (
     <Header className="flex flex-col items-center gap-2 p-4">
       {/* Logo Section */}
-      <div className="flex w-full mb-4 items-center justify-center">
-        <div className="text-2xl font-bold text-blue-500 text-center w-full max-w-[200px] group-data-[state=collapsed]:w-[48px]">
-          <span className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden">
-            SA
+      <div className="w-full flex justify-center mb-4">
+        {/* Expanded: SuperApply；Collapsed: SA，居中+宽度对齐 */}
+        <div
+          className={
+            "text-2xl font-bold text-blue-500 text-center transition-all " +
+            "w-full flex justify-center" // 宽度始终铺满
+          }
+        >
+          <span
+            className="group-data-[state=collapsed]:inline group-data-[state=expanded]:hidden"
+          >
+            {/* Collapsed 用蓝色小方框内居中的 SA，和按钮对齐 */}
+            <span className="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-blue-500 text-2xl select-none font-extrabold">
+              SA
+            </span>
           </span>
-          <span className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline">
+          <span
+            className="group-data-[state=collapsed]:hidden group-data-[state=expanded]:inline"
+          >
             SuperApply
           </span>
         </div>
       </div>
-
-      {/* 顶部按钮区：收起时居中、固定宽度 */}
+      {/* 顶部按钮区和头像：收起时全部48px宽，按钮正方且内容居中 */}
       <div className="flex flex-col items-center gap-3 w-full">
         {/* Toggle Sidebar Button */}
-        <SidebarMenuButton 
+        <SidebarMenuButton
           asChild
           tooltip="打开边栏"
-          className="w-full max-w-[200px] group-data-[state=collapsed]:max-w-[48px]"
+          className="
+            w-full
+            group-data-[state=collapsed]:w-12
+            group-data-[state=collapsed]:h-12
+            group-data-[state=collapsed]:max-w-[48px]
+            group-data-[state=collapsed]:p-0
+            group-data-[state=expanded]:max-w-[200px]
+          "
         >
-          <SidebarTrigger className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-            bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px] group-data-[state=collapsed]:w-[48px] group-data-[state=collapsed]:p-0"
+          <SidebarTrigger
+            className="
+              flex items-center justify-center gap-2 rounded-lg text-base
+              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]
+              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0
+              group-data-[state=expanded]:p-3 group-data-[state=expanded]:w-full
+            "
           >
             <ChevronLeft className="w-6 h-6" />
             <span className="group-data-[state=collapsed]:hidden">打开边栏</span>
           </SidebarTrigger>
         </SidebarMenuButton>
-
         {/* New Application Button */}
-        <SidebarMenuButton 
+        <SidebarMenuButton
           asChild
           tooltip="开启新申请"
-          className="w-full max-w-[200px] group-data-[state=collapsed]:max-w-[48px]"
+          className="
+            w-full
+            group-data-[state=collapsed]:w-12
+            group-data-[state=collapsed]:h-12
+            group-data-[state=collapsed]:max-w-[48px]
+            group-data-[state=collapsed]:p-0
+            group-data-[state=expanded]:max-w-[200px]
+          "
         >
-          <Link 
+          <Link
             to="/new"
-            className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
-              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px] group-data-[state=collapsed]:w-[48px] group-data-[state=collapsed]:p-0"
+            className="
+              flex items-center justify-center gap-2 rounded-lg text-base
+              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]
+              group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:h-12 group-data-[state=collapsed]:p-0
+              group-data-[state=expanded]:p-3 group-data-[state=expanded]:w-full
+            "
           >
             <Plus className="w-6 h-6" />
             <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
           </Link>
         </SidebarMenuButton>
-
         {/* Avatar for expanded state - with details */}
-        <SidebarMenuButton 
+        <SidebarMenuButton
           asChild
           tooltip="查看学生详情"
-          className="hidden group-data-[state=expanded]:flex w-full max-w-[200px]"
+          className="
+            hidden group-data-[state=expanded]:flex w-full max-w-[200px]
+          "
         >
           <Link to="/" className="flex items-center gap-4 w-full">
             <Avatar className="w-12 h-12">
@@ -72,14 +107,16 @@ export function SidebarHeader() {
             </div>
           </Link>
         </SidebarMenuButton>
-        
-        {/* Avatar for collapsed state - centered + 居中宽度对齐 */}
-        <SidebarMenuButton 
+        {/* Avatar for collapsed state - 居中宽度对齐 */}
+        <SidebarMenuButton
           asChild
           tooltip="查看学生详情"
-          className="hidden group-data-[state=collapsed]:flex group-data-[state=collapsed]:justify-center w-full max-w-[48px]"
+          className="
+            hidden group-data-[state=collapsed]:flex group-data-[state=collapsed]:justify-center w-full
+            group-data-[state=collapsed]:w-12 group-data-[state=collapsed]:max-w-[48px] group-data-[state=collapsed]:h-12 p-0
+          "
         >
-          <Link to="/" className="flex justify-center items-center w-[48px] h-[42px]">
+          <Link to="/" className="flex justify-center items-center w-12 h-12">
             <Avatar className="w-8 h-8">
               <AvatarImage src="/placeholder.svg" alt="Student Avatar" />
               <AvatarFallback className="!bg-[#D3E4FD] !text-gray-700 font-bold text-sm flex items-center justify-center">SA</AvatarFallback>
