@@ -8,6 +8,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import Index from "./pages/Index";
 import Chat from "./pages/Chat";
+import Application from "./pages/Application";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/new" element={<Index />} />
+                <Route path="/application" element={<Application />} />
                 <Route path="/profile" element={<Navigate to="/" replace />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

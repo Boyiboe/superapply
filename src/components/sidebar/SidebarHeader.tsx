@@ -1,5 +1,5 @@
 
-import { ChevronLeft, Plus } from "lucide-react";
+import { ChevronLeft, Plus, FileUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   SidebarHeader as Header,
@@ -51,6 +51,22 @@ export function SidebarHeader() {
           >
             <Plus className="w-6 h-6" />
             <span className="group-data-[state=collapsed]:hidden">开启新申请</span>
+          </Link>
+        </SidebarMenuButton>
+        
+        {/* New Smart Application Button */}
+        <SidebarMenuButton
+          asChild
+          tooltip="智能解析申请"
+          className="w-full max-w-[200px] group-data-[state=collapsed]:justify-center group-data-[state=collapsed]:max-w-full"
+        >
+          <Link
+            to="/application"
+            className="flex items-center justify-center gap-2 p-3 rounded-lg text-base 
+              bg-[#D3E4FD] hover:bg-blue-200 text-gray-700 w-full h-[42px]"
+          >
+            <FileUp className="w-6 h-6" />
+            <span className="group-data-[state=collapsed]:hidden">智能解析申请</span>
           </Link>
         </SidebarMenuButton>
 

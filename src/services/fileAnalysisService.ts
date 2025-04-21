@@ -233,3 +233,24 @@ export const simulateProgressUpdates = (
   
   return () => clearInterval(interval);
 };
+
+// Get the wave animation value for progress visualization
+export const getWaveAnimation = (progress: number): string => {
+  return `M0,50 C30,${60 + Math.sin(Date.now() / 1000) * 10},
+          70,${40 + Math.cos(Date.now() / 800) * 10},
+          100,50 V100 H0 Z`;
+};
+
+// Function to generate visual verification info for documents
+export const getVerificationStatus = (docType: string): 'verified' | 'partial' | 'pending' => {
+  switch (docType) {
+    case '个人陈述':
+    case '推荐信':
+      return 'verified';
+    case '成绩单':
+    case '英语水平证书':
+      return 'partial';
+    default:
+      return 'pending';
+  }
+};
